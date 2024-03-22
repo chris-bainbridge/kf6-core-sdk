@@ -1039,6 +1039,7 @@ parts:
         - polkit-qt-1
         - extra-cmake-modules
         - kcoreaddons
+        - kwindowsystem
         source: https://invent.kde.org/frameworks/kauth.git
         source-branch: master
         build-packages:
