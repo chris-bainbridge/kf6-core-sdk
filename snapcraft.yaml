@@ -649,7 +649,6 @@ parts:
         - kconfig
         - kcoreaddons
         - kcrash
-        - kdbusaddons
         - kdoctools
         - ki18n
         source: https://invent.kde.org/frameworks/kservice.git
@@ -717,7 +716,6 @@ parts:
         - extra-cmake-modules
         - kauth
         - kcodecs
-        - kcolorscheme
         - kconfig
         - kcoreaddons
         - kdoctools
