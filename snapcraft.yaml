@@ -84,7 +84,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
+        cmake-parameters: &cmakeparameters
         - -DCMAKE_INSTALL_PREFIX=/usr
         - -DCMAKE_BUILD_TYPE=RelWithDebInfo
         - -DQT_MAJOR_VERSION=6
@@ -103,11 +103,11 @@ parts:
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        build-environment: &buildenvironment
+            - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
+            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
+            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
+            - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     plasma-wayland-protocols:
         after:
         - extra-cmake-modules
@@ -122,30 +122,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     qca:
         after:
         - extra-cmake-modules
@@ -162,30 +140,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     polkit-qt-1:
         after:
         - qtconf
@@ -204,30 +160,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/${CRAFT_ARCH_TRIPLET}
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/${CRAFT_ARCH_TRIPLET}
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kirigami:
         after:
         - extra-cmake-modules
@@ -240,31 +174,27 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: &cmakeparameters-ffmpeg
+            - -DCMAKE_INSTALL_PREFIX=/usr
+            - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+            - -DQT_MAJOR_VERSION=6
+            - -DBUILD_WITH_QT6=ON
+            - -DBUILD_TESTING=OFF
+            - -DBUILD_KWALLETD=OFF
+            - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+            - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+            - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+            - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+            - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+            - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+            - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+            - -DCMAKE_VERBOSE_MAKEFILE=ON
+            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+            - --log-level=STATUS
+            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
+            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        build-environment: *buildenvironment
     # kplotting:
     #     after:
     #     - extra-cmake-modules
@@ -347,31 +277,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kdnssd:
         after:
         - extra-cmake-modules
@@ -385,31 +292,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kitemmodels:
         after:
         - extra-cmake-modules
@@ -423,30 +307,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     threadweaver:
         after:
         - extra-cmake-modules
@@ -460,31 +322,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     solid:
         after:
         - extra-cmake-modules
@@ -501,30 +340,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kwidgetsaddons:
         after:
         - plasma-wayland-protocols
@@ -539,30 +356,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     ki18n:
         after:
         - extra-cmake-modules
@@ -581,30 +376,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kconfig:
         after:
         - extra-cmake-modules
@@ -620,30 +393,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     attica:
         after:
         - extra-cmake-modules
@@ -656,30 +407,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kguiaddons:
         after:
         - qtconf
@@ -707,30 +436,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kcoreaddons:
         after:
         - extra-cmake-modules
@@ -751,30 +458,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     karchive:
         after:
         - extra-cmake-modules
@@ -798,30 +483,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kcodecs:
         after:
         - extra-cmake-modules
@@ -837,30 +500,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kitemviews:
         after:
         - extra-cmake-modules
@@ -875,30 +516,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kwindowsystem:
         after:
         - extra-cmake-modules
@@ -921,30 +540,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kdbusaddons:
         after:
         - extra-cmake-modules
@@ -958,30 +555,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     sonnet:
         after:
         - extra-cmake-modules
@@ -1009,30 +584,8 @@ parts:
         - hunspell-dictionaries
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
 # ## Tier 2
     kauth:
         after:
@@ -1050,30 +603,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kglobalaccel:
         after:
         - extra-cmake-modules
@@ -1091,30 +622,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kcrash:
         after:
         - extra-cmake-modules
@@ -1131,30 +640,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kservice:
         after:
         - kdbusaddons
@@ -1181,30 +668,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kcolorscheme:
         after:
         - extra-cmake-modules
@@ -1221,30 +686,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kdoctools:
         after:
         - extra-cmake-modules
@@ -1266,30 +709,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kconfigwidgets:
         after:
         - kcolorscheme
@@ -1318,30 +739,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kiconthemes:
         after:
         - extra-cmake-modules
@@ -1365,30 +764,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kcompletion:
         after:
         - extra-cmake-modules
@@ -1405,30 +782,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     ktextwidgets:
         after:
         - extra-cmake-modules
@@ -1456,30 +811,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kxmlgui:
         after:
         - attica
@@ -1506,30 +839,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kpackage:
         after:
         - extra-cmake-modules
@@ -1548,30 +859,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kbookmarks:
         after:
         - extra-cmake-modules
@@ -1594,30 +883,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kfilemetadata:
         after:
         - extra-cmake-modules
@@ -1654,30 +921,8 @@ parts:
         - liblcms2-2
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     phonon:
         after:
         - extra-cmake-modules
@@ -1714,11 +959,7 @@ parts:
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        build-environment: *buildenvironment
     knotifications:
         after:
         - extra-cmake-modules
@@ -1743,30 +984,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     kwallet:
         after:
         - qca
@@ -1799,31 +1018,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kjobwidgets:
         after:
         - extra-cmake-modules
@@ -1841,31 +1037,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kio:
         after:
         - extra-cmake-modules
@@ -1912,31 +1085,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kparts:
         after:
         - extra-cmake-modules
@@ -1967,31 +1117,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kded:
         after:
         - extra-cmake-modules
@@ -2009,31 +1136,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kunitconversion:
         after:
         - extra-cmake-modules
@@ -2048,31 +1152,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kdeclarative:
         after:
         - extra-cmake-modules
@@ -2094,31 +1175,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kactivities:
         after:
         - extra-cmake-modules
@@ -2136,31 +1194,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kactivities-stats:
         after:
         - extra-cmake-modules
@@ -2179,31 +1214,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kcmutils:
         after:
         - extra-cmake-modules
@@ -2227,31 +1239,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     knotifyconfig:
         after:
         - extra-cmake-modules
@@ -2280,31 +1269,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     syndication:
         after:
         - extra-cmake-modules
@@ -2317,31 +1283,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     knewstuff:
         after:
         - attica
@@ -2372,31 +1315,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kidletime:
         after:
         - extra-cmake-modules
@@ -2417,31 +1337,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kquickcharts:
         after:
         - extra-cmake-modules
@@ -2454,31 +1351,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     ktexteditor:
         after:
         - extra-cmake-modules
@@ -2514,31 +1388,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     frameworkintegration:
         after:
         - extra-cmake-modules
@@ -2568,31 +1419,8 @@ parts:
         - libpackagekitqt6
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kpty:
         after:
         - extra-cmake-modules
@@ -2607,31 +1435,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kwayland:
         after:
         - extra-cmake-modules
@@ -2650,31 +1455,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     qqc2-desktop-style:
         after:
         - sonnet
@@ -2692,31 +1474,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kcontacts:
         after:
         - extra-cmake-modules
@@ -2733,31 +1492,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kcalendarcore:
         after:
         - extra-cmake-modules
@@ -2773,31 +1509,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kholidays:
         after:
         - extra-cmake-modules
@@ -2811,31 +1524,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     prison:
         after:
         - extra-cmake-modules
@@ -2854,31 +1544,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     purpose:
         after:
         - extra-cmake-modules
@@ -2902,31 +1569,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kdav:
         after:
         - extra-cmake-modules
@@ -2946,31 +1590,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     ksvg:
         after:
         - extra-cmake-modules
@@ -2988,31 +1609,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     plasma-framework:
         after:
         - extra-cmake-modules
@@ -3060,31 +1658,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     breeze-icons:
         after:
         - extra-cmake-modules
@@ -3101,31 +1676,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
         prime:
         - "-*.rcc"
     kimageformats:
@@ -3153,31 +1705,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     bluez-qt:
         after:
         - extra-cmake-modules
@@ -3192,31 +1721,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     kstatusnotifieritem:
         after:
         - kwindowsystem
@@ -3228,31 +1734,8 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DBUILD_KWALLETD=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        build-environment:
-        - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-        - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-        - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-        - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        cmake-parameters: *cmakeparameters-ffmpeg
+        build-environment: *buildenvironment
     # kio-extras:
     #     after:
     #     - extra-cmake-modules
