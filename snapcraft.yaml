@@ -161,8 +161,6 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kirigami.git
         source-branch: master
-        build-packages:
-        - kf6-breeze-icon-theme
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
