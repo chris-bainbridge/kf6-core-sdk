@@ -1669,6 +1669,38 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+    qtkeychain:
+        source: https://github.com/frankosterfeld/qtkeychain.git
+        source-branch: main
+        build-snaps:
+        - kde-qt6-core22-sdk
+        build-packages:
+        - libsecret-1-dev
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
+    ktextaddons:
+        after:
+        - extra-cmake-modules
+        - ki18n
+        - kconfig
+        - kconfigwidgets
+        - karchive
+        - kcoreaddons
+        - kio
+        - sonnet
+        - syntax-highlighting
+        - breeze-icons
+        - qtkeychain
+        source: https://invent.kde.org/libraries/ktextaddons.git
+        source-branch: master
+        build-snaps:
+        - kde-qt6-core22-sdk
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     # kio-extras:
     #     after:
     #     - extra-cmake-modules
