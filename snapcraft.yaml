@@ -13,7 +13,7 @@ architectures:
   # - build-on: armhf
   # - build-on: ppc64el
 environment:
-  LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET}:/usr/lib/${CRAFT_ARCH_TRIPLET}:/usr/lib:/lib"
+  LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
 slots: {}
 package-repositories:
 -   type: apt
@@ -56,9 +56,9 @@ parts:
             cat <<EOF > $CRAFT_PART_INSTALL/usr/bin/qt.conf
             [Paths]
             Prefix = ../../
-            LibraryExecutables = usr/lib/$CRAFT_ARCH_TRIPLET/qt6/libexec
-            Plugins = usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins
-            Qml2Imports = usr/lib/$CRAFT_ARCH_TRIPLET/qt6/qml
+            LibraryExecutables = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/libexec
+            Plugins = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins
+            Qml2Imports = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/qml
             Translations = usr/share/qt6/translations
             Data = usr/share/qt6
             EOF
@@ -96,16 +96,16 @@ parts:
         - -DCMAKE_INSTALL_RUNSTATEDIR=/run
         - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
         - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: &buildenvironment
             - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
             - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
             - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     plasma-wayland-protocols:
         after:
         - extra-cmake-modules
@@ -180,9 +180,9 @@ parts:
             - -DCMAKE_INSTALL_RUNSTATEDIR=/run
             - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
             - -DCMAKE_VERBOSE_MAKEFILE=ON
-            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
             - --log-level=STATUS
-            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
             - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
             - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
@@ -214,27 +214,27 @@ parts:
     #     - -DCMAKE_INSTALL_RUNSTATEDIR=/run
     #     - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
     #     - -DCMAKE_VERBOSE_MAKEFILE=ON
-    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - --log-level=STATUS
-    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     #     - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     #     build-environment:
     #     - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
     #     - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
     #     - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     #     stage:
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libdrm_amdgpu.so.1.0.0
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libdrm_intel.so.1.0.0
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libdrm_nouveau.so.2.0.0
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libdrm_radeon.so.1.0.1
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libdrm_amdgpu.so.1.0.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libdrm_intel.so.1.0.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libdrm_nouveau.so.2.0.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libdrm_radeon.so.1.0.1
     #     - -usr/share/doc/libdrm-amdgpu1/changelog.Debian.gz
     #     - -usr/share/doc/libdrm-intel1/changelog.Debian.gz
     #     - -usr/share/doc/libdrm-nouveau2/changelog.Debian.gz
     #     - -usr/share/doc/libdrm-radeon1/changelog.Debian.gz
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libwayland-client.so.0
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libwayland-server.so.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libwayland-client.so.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libwayland-server.so.0
     #     - -usr/share/doc/libwayland-client0/changelog.Debian.gz
     #     - -usr/share/doc/libwayland-server0/changelog.Debian.gz
     #     - -usr/bin/update-mime-database
@@ -247,9 +247,9 @@ parts:
     #     - -usr/share/man/man1/update-mime-database.1.gz
     #     - -usr/share/mime/packages/freedesktop.org.xml
     #     - -usr/share/pkgconfig/shared-mime-info.pc
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libjpeg.so.8.2.2
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/liblcms2.so.2
-    #     - -usr/lib/$CRAFT_ARCH_TRIPLET/libtiff.so.5.7.0
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libjpeg.so.8.2.2
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/liblcms2.so.2
+    #     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libtiff.so.5.7.0
     #     - -usr/share/doc/libjpeg-turbo8/changelog.Debian.gz
     #     - -usr/share/doc/libjpeg-turbo8/copyright
     #     - -usr/share/doc/liblcms2-2/changelog.Debian.gz
@@ -911,9 +911,9 @@ parts:
         - -DCMAKE_INSTALL_RUNSTATEDIR=/run
         - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
         - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
@@ -1776,16 +1776,16 @@ parts:
     #     - -DCMAKE_INSTALL_RUNSTATEDIR=/run
     #     - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
     #     - -DCMAKE_VERBOSE_MAKEFILE=ON
-    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - --log-level=STATUS
-    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
     #     - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     #     build-environment:
     #     - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
     #     - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
     #     - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     # breeze:
     #     after:
     #     - extra-cmake-modules
@@ -1832,16 +1832,16 @@ parts:
     #     - -DCMAKE_INSTALL_RUNSTATEDIR=/run
     #     - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
     #     - -DCMAKE_VERBOSE_MAKEFILE=ON
-    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - --log-level=STATUS
-    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
     #     - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     #     build-environment:
     #     - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
     #     - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
     #     - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     #     prime:
     #     - -usr/share/wallpapers
     # plasma-integration:
@@ -1905,16 +1905,16 @@ parts:
     #     - -DCMAKE_INSTALL_RUNSTATEDIR=/run
     #     - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
     #     - -DCMAKE_VERBOSE_MAKEFILE=ON
-    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - --log-level=STATUS
-    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET
+    #     - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     #     - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
     #     - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     #     build-environment:
     #     - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
     #     - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
     #     - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    #     - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     # qqc2-breeze-style:
     #     after:
     #     - kcolorscheme
