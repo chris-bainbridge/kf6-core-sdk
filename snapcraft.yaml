@@ -1670,6 +1670,8 @@ parts:
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     qtkeychain:
+        after:
+        - qtconf
         source: https://github.com/frankosterfeld/qtkeychain.git
         source-branch: main
         build-snaps:
@@ -1681,6 +1683,8 @@ parts:
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     qcoro:
+        after:
+        - qtconf
         source: https://github.com/danvratil/qcoro.git
         source-branch: main
         build-snaps:
