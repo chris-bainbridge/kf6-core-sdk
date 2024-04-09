@@ -1727,6 +1727,32 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+    modemmanager-qt:
+        after:
+        - qtconf
+        source: https://invent.kde.org/frameworks/modemmanager-qt.git
+        source-branch: master
+        build-snaps:
+        - kde-qt6-core22-sdk
+        build-packages:
+        - modemmanager-dev
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
+    networkmanager-qt:
+        after:
+        - qtconf
+        source: https://invent.kde.org/frameworks/networkmanager-qt.git
+        source-branch: master
+        build-snaps:
+        - kde-qt6-core22-sdk
+        build-packages:
+        - libnm-dev
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     # kio-extras:
     #     after:
     #     - extra-cmake-modules
