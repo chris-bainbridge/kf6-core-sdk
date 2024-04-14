@@ -107,6 +107,8 @@ parts:
             - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
             - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
             - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        stage-packages:
+        - python3
     plasma-wayland-protocols:
         after:
         - extra-cmake-modules
@@ -187,6 +189,8 @@ parts:
             - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
             - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
+        stage-packages:
+        - libgomp1
     kplotting:
         after:
         - extra-cmake-modules
@@ -282,6 +286,11 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - libimobiledevice6
+        - libmount1
+        - libplist3
+        - libudev1
     kwidgetsaddons:
         after:
         - plasma-wayland-protocols
@@ -366,6 +375,7 @@ parts:
         - libmd4c-dev
         stage-packages:
         - libwayland-client0
+        - libx11-6
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -386,7 +396,7 @@ parts:
         - shared-mime-info
         stage-packages:
         - shared-mime-info
-        - libgamin0
+        - libudev1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -407,10 +417,10 @@ parts:
         - zlib1g-dev
         - libbz2-dev
         stage-packages:
-        - libzstd1
+        - libbz2-1.0
         - liblzma5
+        - libzstd1
         - zlib1g
-        - bzip2
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -471,6 +481,13 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - libwayland-client0
+        - libx11-6
+        - libxcb-keysyms1
+        - libxcb-res0
+        - libxcb1
+        - libxfixes3
     kdbusaddons:
         after:
         - extra-cmake-modules
@@ -501,10 +518,11 @@ parts:
         - pkg-config
         - zlib1g-dev
         stage-packages:
+        - hspell
         - libaspell15
-        - libarchive13
-        - libhfstospell11
+        - libhunspell-1.7-0
         - libvoikko1
+        - zlib1g
         build-snaps:
         - kde-qt6-core22-sdk
         stage-snaps:
@@ -566,6 +584,8 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - libx11-6
     kservice:
         after:
         - kdbusaddons
@@ -624,6 +644,10 @@ parts:
         - libxml2-utils
         - libxslt1-dev
         stage-packages:
+        - docbook-xml
+        - docbook-xsl
+        - libxml2-utils
+        - libxml2
         - libxslt1.1
         build-snaps:
         - kde-qt6-core22-sdk
@@ -824,12 +848,11 @@ parts:
         stage-packages:
         - catdoc
         - libappimage1.0
+        - libavformat58
+        - libavutil56
         - libepub0
         - libexiv2-27
         - libpoppler-qt6-3
-        - libqmobipocket2
-        - libtag1v5
-        - liblcms2-2
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
@@ -888,7 +911,6 @@ parts:
         - pkg-config
         stage-packages:
         - libcanberra0
-        - libdbusmenu-qt6-2
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -928,6 +950,10 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libgcrypt20
+        - libgpgmepp6
+        - libqca-qt6-2
     kjobwidgets:
         after:
         - extra-cmake-modules
@@ -993,6 +1019,11 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libacl1
+        - libmount1
+        - libxml2
+        - libxslt1.1
     kparts:
         after:
         - extra-cmake-modules
@@ -1127,6 +1158,8 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libcanberra0
     syndication:
         after:
         - extra-cmake-modules
@@ -1190,6 +1223,14 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libwayland-client0
+        - libx11-6
+        - libx11-xcb1
+        - libxcb-sync1
+        - libxcb1
+        - libxext6
+        - libxss1
     kquickcharts:
         after:
         - extra-cmake-modules
@@ -1238,6 +1279,9 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libjs-underscore
+        - libeditorconfig0
     frameworkintegration:
         after:
         - extra-cmake-modules
@@ -1294,8 +1338,6 @@ parts:
         - libwayland-dev
         - pkg-config
         - wayland-protocols
-        stage-packages:
-        - libwayland-client0
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1377,9 +1419,9 @@ parts:
         - libdmtx-dev
         - libzxingcore-dev
         stage-packages:
-        - libqrencode4
         - libdmtx0b
-        - libzxingcore1
+        - libqrencode4
+        - libzxing3
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1410,6 +1452,8 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
+        stage-packages:
+        - libaccounts-qt6-1
     kdav:
         after:
         - extra-cmake-modules
@@ -1527,6 +1571,7 @@ parts:
         - libraw-dev
         - pkg-config
         stage-packages:
+        - python3-imath
         - libavif16
         - libheif1
         - libimath-3-1-29
@@ -1649,6 +1694,9 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - init-system-helpers
+        - liblmdb0
     kdesu:
         after:
         - extra-cmake-modules
@@ -1663,6 +1711,9 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - sudo
+        - libx11-6
     kpeople:
         after:
         - extra-cmake-modules
@@ -1707,6 +1758,8 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - hicolor-icon-theme
     kuserfeedback:
         after:
         - qtconf
@@ -1818,6 +1871,8 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - libexiv2-27
     plasma-activities:
         after:
         - extra-cmake-modules
@@ -1888,6 +1943,17 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        stage-packages:
+        - perl
+        - libappimage1.0
+        - libimobiledevice6
+        - libmtp9
+        - libopenexr-3-1-30
+        - libplist3
+        - libsmbclient
+        - libssh-4
+        - libtag1v5-vanilla
+        - libxcursor1
     kdecoration2:
         after:
         - extra-cmake-modules
@@ -1975,6 +2041,15 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-withoutqt5
         build-environment: *buildenvironment
+        stage-packages:
+        - fonts-hack
+        - fonts-noto-cjk
+        - fonts-noto-color-emoji
+        - fonts-noto-core
+        - fonts-noto-ui-core
+        - libwayland-client0
+        - libxcb1
+        - libxcursor1
     qqc2-breeze-style:
         after:
         - extra-cmake-modules
