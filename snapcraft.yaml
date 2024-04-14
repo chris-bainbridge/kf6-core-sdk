@@ -97,6 +97,7 @@ parts:
         - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
         - -DCMAKE_VERBOSE_MAKEFILE=ON
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - -DENABLE_DOCS=OFF
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
@@ -1709,6 +1710,7 @@ parts:
     kuserfeedback:
         after:
         - qtconf
+        - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kuserfeedback.git
         source-tag: *kf6-version
         build-snaps:
