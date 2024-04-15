@@ -7,4 +7,4 @@ snap:
 #  image:
 #    name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
 #    entrypoint: [""]
-  script: podman info | grep -i overlay
+  script: docker info | grep -i overlay
