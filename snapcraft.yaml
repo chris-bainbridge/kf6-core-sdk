@@ -275,11 +275,6 @@ parts:
         - libudev-dev
         - libimobiledevice-dev
         - libmount-dev
-        stage-packages:
-        - libimobiledevice6
-        - libplist3
-        - libmount1
-        - libudev1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
