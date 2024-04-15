@@ -4,8 +4,9 @@ include:
       - /gitlab-templates/blocks/workflow.yml
 snap:
   stage: deploy
-  image: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
-    entrypoint "bash"
+  image:
+    name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
+    entrypoint: [""]
 
   rules:
     # run the job on mainline branches of mainline repositories
