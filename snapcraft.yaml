@@ -938,7 +938,6 @@ parts:
         - libgpgme-dev
         - libgpgmepp-dev
         - libqgpgme15-qt6-dev
-        - libqca-qt6-2-dev
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -948,7 +947,6 @@ parts:
         stage-packages:
         - libgcrypt20
         - libgpgmepp6
-        - libqca-qt6-2
     kjobwidgets:
         after:
         - extra-cmake-modules
@@ -1630,6 +1628,8 @@ parts:
         - kde-qt6-core22-sdk
         build-packages:
         - libsecret-1-dev
+        stage-packages:
+        - libglib2.0-0
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
