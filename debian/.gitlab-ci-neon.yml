@@ -5,6 +5,8 @@ include:
 snap:
   stage: deploy
   image: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
+    entrypoint ""
+
   rules:
     # run the job on mainline branches of mainline repositories
     - if: $KDECI_SECURE_SERVICES_KEY
