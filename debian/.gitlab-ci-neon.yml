@@ -1,0 +1,42 @@
+include:
+  - project: sysadmin/ci-utilities
+    file:
+      - /gitlab-templates/blocks/workflow.yml
+snap:
+  stage: deploy
+  image: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
+  rules:
+    # run the job on mainline branches of mainline repositories
+    - if: $KDECI_SECURE_SERVICES_KEY
+      when: on_success
+    # or when triggered manually
+    - when: manual
+      # we don't want the manual job to block the pipeline
+      allow_failure: true
+  tags:
+    - Snap
+  variables:
+    KDE_SNAP_MODULE_NAME: ${CI_PROJECT_NAME}
+    KDECI_SIGNSNAP_CONFIG: $CI_PROJECT_DIR/ci-utilities/signing/signsnap.ini
+  interruptible: true
+  before_script:
+    - git clone https://invent.kde.org/sysadmin/ci-utilities.git --depth=1
+    - git clone https://invent.kde.org/sysadmin/ci-notary-service.git --depth=1
+  script:
+    - snapcraft
+    #- git config --global --add safe.directory $CI_PROJECT_DIR
+    #- python3 -u ci-utilities/run-ci-bu
+    #- echo ${KDE_SNAPCRAFT_MODULE_NAME}
+    # Build and install
+    #- python3 -u ci-utilities/snap-build.py ${KDE_SNAP_MODULE_NAME}
+    # Sign and publish (if the project branch is cleared for signing and publishing)
+    #- python3 ci-notary-service/signsnap.py -v --config $KDECI_SIGNSNAP_CONFIG ${KDE_SNAP_MODULE_NAME}.SNAP
+  artifacts:
+    name: SNAPCRAFT artifacts
+    expose_as: 'SNAPCRAFT Bundle'
+    when: always
+    paths:
+      - "${KDE_SNAP_MODULE_NAME}.snap"
+      - "task.log"
+      - "task-debug.log"
+    expire_in: 7 days
