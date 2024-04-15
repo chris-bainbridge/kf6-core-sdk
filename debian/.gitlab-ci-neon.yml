@@ -1,10 +1,10 @@
-include:
-  - project: sysadmin/ci-utilities
-    file:
-      - /gitlab-templates/blocks/workflow.yml
+#include:
+#  - project: sysadmin/ci-utilities
+#    file:
+#      - /gitlab-templates/blocks/workflow.yml
 snap:
-  stage: build
-  image:
-    name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
-    entrypoint: [""]
+#  stage: build
+#  image:
+#    name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
+#    entrypoint: [""]
   script: podman info | grep -i overlay
