@@ -7,4 +7,4 @@ snap:
   image:
     name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
     entrypoint: [""]
-  script: cat /usr/local/bin/docker_commandline.sh
+  script: printenv
