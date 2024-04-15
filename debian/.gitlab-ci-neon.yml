@@ -14,7 +14,7 @@ snap:
       # we don't want the manual job to block the pipeline
       allow_failure: true
   tags:
-    - snap
+    - Snap
   variables:
     KDE_SNAP_MODULE_NAME: ${CI_PROJECT_NAME}
     KDECI_SIGNSNAP_CONFIG: $CI_PROJECT_DIR/ci-utilities/signing/signsnap.ini
