@@ -5,7 +5,7 @@ include:
 snap:
   stage: deploy
   image: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
-    entrypoint ""
+    entrypoint "bash"
 
   rules:
     # run the job on mainline branches of mainline repositories
