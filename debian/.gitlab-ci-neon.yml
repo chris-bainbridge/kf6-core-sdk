@@ -3,7 +3,7 @@ include:
     file:
       - /gitlab-templates/blocks/workflow.yml
 snap:
-  #stage: deploy
+  stage: build
   image:
     name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
     entrypoint: [""]
