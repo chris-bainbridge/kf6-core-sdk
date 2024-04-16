@@ -1483,54 +1483,6 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
-    plasma-framework:
-        after:
-        - extra-cmake-modules
-        - plasma-activities
-        - karchive
-        - kcmutils
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kdbusaddons
-        - kdeclarative
-        - kdoctools
-        - kglobalaccel
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kio
-        - kirigami
-        - knotifications
-        - kpackage
-        - kparts
-        - kservice
-        - ksvg
-        - kwayland
-        - kwidgetsaddons
-        - kwindowsystem
-        - kxmlgui
-        source: https://invent.kde.org/plasma/libplasma.git
-        source-tag: v6.0.3
-        build-packages:
-        - doxygen
-        - gettext
-        - libegl1-mesa-dev
-        - libsm-dev
-        - libx11-xcb-dev
-        - libxcb-composite0-dev
-        - libxcb-damage0-dev
-        - libxcb-shape0-dev
-        - libwayland-dev
-        - pkg-config
-        - plasma-wayland-protocols
-        build-snaps:
-        - kde-qt6-core22-sdk
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
-        build-environment: *buildenvironment
     breeze-icons:
         after:
         - extra-cmake-modules
