@@ -7,4 +7,6 @@ snap:
   image:
     name: invent-registry.kde.org/sysadmin/ci-images/snap-builder:latest
     entrypoint: [""]
-  script: snap --version
+  script: 
+    - snap --version
+    - snapcraft
