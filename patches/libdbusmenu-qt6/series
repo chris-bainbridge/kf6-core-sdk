@@ -1,0 +1,5 @@
+01_build_without_cmake_automoc_relaxed_mode
+02_Fix_warnings_in_build_with_Qt_5_12_5
+03_Fix_build_with_Qt_6
+04_add_qt6_to_the_build
+05_turn_off_tests.diff

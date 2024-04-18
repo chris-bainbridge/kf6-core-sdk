@@ -816,6 +816,123 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+    libpoppler:
+        after:
+        - qtconf
+        - libgpgmepp-qt6
+        plugin: cmake
+        source: https://gitlab.freedesktop.org/poppler/poppler.git
+        source-tag: poppler-24.04.0
+        build-packages:
+        - libboost-dev
+        - libjpeg-dev
+        - libopenjp2-7-dev
+        - libnss3-dev
+        - libcurl4-nss-dev
+        - liblcms2-dev
+        - libboost-container-dev
+        - libtiff-dev
+        stage-packages:
+        - libfreetype6
+        - liblcms2-2
+        - libcurl3-gnutls
+        - libfontconfig1
+        - libjpeg-turbo8
+        - libnspr4
+        - libnss3
+        - libopenjp2-7
+        - libpng16-16
+        - zlib1g
+        - libtiff5
+        build-snaps:
+        - kde-qt6-core22-sdk
+        cmake-generator: Ninja
+        cmake-parameters:
+        - -DCMAKE_INSTALL_PREFIX=/usr
+        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DQT_MAJOR_VERSION=6
+        - -DENABLE_QT5=OFF
+        - -DENABLE_QT6=ON
+        - -DENABLE_GLIB=OFF
+        - -DBUILD_QT5_TESTS=OFF
+        - -DBUILD_QT6_TESTS=OFF
+        - -DBUILD_CPP_TESTS=OFF
+        - -DBUILD_GTK_TESTS=OFF
+        - -DBUILD_MANUAL_TESTS=OFF
+        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+        - -DCMAKE_VERBOSE_MAKEFILE=ON
+        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - -DENABLE_DOCS=OFF
+        - --log-level=STATUS
+        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        build-environment: *buildenvironment
+    packagekit-qt6:
+        after:
+        - qtconf
+        source: "https://www.freedesktop.org/software/PackageKit/releases/PackageKit-Qt-1.1.1.tar.xz"
+        source-checksum: sha256/8ad57523dbfd5a4b2086fa420b8ded63024e12efb8ca0ac42db767842e506212
+        plugin: cmake
+#        build-packages:
+#        - packagekit-dev
+#        stage-packages:
+#        - packagekit
+        build-snaps:
+        - kde-qt6-core22-sdk
+        cmake-generator: Ninja
+        cmake-parameters:
+        - -DCMAKE_INSTALL_PREFIX=/usr
+        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DQT_MAJOR_VERSION=6
+        - -DBUILD_WITH_QT5=OFF
+        - -DBUILD_WITH_QT6=ON
+        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+        - -DCMAKE_VERBOSE_MAKEFILE=ON
+        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - -DENABLE_DOCS=OFF
+        - --log-level=STATUS
+        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+#    libdbusmenu-qt6:
+#        after:
+#        - qtconf
+#        source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
+#        source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
+# TODO need to patch it to support qt6
+#    libappstream-qt6:
+#        after:
+#        - qtconf
+#        source:
+    libgpgmepp-qt6:
+        after:
+        - qtconf
+        build-packages:
+        - libassuan-dev
+        - libgpg-error-dev
+        stage-packages:
+        - libassuan0
+        - libgpg-error0
+        source: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.2.tar.bz2
+        source-checksum: sha256/9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224
+        plugin: autotools
+        autotools-configure-parameters:
+        - --disable-gpgsm-test
+        - --enable-languages=cpp,qt6
+        build-environment: *buildenvironment
     kfilemetadata:
         after:
         - extra-cmake-modules
@@ -823,6 +940,7 @@ parts:
         - kconfig
         - kcoreaddons
         - ki18n
+        - libpoppler
         source: https://invent.kde.org/frameworks/kfilemetadata.git
         source-tag: *kf6-version
         build-packages:
@@ -833,7 +951,6 @@ parts:
         - libattr1-dev
         - libepub-dev
         - libexiv2-dev
-        - libpoppler-qt6-dev
         - libpostproc-dev
         - libswscale-dev
         - pkg-config
@@ -847,7 +964,6 @@ parts:
         - libavutil56
         - libepub0
         - libexiv2-27
-        - libpoppler-qt6-3
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
@@ -902,7 +1018,7 @@ parts:
         - dbus-x11
         - doxygen
         - graphviz
-        - libdbusmenu-qt6-dev
+#        - libdbusmenu-qt6-dev
         - pkg-config
         stage-packages:
         - libcanberra0
@@ -928,6 +1044,7 @@ parts:
         - kservice
         - kwidgetsaddons
         - kwindowsystem
+        - libgpgmepp-qt6
         source: https://invent.kde.org/frameworks/kwallet.git
         source-tag: *kf6-version
         build-packages:
@@ -935,9 +1052,6 @@ parts:
         - graphviz
         - libboost-dev
         - libgcrypt20-dev
-        - libgpgme-dev
-        - libgpgmepp-dev
-        - libqgpgme15-qt6-dev
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -946,7 +1060,6 @@ parts:
         build-environment: *buildenvironment
         stage-packages:
         - libgcrypt20
-        - libgpgmepp6
     kjobwidgets:
         after:
         - extra-cmake-modules
@@ -1288,19 +1401,18 @@ parts:
         - knotifications
         - kpackage
         - kwidgetsaddons
+        - packagekit-qt6
         source: https://invent.kde.org/frameworks/frameworkintegration.git
         source-tag: *kf6-version
         build-packages:
         - dbus-x11
         - libappstreamqt-dev
-        - libpackagekitqt6-dev
         - libxcursor-dev
         - pkg-config
         build-snaps:
         - kde-qt6-core22-sdk
         stage-packages:
         - libappstreamqt-3
-        - libpackagekitqt6
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
@@ -1437,7 +1549,6 @@ parts:
         source-tag: *kf6-version
         build-packages:
         - intltool
-        - libaccounts-glib-dev
         - pkg-config
         build-snaps:
         - kde-qt6-core22-sdk
@@ -1445,8 +1556,6 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
         build-environment: *buildenvironment
-        stage-packages:
-        - libaccounts-qt6-1
     kdav:
         after:
         - extra-cmake-modules
