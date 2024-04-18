@@ -1,0 +1,14 @@
+include:
+  - project: sysadmin/ci-utilities
+    file:
+      - /gitlab-templates/blocks/workflow.yml
+  - local: debian/snap-base.yml
+
+snap_snapcraft_destructive:
+  extends: .snap_base
+  inherit:
+    default: true
+  script:
+    - echo building $KDE_SNAP_MODULE_NAME with --destructive-mode ...
+    - snapcraft --destructive-mode --verbosity=debug
+  interruptible: true
