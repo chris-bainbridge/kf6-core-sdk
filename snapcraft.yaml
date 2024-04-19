@@ -828,7 +828,7 @@ parts:
         - libjpeg-dev
         - libopenjp2-7-dev
         - libnss3-dev
-        - libcurl4-nss-dev
+        - libcurl4-gnutls-dev
         - liblcms2-dev
         - libboost-container-dev
         - libtiff-dev
@@ -926,10 +926,46 @@ parts:
 #        source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
 #        source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
 # TODO need to patch it to support qt6
-#    libappstream-qt6:
-#        after:
-#        - qtconf
-#        source:
+    libappstream-qt6:
+        after:
+        - qtconf
+        source: https://github.com/ximion/appstream/archive/refs/tags/v1.0.2.tar.gz
+        plugin: meson
+        build-packages:
+        - meson
+        - ninja-build
+        - libyaml-dev
+        - gettext
+        - gi-docgen
+        - gobject-introspection
+        - gperf
+        - gtk-doc-tools
+        - itstool
+        - libcairo2-dev
+        - libcurl4-gnutls-dev
+        - libfontconfig-dev
+        - libgdk-pixbuf-2.0-dev
+        - libgirepository1.0-dev
+        - libglib2.0-dev
+        - libjs-highlight.js
+        - libpango1.0-dev
+        - librsvg2-dev
+        - libstemmer-dev
+        - libsystemd-dev
+        - libxml2-dev
+        - libxmlb-dev
+        - libzstd-dev
+        - libyaml-dev
+        - valac
+        stage-packages:
+        - libcurl3-gnutls
+        - libstemmer0d
+        - libsystemd0
+        - libxml2
+        - libxmlb2
+        - libyaml-0-2
+        - libzstd1
+        build-environment: *buildenvironment
     libgpgmepp-qt6:
         after:
         - qtconf
@@ -1424,13 +1460,10 @@ parts:
         source-tag: *kf6-version
         build-packages:
         - dbus-x11
-        - libappstreamqt-dev
         - libxcursor-dev
         - pkg-config
         build-snaps:
         - kde-qt6-core22-sdk
-        stage-packages:
-        - libappstreamqt-3
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters-ffmpeg
@@ -2002,7 +2035,6 @@ parts:
         source-branch: master
         build-packages:
         - libappimage-dev
-        - libappstreamqt-dev
         - libimobiledevice-dev
         - libmsgsl-dev
         - libmtp-dev
