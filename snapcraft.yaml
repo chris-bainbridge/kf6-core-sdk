@@ -874,29 +874,16 @@ parts:
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;../parts/libgpgmepp-qt6/install/\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
-    packagekit:
-        after:
-        - qtconf
-        source: "https://www.freedesktop.org/software/PackageKit/releases/PackageKit-1.2.8.tar.xz"
-        source-checksum: sha256/d834250a0f121483027db2cfd93e8b2cba8dc48ff854395bfd88aa9511898be4
-        plugin: meson
-        build-packages:
-        - meson
-        - libgirepository1.0-dev
-        - valac
-        - xsltproc
-        - libgstreamermm-1.0-dev
-        - bash-completion
-        - ninja-build
-        build-snaps:
-        - kde-qt6-core22-sdk
     packagekit-qt6:
         after:
         - qtconf
-        - packagekit
         source: "https://www.freedesktop.org/software/PackageKit/releases/PackageKit-Qt-1.1.1.tar.xz"
         source-checksum: sha256/8ad57523dbfd5a4b2086fa420b8ded63024e12efb8ca0ac42db767842e506212
         plugin: cmake
+        build-packages:
+        - packagekit
+        stage-packages:
+        - packagekit
         build-snaps:
         - kde-qt6-core22-sdk
         cmake-generator: Ninja
@@ -920,12 +907,6 @@ parts:
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-#    libdbusmenu-qt6:
-#        after:
-#        - qtconf
-#        source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
-#        source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
-# TODO need to patch it to support qt6
     libappstream-qt6:
         after:
         - qtconf
@@ -966,6 +947,39 @@ parts:
         - libyaml-0-2
         - libzstd1
         build-environment: *buildenvironment
+    libdbusmenu-qt6:
+        after:
+        - qtconf
+        source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
+        source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
+        override-pull: |
+            craftctl default
+            while read -r PATCHFILE ; do 
+                patch -p1 < "$CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/$PATCHFILE"
+            done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
+        plugin: cmake
+        build-snaps:
+        - kde-qt6-core22-sdk
+        cmake-generator: Ninja
+        cmake-parameters:
+        - -DCMAKE_INSTALL_PREFIX=/usr
+        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DQT_MAJOR_VERSION=6
+        - -DUSE_QT6=ON
+        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+        - -DCMAKE_VERBOSE_MAKEFILE=ON
+        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - -DENABLE_DOCS=OFF
+        - --log-level=STATUS
+        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
     libgpgmepp-qt6:
         after:
         - qtconf
