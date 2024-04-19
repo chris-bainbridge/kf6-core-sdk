@@ -4,6 +4,7 @@
     - Snap
   variables:
     KDE_SNAP_MODULE_NAME: ${CI_PROJECT_NAME}
+    KDE_SNAP_MODULE_VERSION: ${CI_PROJECT_VERSION}
     SNAPCRAFT_BUILD_ENVIRONMENT: "host"
     SNAPCRAFT_MANAGED_MODE: "y"
   interruptible: true
