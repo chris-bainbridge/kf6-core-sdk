@@ -9,6 +9,6 @@ snap_snapcraft_lxc:
   inherit:
     default: true
   script:
-    - echo building $KDE_SNAP_MODULE_NAME_$KDE_SNAP_MODULE_VERSION with --use-lxd ...
+    - echo building $KDE_SNAP_MODULE_NAME $KDE_SNAP_MODULE_VERSION with --use-lxd ...
     - snapcraft  --use-lxd --verbosity=debug
   interruptible: true
