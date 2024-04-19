@@ -819,7 +819,6 @@ parts:
     libpoppler:
         after:
         - qtconf
-        - libgpgmepp-qt6
         plugin: cmake
         source: https://gitlab.freedesktop.org/poppler/poppler.git
         source-tag: poppler-24.04.0
@@ -858,6 +857,7 @@ parts:
         - -DBUILD_QT6_TESTS=OFF
         - -DBUILD_CPP_TESTS=OFF
         - -DBUILD_GTK_TESTS=OFF
+        - -DENABLE_GPGME=OFF
         - -DBUILD_MANUAL_TESTS=OFF
         - -DCMAKE_INSTALL_SYSCONFDIR=/etc
         - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
@@ -872,7 +872,7 @@ parts:
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;../parts/libgpgmepp-qt6/install/\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
     packagekit-qt6:
         after:
@@ -907,6 +907,7 @@ parts:
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        build-environment: *buildenvironment
     libappstream-qt6:
         after:
         - qtconf
@@ -980,27 +981,31 @@ parts:
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-    libgpgmepp-qt6:
-        after:
-        - qtconf
-        build-packages:
-        - libassuan-dev
-        - libgpg-error-dev
-        - rsync
-        stage-packages:
-        - libassuan0
-        - libgpg-error0
-        source: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.2.tar.bz2
-        source-checksum: sha256/9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224
-        plugin: autotools
-        autotools-configure-parameters:
-        - --disable-gpgsm-test
-        - --enable-languages=cpp,qt6
-        - --prefix=/usr
         build-environment: *buildenvironment
-        override-build: |
-            craftctl default
-            rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+
+    #    libgpgmepp-qt6:
+#        after:
+#        - qtconf
+#        build-packages:
+#        - libassuan-dev
+#        - libgpg-error-dev
+#        - rsync
+#        stage-packages:
+#        - libassuan0
+#        - libgpg-error0
+#        build-snaps:
+#        - kde-qt6-core22-sdk
+#        source: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.2.tar.bz2
+#        source-checksum: sha256/9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224
+#        plugin: autotools
+#        autotools-configure-parameters:
+#        - --disable-gpgsm-test
+#        - --enable-languages=cpp,qt6
+#        - --prefix=/usr
+#        build-environment: *buildenvironment
+#        override-build: |
+#            craftctl default
+#            rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
     kfilemetadata:
         after:
         - extra-cmake-modules
@@ -1112,7 +1117,6 @@ parts:
         - kservice
         - kwidgetsaddons
         - kwindowsystem
-        - libgpgmepp-qt6
         source: https://invent.kde.org/frameworks/kwallet.git
         source-tag: *kf6-version
         build-packages:
