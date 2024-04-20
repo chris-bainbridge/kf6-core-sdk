@@ -914,6 +914,11 @@ parts:
         - libxmlb2
         - libyaml-0-2
         - libzstd1
+        build-snaps:
+        - kde-qt6-core22-sdk
+        meson-parameters:
+        - -Dqt=true
+        - --prefix=/usr
         build-environment: *buildenvironment
     libdbusmenu-qt6:
         after:
