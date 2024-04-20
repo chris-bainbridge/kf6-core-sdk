@@ -10,5 +10,5 @@ snap_snapcraft_lxc:
     default: true
   script:
     - echo building $KDE_SNAP_MODULE_NAME $KDE_SNAP_MODULE_VERSION with --use-lxd ...
-    - snapcraft  --use-lxd --verbosity=debug
+    - snapcraft  --use-lxd --verbosity=verbose
   interruptible: true
