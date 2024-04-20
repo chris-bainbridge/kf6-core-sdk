@@ -879,6 +879,11 @@ parts:
         after:
         - qtconf
         source: https://github.com/ximion/appstream/archive/refs/tags/v1.0.2.tar.gz
+        override-pull: |
+            craftctl default
+            while read -r PATCHFILE ; do
+                patch -p1 < "$CRAFT_PROJECT_DIR/patches/libappstream-qt6/$PATCHFILE"
+            done < $CRAFT_PROJECT_DIR/patches/libappstream-qt6/series
         plugin: meson
         build-packages:
         - meson
