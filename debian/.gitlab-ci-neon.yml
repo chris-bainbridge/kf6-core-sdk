@@ -5,5 +5,4 @@ include:
   - project: sysadmin/ci-utilities
     file:
 #      - /gitlab-templates/snap-snapcraft-destructive.yml
-#      - /gitlab-templates/snap-snapcraft-lxd.yml
-  - local: debian/snap-snapcraft-lxd.yml
+      - /gitlab-templates/snap-snapcraft-lxd.yml
