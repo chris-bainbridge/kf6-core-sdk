@@ -921,6 +921,47 @@ parts:
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/snap/ffmpeg-2204-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
+    phonon-vlc:
+        after:
+        - extra-cmake-modules
+        - phonon
+        source: https://invent.kde.org/libraries/phonon-vlc.git
+        source-branch: master
+        source-depth: 1
+        build-packages:
+            - libvlc-dev
+            - libvlccore-dev
+            - libv4l-dev
+        build-snaps:
+            - kde-qt6-core22-sdk
+        stage-packages:
+            - vlc-plugin-base
+            - vlc-plugin-video-output
+            - libvlc5
+            - libvlccore9
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters:
+            - -DCMAKE_INSTALL_PREFIX=/usr
+            - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+            - -DQT_MAJOR_VERSION=6
+            - -DPHONON_BUILD_QT5=OFF
+            - -DPHONON_BUILD_QT6=ON
+            - -DBUILD_TESTING=OFF
+            - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+            - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+            - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+            - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+            - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+            - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+            - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+            - -DCMAKE_VERBOSE_MAKEFILE=ON
+            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+            - --log-level=STATUS
+            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/snap/ffmpeg-2204-sdk/current\\;/usr"
+            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        build-environment: *buildenvironment
     knotifications:
         after:
         - extra-cmake-modules
