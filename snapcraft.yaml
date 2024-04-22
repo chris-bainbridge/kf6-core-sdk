@@ -78,6 +78,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/extra-cmake-modules.git
         source-tag: &kf6-version v6.1.0
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -116,6 +117,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
         source-branch: master
+        source-depth: 1
         stage-packages:
         - wayland-protocols
         build-snaps:
@@ -129,6 +131,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/libraries/qca.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - ca-certificates
         - gnupg
@@ -146,6 +149,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/libraries/polkit-qt-1.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - libglib2.0-dev
         - libpolkit-agent-1-dev
@@ -165,6 +169,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kirigami.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -198,6 +203,7 @@ parts:
         - missing-deps
         source: https://invent.kde.org/frameworks/kplotting.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - cmake
         - libglx-dev
@@ -213,6 +219,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/syntax-highlighting.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - perl
         build-snaps:
@@ -226,6 +233,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kdnssd.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - graphviz
         - doxygen
@@ -240,6 +248,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kitemmodels.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - graphviz
         - doxygen
@@ -254,6 +263,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/threadweaver.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - graphviz
         - doxygen
@@ -268,6 +278,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/solid.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - bison
         - doxygen
@@ -293,6 +304,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kwidgetsaddons.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - graphviz
         - doxygen
@@ -308,6 +320,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/ki18n.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libisocodes-dev
         - iso-codes
@@ -327,6 +340,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kconfig.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -343,6 +357,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/attica.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -356,6 +371,7 @@ parts:
         - plasma-wayland-protocols
         source: https://invent.kde.org/frameworks/kguiaddons.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libxkbcommon-dev
         - libwayland-client0
@@ -384,6 +400,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kcoreaddons.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -405,6 +422,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/karchive.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -429,6 +447,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kcodecs.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - gperf
         - doxygen
@@ -445,6 +464,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kitemviews.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -461,6 +481,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kwindowsystem.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libx11-dev
         - libxcb-icccm4-dev
@@ -490,6 +511,7 @@ parts:
         - qtconf
         source: https://invent.kde.org/frameworks/kdbusaddons.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - dbus-x11
         build-snaps:
@@ -503,6 +525,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/sonnet.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - aspell
         - doxygen
@@ -536,6 +559,7 @@ parts:
         - kwindowsystem
         source: https://invent.kde.org/frameworks/kauth.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -551,6 +575,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kglobalaccel.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -570,6 +595,7 @@ parts:
         - kwindowsystem
         source: https://invent.kde.org/frameworks/kcrash.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -593,6 +619,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kservice.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - bison
         - dbus-x11
@@ -616,6 +643,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kcolorscheme.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libglx-dev
         - libgl1-mesa-dev
@@ -632,6 +660,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kdoctools.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - docbook-xml
         - docbook-xsl
@@ -665,6 +694,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/kconfigwidgets.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - docbook-xml
         - docbook-xsl
@@ -694,6 +724,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/kiconthemes.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -711,6 +742,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/kcompletion.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -739,6 +771,7 @@ parts:
         - sonnet
         source: https://invent.kde.org/frameworks/ktextwidgets.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -766,6 +799,7 @@ parts:
         - kwindowsystem
         source: https://invent.kde.org/frameworks/kxmlgui.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -785,6 +819,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kpackage.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -808,6 +843,7 @@ parts:
         - kxmlgui
         source: https://invent.kde.org/frameworks/kbookmarks.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -860,6 +896,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kfilemetadata.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libtag1-dev
         - doxygen
@@ -890,6 +927,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/libraries/phonon.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - libglib2.0-dev
         - libpulse-dev
@@ -972,6 +1010,7 @@ parts:
         - libdbusmenu-qt6
         source: https://invent.kde.org/frameworks/knotifications.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libcanberra-dev
         - dbus-x11
@@ -1004,6 +1043,7 @@ parts:
         - kwindowsystem
         source: https://invent.kde.org/frameworks/kwallet.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1025,6 +1065,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/kjobwidgets.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1066,6 +1107,7 @@ parts:
         - kxmlgui
         source: https://invent.kde.org/frameworks/kio.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1109,6 +1151,7 @@ parts:
         - sonnet
         source: https://invent.kde.org/frameworks/kparts.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1129,6 +1172,7 @@ parts:
         - kservice
         source: https://invent.kde.org/frameworks/kded.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1141,6 +1185,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kunitconversion.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1161,6 +1206,7 @@ parts:
         - kio
         source: https://invent.kde.org/frameworks/kdeclarative.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1183,6 +1229,7 @@ parts:
         - kxmlgui
         source: https://invent.kde.org/frameworks/kcmutils.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1211,6 +1258,7 @@ parts:
         - phonon
         source: https://invent.kde.org/frameworks/knotifyconfig.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libcanberra-dev
         - doxygen
@@ -1229,6 +1277,7 @@ parts:
         - kcodecs
         source: https://invent.kde.org/frameworks/syndication.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1259,6 +1308,7 @@ parts:
         - syndication
         source: https://invent.kde.org/frameworks/knewstuff.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1271,6 +1321,7 @@ parts:
         - plasma-wayland-protocols
         source: https://invent.kde.org/frameworks/kidletime.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libwayland-dev
         - libx11-dev
@@ -1300,6 +1351,7 @@ parts:
         - kirigami
         source: https://invent.kde.org/frameworks/kquickcharts.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1330,6 +1382,7 @@ parts:
         - syntax-highlighting
         source: https://invent.kde.org/frameworks/ktexteditor.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libeditorconfig-dev
         - libgit2-dev
@@ -1360,6 +1413,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/frameworkintegration.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - dbus-x11
         - libxcursor-dev
@@ -1377,6 +1431,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kpty.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libutempter-dev
         build-snaps:
@@ -1391,6 +1446,7 @@ parts:
         - plasma-wayland-protocols
         source: https://invent.kde.org/plasma/kwayland.git
         source-tag: v6.0.3
+        source-depth: 1
         build-packages:
         - libegl1-mesa-dev
         - libwayland-dev
@@ -1411,6 +1467,7 @@ parts:
         - kirigami
         source: https://invent.kde.org/frameworks/qqc2-desktop-style.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - dbus-x11
         - pkg-config
@@ -1429,6 +1486,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/frameworks/kcontacts.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         build-snaps:
@@ -1442,6 +1500,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kcalendarcore.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libical-dev
         - bison
@@ -1458,6 +1517,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kholidays.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - doxygen
         - graphviz
@@ -1472,6 +1532,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/prison.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libqrencode-dev
         - libdmtx-dev
@@ -1500,6 +1561,7 @@ parts:
         - kwallet
         source: https://invent.kde.org/frameworks/purpose.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - intltool
         - pkg-config
@@ -1522,6 +1584,7 @@ parts:
         - kwidgetsaddons
         source: https://invent.kde.org/frameworks/kdav.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1539,6 +1602,7 @@ parts:
         - kirigami
         source: https://invent.kde.org/frameworks/ksvg.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1550,6 +1614,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/breeze-icons.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - fdupes
         - libxml2-utils
@@ -1570,6 +1635,7 @@ parts:
         - karchive
         source: https://invent.kde.org/frameworks/kimageformats.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - libavif-dev
         - libjxl-dev
@@ -1596,6 +1662,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/bluez-qt.git
         source-tag: *kf6-version
+        source-depth: 1
         build-packages:
         - graphviz
         - doxygen
@@ -1611,6 +1678,7 @@ parts:
         - kwindowsystem
         source: https://invent.kde.org/frameworks/kstatusnotifieritem.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1627,6 +1695,7 @@ parts:
         - kitemmodels
         source: https://invent.kde.org/frameworks/krunner.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1638,6 +1707,7 @@ parts:
         - qtconf
         source: https://github.com/frankosterfeld/qtkeychain.git
         source-branch: main
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1653,6 +1723,7 @@ parts:
         - qtconf
         source: https://github.com/danvratil/qcoro.git
         source-branch: main
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1674,6 +1745,7 @@ parts:
         - qtkeychain
         source: https://invent.kde.org/libraries/ktextaddons.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1694,6 +1766,7 @@ parts:
         - kio
         source: https://invent.kde.org/frameworks/baloo.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1714,6 +1787,7 @@ parts:
         - kpty
         source: https://invent.kde.org/frameworks/kdesu.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1733,6 +1807,7 @@ parts:
         - kcontacts
         source: https://invent.kde.org/frameworks/kpeople.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1744,6 +1819,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/ktexttemplate.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1758,6 +1834,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/oxygen-icons.git
         source-tag: v6.0.0
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1775,6 +1852,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/kuserfeedback.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1791,6 +1869,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/libraries/kirigami-addons.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1803,6 +1882,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/modemmanager-qt.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1817,6 +1897,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/frameworks/networkmanager-qt.git
         source-tag: *kf6-version
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1830,6 +1911,7 @@ parts:
         - qtconf
         source: https://github.com/KDAB/KDSoap.git
         source-branch: kdsoap-2.2
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1861,6 +1943,7 @@ parts:
         - kdsoap
         source: https://invent.kde.org/libraries/kdsoap-ws-discovery-client.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1872,6 +1955,7 @@ parts:
         - extra-cmake-modules
         source: https://invent.kde.org/graphics/libkexiv2.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1890,6 +1974,7 @@ parts:
         - kcoreaddons
         source: https://invent.kde.org/plasma/plasma-activities.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1903,6 +1988,7 @@ parts:
         - plasma-activities
         source: https://invent.kde.org/plasma/plasma-activities-stats.git
         source-branch: master
+        source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
         build-packages:
@@ -1935,6 +2021,7 @@ parts:
         - plasma-activities-stats
         source: https://invent.kde.org/network/kio-extras.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - libappimage-dev
         - libimobiledevice-dev
@@ -1968,6 +2055,7 @@ parts:
         - ki18n
         source: https://invent.kde.org/plasma/kdecoration.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - libx11-dev
         - libfftw3-dev
@@ -1991,6 +2079,7 @@ parts:
         - kcmutils
         source: https://invent.kde.org/plasma/breeze.git
         source-branch: master
+        source-depth: 1
         plugin: cmake
         build-snaps:
         - kde-qt6-core22-sdk
@@ -2040,6 +2129,7 @@ parts:
         - breeze
         source: https://invent.kde.org/plasma/plasma-integration.git
         source-branch: master
+        source-depth: 1
         plugin: cmake
         build-snaps:
         - kde-qt6-core22-sdk
@@ -2071,6 +2161,7 @@ parts:
         - kiconthemes
         source: https://invent.kde.org/plasma/qqc2-breeze-style.git
         source-branch: master
+        source-depth: 1
         build-packages:
         - cmake
         build-snaps:
