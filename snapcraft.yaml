@@ -2109,6 +2109,42 @@ parts:
         - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
+    oxygen:
+        after:
+        - extra-cmake-modules
+        - kconfig
+        - kcoreaddons
+        - kguiaddons
+        - ki18n
+        - kiconthemes
+        - kirigami
+        - kwindowsystem
+        - kcolorscheme
+        - kdecoration2
+        - frameworkintegration
+        - kcmutils
+        - kcodecs
+        - kcompletion
+        - kconfigwidgets
+        - kservice
+        - kwidgetsaddons
+        source: https://invent.kde.org/plasma/oxygen.git
+        source-branch: master
+        source-depth: 1
+        plugin: cmake
+        build-snaps:
+        - kde-qt6-core22-sdk
+        build-packages:
+        - libx11-dev
+        - libfftw3-dev
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters-withoutqt5
+        build-environment: *buildenvironment
+        override-pull: |
+            craftctl default
+            while read -r PATCHFILE ; do
+                patch -p1 < "$CRAFT_PROJECT_DIR/patches/oxygen/$PATCHFILE"
+            done < $CRAFT_PROJECT_DIR/patches/oxygen/series
     plasma-integration:
         after:
         - extra-cmake-modules
