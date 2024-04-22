@@ -928,6 +928,7 @@ parts:
         - kconfig
         - kcoreaddons
         - kwindowsystem
+        - libdbusmenu-qt6
         source: https://invent.kde.org/frameworks/knotifications.git
         source-tag: *kf6-version
         build-packages:
@@ -935,7 +936,6 @@ parts:
         - dbus-x11
         - doxygen
         - graphviz
-#        - libdbusmenu-qt6-dev
         - pkg-config
         stage-packages:
         - libcanberra0
