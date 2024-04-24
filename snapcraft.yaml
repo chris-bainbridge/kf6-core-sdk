@@ -138,12 +138,16 @@ parts:
         - libsasl2-dev
         - libssl-dev
         - pkg-config
+        - rsync
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        override-stage: |
+            craftctl default
+            rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
     polkit-qt-1:
         after:
         - qtconf
