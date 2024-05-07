@@ -6,5 +6,3 @@ include:
     file:
 #      - /gitlab-templates/snap-snapcraft-destructive.yml
       - /gitlab-templates/snap-snapcraft-lxd.yml
-variables:
-  KDECI_GITLAB_TOKEN: None
