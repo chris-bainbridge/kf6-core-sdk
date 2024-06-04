@@ -1812,6 +1812,8 @@ parts:
         source-depth: 1
         build-snaps:
         - kde-qt6-core22-sdk
+        build-packages:
+        - firebird-dev
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
