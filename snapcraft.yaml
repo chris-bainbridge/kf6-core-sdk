@@ -430,14 +430,12 @@ parts:
         build-packages:
         - doxygen
         - graphviz
-        - libzstd-dev
         - liblzma-dev
         - zlib1g-dev
         - libbz2-dev
         stage-packages:
         - libbz2-1.0
         - liblzma5
-        - libzstd1
         - zlib1g
         build-snaps:
         - kde-qt6-core22-sdk
