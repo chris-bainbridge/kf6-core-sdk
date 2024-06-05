@@ -97,6 +97,7 @@ parts:
         - -DCMAKE_INSTALL_RUNSTATEDIR=/run
         - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
         - -DCMAKE_VERBOSE_MAKEFILE=ON
+        - -DBUILD_SHARED_LIBS=ON
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - -DENABLE_DOCS=OFF
         - --log-level=STATUS
@@ -431,12 +432,10 @@ parts:
         - doxygen
         - graphviz
         - liblzma-dev
-        - zlib1g-dev
         - libbz2-dev
         stage-packages:
         - libbz2-1.0
         - liblzma5
-        - zlib1g
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
