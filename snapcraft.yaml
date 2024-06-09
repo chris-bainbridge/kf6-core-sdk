@@ -106,7 +106,7 @@ parts:
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: &buildenvironment
             - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-            - PKG_CONFIG_PATH: /snap/kde-qt6-core22-sdk/current/usr/lib/x86_64-linux-gnu/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+            - PKG_CONFIG_PATH: /snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
             - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
             - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
             - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
@@ -425,23 +425,26 @@ parts:
         after:
         - extra-cmake-modules
         - qtconf
+        build-packages:
+        - libbz2-dev
+        - libzstd-dev
+        stage-packages:
+        - libbz2-1.0
+        - libzstd1
         source: https://invent.kde.org/frameworks/karchive.git
         source-tag: *kf6-version
         source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - liblzma-dev
-        - libbz2-dev
-        stage-packages:
-        - libbz2-1.0
-        - liblzma5
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        override-pull: |
+            craftctl default
+            while read -r PATCHFILE ; do
+                patch -p1 < "$CRAFT_PROJECT_DIR/patches/karchive/$PATCHFILE"
+            done < $CRAFT_PROJECT_DIR/patches/karchive/series
     kcodecs:
         after:
         - extra-cmake-modules
