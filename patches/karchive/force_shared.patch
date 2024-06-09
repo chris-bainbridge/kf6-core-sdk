@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e4b9d6f..00ac486 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
+ set(KF_VERSION "6.4.0") # handled by release scripts
+ project(KArchive VERSION ${KF_VERSION})
+ 
++option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
++
+ include(FeatureSummary)
+ find_package(ECM 6.3.0  NO_MODULE)
+ set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://commits.kde.org/extra-cmake-modules")
