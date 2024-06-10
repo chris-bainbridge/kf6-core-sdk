@@ -731,6 +731,7 @@ parts:
         - ki18n
         - kitemviews
         - kwidgetsaddons
+        - breeze-icons
         source: https://invent.kde.org/frameworks/kiconthemes.git
         source-tag: *kf6-version
         source-depth: 1
