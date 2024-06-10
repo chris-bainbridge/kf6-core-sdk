@@ -1,0 +1,12 @@
+diff --git a/src/incidence.cpp b/src/incidence.cpp
+index 81cad1611..40a026262 100644
+--- a/src/incidence.cpp
++++ b/src/incidence.cpp
+@@ -26,6 +26,7 @@
+ #include "utils_p.h"
+ 
+ #include <math.h>
++#include <cmath>
+ 
+ #include <QStringList>
+ #include <QTextDocument> // for .toHtmlEscaped() and Qt::mightBeRichText()
