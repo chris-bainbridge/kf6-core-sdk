@@ -2223,6 +2223,31 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+    libkdegames:
+        after:
+        - extra-cmake-modules
+        - karchive
+        - kconfig
+        - kcolorscheme
+        - kcompletion
+        - kconfigwidgets
+        - kdnssd
+        - kguiaddons
+        - kiconthemes
+        - ki18n
+        - knewstuff
+        - kxmlgui
+        source: https://invent.kde.org/games/libkdegames.git
+        source-branch: master
+        source-depth: 1
+        build-packages:
+        - cmake
+        build-snaps:
+        - kde-qt6-core22-sdk
+        plugin: cmake
+        cmake-generator: Ninja
+        cmake-parameters: *cmakeparameters
+        build-environment: *buildenvironment
     fix_pc_files:
         after:
         - mesa-no-patchelf
