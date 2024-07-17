@@ -1,6 +1,6 @@
 ---
 name: kf6-core22-sdk
-version: 6.3.0
+version: 6.4.0
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
