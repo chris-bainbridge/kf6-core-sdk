@@ -2242,6 +2242,12 @@ parts:
         source-depth: 1
         build-packages:
         - cmake
+        - libsndfile1-dev
+        - 7zip
+        - libopenal-dev
+        stage-packages:
+        - libsndfile1
+        - libopenal1
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -2347,6 +2353,7 @@ parts:
         - oxygen
         - plasma-integration
         - qqc2-breeze-style
+        - libkdegames
         plugin: nil
         override-stage: |
             craftctl default
