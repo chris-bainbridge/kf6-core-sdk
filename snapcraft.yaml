@@ -179,7 +179,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: &cmakeparameters
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libgomp1
