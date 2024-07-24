@@ -179,26 +179,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: &cmakeparameters-ffmpeg
-            - -DCMAKE_INSTALL_PREFIX=/usr
-            - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-            - -DQT_MAJOR_VERSION=6
-            - -DBUILD_WITH_QT6=ON
-            - -DBUILD_TESTING=OFF
-            - -DBUILD_KWALLETD=OFF
-            - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-            - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-            - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-            - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-            - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-            - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-            - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-            - -DCMAKE_VERBOSE_MAKEFILE=ON
-            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - --log-level=STATUS
-            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr\\;/snap/ffmpeg-2204-sdk/current"
-            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        cmake-parameters: &cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libgomp1
@@ -231,7 +212,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kdnssd:
         after:
@@ -246,7 +227,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kitemmodels:
         after:
@@ -261,7 +242,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     threadweaver:
         after:
@@ -276,7 +257,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     solid:
         after:
@@ -916,21 +897,17 @@ parts:
         - libepub-dev
         - libexiv2-dev
         - libpostproc-dev
-        - libswscale-dev
         - pkg-config
         build-snaps:
         - kde-qt6-core22-sdk
-        - ffmpeg-2204-sdk
         stage-packages:
         - catdoc
         - libappimage1.0
-        - libavformat58
-        - libavutil56
         - libepub0
         - libexiv2-27
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     phonon:
         after:
@@ -941,6 +918,7 @@ parts:
         build-packages:
         - libglib2.0-dev
         - libpulse-dev
+        - libpulse0
         build-snaps:
         - kde-qt6-core22-sdk
         stage-packages:
@@ -966,7 +944,7 @@ parts:
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/snap/ffmpeg-2204-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
     phonon-vlc:
@@ -1007,7 +985,7 @@ parts:
             - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
             - --log-level=STATUS
             - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/snap/ffmpeg-2204-sdk/current\\;/usr"
+            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
             - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
         build-environment: *buildenvironment
     knotifications:
@@ -1022,13 +1000,10 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-packages:
-        - libcanberra-dev
         - dbus-x11
         - doxygen
         - graphviz
         - pkg-config
-        stage-packages:
-        - libcanberra0
         build-snaps:
         - kde-qt6-core22-sdk
         plugin: cmake
@@ -1063,7 +1038,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libgcrypt20
@@ -1084,7 +1059,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kio:
         after:
@@ -1132,7 +1107,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libacl1
@@ -1169,7 +1144,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kded:
         after:
@@ -1187,7 +1162,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kunitconversion:
         after:
@@ -1203,7 +1178,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kdeclarative:
         after:
@@ -1226,7 +1201,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kcmutils:
         after:
@@ -1247,7 +1222,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     knotifyconfig:
         after:
@@ -1277,7 +1252,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libcanberra0
@@ -1292,7 +1267,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     knewstuff:
         after:
@@ -1323,7 +1298,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kidletime:
         after:
@@ -1345,7 +1320,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libwayland-client0
@@ -1366,7 +1341,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     ktexteditor:
         after:
@@ -1403,7 +1378,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         stage-packages:
         - libjs-underscore
@@ -1432,7 +1407,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kpty:
         after:
@@ -1448,7 +1423,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kwayland:
         after:
@@ -1466,7 +1441,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     qqc2-desktop-style:
         after:
@@ -1485,7 +1460,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kcontacts:
         after:
@@ -1503,7 +1478,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kcalendarcore:
         after:
@@ -1520,7 +1495,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         override-pull: |
             craftctl default
@@ -1540,7 +1515,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     prison:
         after:
@@ -1560,7 +1535,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     purpose:
         after:
@@ -1584,7 +1559,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kdav:
         after:
@@ -1604,7 +1579,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     ksvg:
         after:
@@ -1622,7 +1597,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     breeze-icons:
         after:
@@ -1640,7 +1615,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
         prime:
         - "-*.rcc"
@@ -1670,7 +1645,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     bluez-qt:
         after:
@@ -1686,7 +1661,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     kstatusnotifieritem:
         after:
@@ -1698,7 +1673,7 @@ parts:
         - kde-qt6-core22-sdk
         plugin: cmake
         cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-ffmpeg
+        cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
     krunner:
         after:
