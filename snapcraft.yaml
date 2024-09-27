@@ -902,7 +902,7 @@ parts:
         - kde-qt6-core24-sdk
         stage-packages:
         - catdoc
-        - libappimage1.0
+        - libappimage1.0abi1t64
         - libepub0
         - libexiv2-27
         plugin: cmake
