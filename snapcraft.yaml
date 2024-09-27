@@ -1,26 +1,28 @@
 ---
-name: kf6-core22-sdk
+name: kf6-core24-sdk
 version: 6.6.0
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
 grade: stable
-base: core22
+base: core24
 compression: lzo
-architectures:
-  - build-on: amd64
-  - build-on: arm64
-  # - build-on: armhf
-  # - build-on: ppc64el
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
 environment:
-  LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
+  LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
 slots: {}
 package-repositories:
 -   type: apt
     components:
     - main
     suites:
-    - jammy
+    - noble
     key-id: 444DABCF3667D0283F894EDDE6D4736255751E5D
     url: http://origin.archive.neon.kde.org/user
     key-server: keyserver.ubuntu.com
@@ -80,7 +82,7 @@ parts:
         source-tag: &kf6-version v6.6.0
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: &cmakeparameters
@@ -102,14 +104,14 @@ parts:
         - -DENABLE_DOCS=OFF
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: &buildenvironment
-            - PATH: /snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-            - PKG_CONFIG_PATH: /snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
-            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
+            - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
+            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
+            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
         stage-packages:
         - python3
     plasma-wayland-protocols:
@@ -122,7 +124,7 @@ parts:
         stage-packages:
         - wayland-protocols
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -141,7 +143,7 @@ parts:
         - pkg-config
         - rsync
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -164,7 +166,7 @@ parts:
         - libpolkit-agent-1-0
         - libpolkit-gobject-1-0
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -176,7 +178,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -195,7 +197,7 @@ parts:
         - libglx-dev
         - libgl1-mesa-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -209,7 +211,7 @@ parts:
         build-packages:
         - perl
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -224,7 +226,7 @@ parts:
         - graphviz
         - doxygen
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -239,7 +241,7 @@ parts:
         - graphviz
         - doxygen
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -254,7 +256,7 @@ parts:
         - graphviz
         - doxygen
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -274,7 +276,7 @@ parts:
         - libimobiledevice-dev
         - libmount-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -295,7 +297,7 @@ parts:
         - graphviz
         - doxygen
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -315,7 +317,7 @@ parts:
         - graphviz
         - python3
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -332,7 +334,7 @@ parts:
         - graphviz
         - libxkbcommon-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -345,7 +347,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -375,7 +377,7 @@ parts:
         - libwayland-client0
         - libx11-6
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -397,7 +399,7 @@ parts:
         - shared-mime-info
         - libudev1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -416,7 +418,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -438,7 +440,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -454,7 +456,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -478,7 +480,7 @@ parts:
         - libxrender-dev
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -500,7 +502,7 @@ parts:
         build-packages:
         - dbus-x11
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -528,7 +530,7 @@ parts:
         - libvoikko1
         - zlib1g
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         stage-snaps:
         - hunspell-dictionaries
         plugin: cmake
@@ -549,7 +551,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -568,7 +570,7 @@ parts:
         - libxcb1-dev
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -586,7 +588,7 @@ parts:
         - graphviz
         - libx11-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -615,7 +617,7 @@ parts:
         - graphviz
         - libxml2-utils
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -633,7 +635,7 @@ parts:
         - libglx-dev
         - libgl1-mesa-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -660,16 +662,16 @@ parts:
         - libxml2
         - libxslt1.1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment:
-            - PATH: $CRAFT_STAGE/usr/bin:/snap/kde-qt6-core22-sdk/current/usr/bin${PATH:+:$PATH}
-            - PKG_CONFIG_PATH: /snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
-            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core22-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core22-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core22-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            - PATH: $CRAFT_STAGE/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
+            - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
+            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
+            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     kconfigwidgets:
         after:
         - kcolorscheme
@@ -694,7 +696,7 @@ parts:
         stage-packages:
         - perl
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -720,7 +722,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -738,7 +740,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -767,7 +769,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -795,7 +797,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -815,7 +817,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -839,7 +841,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -856,7 +858,7 @@ parts:
             done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
         plugin: cmake
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         cmake-generator: Ninja
         cmake-parameters:
         - -DCMAKE_INSTALL_PREFIX=/usr
@@ -875,8 +877,8 @@ parts:
         - -DENABLE_DOCS=OFF
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: *buildenvironment
     kfilemetadata:
         after:
@@ -899,7 +901,7 @@ parts:
         - libpostproc-dev
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         stage-packages:
         - catdoc
         - libappimage1.0
@@ -920,7 +922,7 @@ parts:
         - libpulse-dev
         - libpulse0
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         stage-packages:
         - libpulse-mainloop-glib0
         - libpulse0
@@ -944,8 +946,8 @@ parts:
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: *buildenvironment
     phonon-vlc:
         after:
@@ -959,7 +961,7 @@ parts:
             - libvlccore-dev
             - libv4l-dev
         build-snaps:
-            - kde-qt6-core22-sdk
+            - kde-qt6-core24-sdk
         stage-packages:
             - vlc-plugin-base
             - vlc-plugin-video-output
@@ -985,8 +987,8 @@ parts:
             - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
             - --log-level=STATUS
             - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: *buildenvironment
     knotifications:
         after:
@@ -1005,7 +1007,7 @@ parts:
         - graphviz
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1035,7 +1037,7 @@ parts:
         - libboost-dev
         - libgcrypt20-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1056,7 +1058,7 @@ parts:
         - graphviz
         - libx11-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1104,7 +1106,7 @@ parts:
         - switcheroo-control
         - zlib1g-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1141,7 +1143,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1159,7 +1161,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1175,7 +1177,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1198,7 +1200,7 @@ parts:
         - libepoxy-dev
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1219,7 +1221,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1249,7 +1251,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1264,7 +1266,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1295,7 +1297,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1317,7 +1319,7 @@ parts:
         - pkg-config
         - wayland-protocols
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1338,7 +1340,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1375,7 +1377,7 @@ parts:
         - perl
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1404,7 +1406,7 @@ parts:
         - libxcursor-dev
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1420,7 +1422,7 @@ parts:
         build-packages:
         - libutempter-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1438,7 +1440,7 @@ parts:
         - pkg-config
         - wayland-protocols
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1457,7 +1459,7 @@ parts:
         - dbus-x11
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1475,7 +1477,7 @@ parts:
         build-packages:
         - doxygen
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1492,7 +1494,7 @@ parts:
         stage-packages:
         - libical3
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1512,7 +1514,7 @@ parts:
         - doxygen
         - graphviz
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1532,7 +1534,7 @@ parts:
         - libqrencode4
         - libzxing3
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1556,7 +1558,7 @@ parts:
         - intltool
         - pkg-config
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1576,7 +1578,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1594,7 +1596,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1612,7 +1614,7 @@ parts:
         stage-packages:
         - hicolor-icon-theme
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1642,7 +1644,7 @@ parts:
         - libopenexr-3-1-30
         - libraw20
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1658,7 +1660,7 @@ parts:
         - doxygen
         - libxkbcommon-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1670,7 +1672,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1687,7 +1689,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1699,7 +1701,7 @@ parts:
         source-branch: main
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libsecret-1-dev
         stage-packages:
@@ -1715,7 +1717,7 @@ parts:
         source-branch: main
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1737,7 +1739,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1758,7 +1760,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - liblmdb-dev
         - libxapian-dev
@@ -1779,7 +1781,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1799,7 +1801,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - firebird-dev
         plugin: cmake
@@ -1813,7 +1815,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - xauth
         - xvfb
@@ -1828,7 +1830,7 @@ parts:
         source-tag: v6.0.0
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - fdupes
         - imagemagick
@@ -1846,7 +1848,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - bison
         - flex
@@ -1863,7 +1865,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1876,7 +1878,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - modemmanager-dev
         plugin: cmake
@@ -1891,7 +1893,7 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libnm-dev
         plugin: cmake
@@ -1905,7 +1907,7 @@ parts:
         source-branch: kdsoap-2.2
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters:
@@ -1926,8 +1928,8 @@ parts:
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: *buildenvironment
     kdsoap-ws-discovery-client:
         after:
@@ -1937,7 +1939,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -1949,7 +1951,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libexiv2-dev
         plugin: cmake
@@ -1968,7 +1970,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libboost-dev
         plugin: cmake
@@ -1982,7 +1984,7 @@ parts:
         source-branch: master
         source-depth: 1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libboost-dev
         plugin: cmake
@@ -2025,7 +2027,7 @@ parts:
         - libtag1-dev
         - libtirpc-dev
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -2074,7 +2076,7 @@ parts:
         source-depth: 1
         plugin: cmake
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libx11-dev
         - libfftw3-dev
@@ -2098,8 +2100,8 @@ parts:
         - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
         - --log-level=STATUS
         - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core22-sdk/current\\;/usr"
+        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
         build-environment: *buildenvironment
     oxygen:
         after:
@@ -2125,7 +2127,7 @@ parts:
         source-depth: 1
         plugin: cmake
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libx11-dev
         - libfftw3-dev
@@ -2160,7 +2162,7 @@ parts:
         source-depth: 1
         plugin: cmake
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         build-packages:
         - libwayland-dev
         - libxcursor-dev
@@ -2193,7 +2195,7 @@ parts:
         build-packages:
         - cmake
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
@@ -2224,7 +2226,7 @@ parts:
         - libsndfile1
         - libopenal1
         build-snaps:
-        - kde-qt6-core22-sdk
+        - kde-qt6-core24-sdk
         plugin: cmake
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
