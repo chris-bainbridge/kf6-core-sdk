@@ -1527,7 +1527,7 @@ parts:
         build-packages:
         - libqrencode-dev
         - libdmtx-dev
-        - libzxingcore-dev
+        - libzxing-dev
         stage-packages:
         - libdmtx0b
         - libqrencode4
