@@ -310,7 +310,6 @@ parts:
         source-tag: *kf6-version
         source-depth: 1
         build-packages:
-        - libisocodes-dev
         - iso-codes
         - gettext
         - doxygen
