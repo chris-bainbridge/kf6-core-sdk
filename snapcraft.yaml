@@ -391,7 +391,6 @@ parts:
         build-packages:
         - doxygen
         - graphviz
-        - libgamin-dev
         - libudev-dev
         - shared-mime-info
         stage-packages:
