@@ -2036,7 +2036,7 @@ parts:
         - libimobiledevice6
         - libmtp9
         - libopenexr-3-1-30
-        - libplist3
+        - libplist-2.0-4
         - libsmbclient
         - libssh-4
         - libtag1v5-vanilla
