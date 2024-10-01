@@ -1642,7 +1642,7 @@ parts:
         - libavif16
         - libheif1
         - libimath-3-1-29
-        - libjxl0.9
+        - libjxl0.7
         - libopenexr-3-1-30
         - libraw23
         build-snaps:
