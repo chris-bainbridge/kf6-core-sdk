@@ -284,8 +284,11 @@ parts:
         stage-packages:
         - libimobiledevice6
         - libmount1
-        - libplist3
+        - libplist-2.0-4
         - libudev1
+        - media-player-info
+        - udisks2
+        - upower
     kwidgetsaddons:
         after:
         - plasma-wayland-protocols
@@ -996,6 +999,7 @@ parts:
         - kcoreaddons
         - kwindowsystem
         - libdbusmenu-qt6
+        - phonon
         source: https://invent.kde.org/frameworks/knotifications.git
         source-tag: *kf6-version
         source-depth: 1
