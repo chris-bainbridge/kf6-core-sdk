@@ -2036,7 +2036,7 @@ parts:
         build-environment: *buildenvironment
         stage-packages:
         - perl
-        - libappimage1.0
+        - libappimage1.0abi1t64
         - libimobiledevice6
         - libmtp9
         - libopenexr-3-1-30
