@@ -142,6 +142,7 @@ parts:
         - libssl-dev
         - pkg-config
         - rsync
+        - libproxy1v5
         build-snaps:
         - kde-qt6-core24-sdk
         plugin: cmake
