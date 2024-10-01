@@ -1644,7 +1644,7 @@ parts:
         - libimath-3-1-29
         - libjxl0.9
         - libopenexr-3-1-30
-        - libraw20
+        - libraw23
         build-snaps:
         - kde-qt6-core24-sdk
         plugin: cmake
