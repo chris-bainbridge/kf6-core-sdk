@@ -2338,3 +2338,5 @@ parts:
         override-stage: |
             craftctl default
             find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:/root/stage:/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
+            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
