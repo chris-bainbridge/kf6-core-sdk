@@ -1,6 +1,6 @@
 ---
 name: kf6-core24-sdk
-version: 6.6.0
+version: 6.8.0
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -79,7 +79,7 @@ parts:
         after:
         - qtconf
         source: https://invent.kde.org/frameworks/extra-cmake-modules.git
-        source-tag: &kf6-version v6.6.0
+        source-tag: &kf6-version v6.8.0
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
