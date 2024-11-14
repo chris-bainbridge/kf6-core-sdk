@@ -119,7 +119,7 @@ parts:
         - extra-cmake-modules
         - qtconf
         source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
-        source-branch: master
+        source-branch: &plasma-version v6.2.3
         source-depth: 1
         stage-packages:
         - wayland-protocols
@@ -1970,7 +1970,7 @@ parts:
         - kwindowsystem
         - kcoreaddons
         source: https://invent.kde.org/plasma/plasma-activities.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
@@ -1984,7 +1984,7 @@ parts:
         after:
         - plasma-activities
         source: https://invent.kde.org/plasma/plasma-activities-stats.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
@@ -2051,7 +2051,7 @@ parts:
         - extra-cmake-modules
         - ki18n
         source: https://invent.kde.org/plasma/kdecoration.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         build-packages:
         - libx11-dev
@@ -2075,7 +2075,7 @@ parts:
         - frameworkintegration
         - kcmutils
         source: https://invent.kde.org/plasma/breeze.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2126,7 +2126,7 @@ parts:
         - kservice
         - kwidgetsaddons
         source: https://invent.kde.org/plasma/oxygen.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2161,7 +2161,7 @@ parts:
         - kxmlgui
         - breeze
         source: https://invent.kde.org/plasma/plasma-integration.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2193,7 +2193,7 @@ parts:
         - kquickcharts
         - kiconthemes
         source: https://invent.kde.org/plasma/qqc2-breeze-style.git
-        source-branch: master
+        source-branch: *plasma-version
         source-depth: 1
         build-packages:
         - cmake
