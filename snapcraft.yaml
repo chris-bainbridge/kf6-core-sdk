@@ -1970,7 +1970,7 @@ parts:
         - kwindowsystem
         - kcoreaddons
         source: https://invent.kde.org/plasma/plasma-activities.git
-        source-branch: *plasma-version
+        source-branch: &plasma-version v6.2.3
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
