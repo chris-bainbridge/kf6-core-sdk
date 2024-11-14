@@ -119,7 +119,7 @@ parts:
         - extra-cmake-modules
         - qtconf
         source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
-        source-branch: &plasma-version v6.2.3
+        source-branch: master
         source-depth: 1
         stage-packages:
         - wayland-protocols
