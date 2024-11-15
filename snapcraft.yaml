@@ -833,7 +833,9 @@ parts:
         override-pull: |
             craftctl default
             while read -r PATCHFILE ; do 
-                patch -p1 < "$CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/$PATCHFILE"
+                patch -p            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+1 < "$CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/$PATCHFILE"
             done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
         plugin: cmake
         build-snaps:
