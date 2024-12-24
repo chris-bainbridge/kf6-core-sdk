@@ -1,6 +1,7 @@
 ---
 name: kf6-core24-sdk
-version: 6.8.0
+# Please update to match &kf6-version, &plasma-version, &apps-version
+version: 6.9.0-6.2.5-24.12.0
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -1435,7 +1436,7 @@ parts:
         - extra-cmake-modules
         - plasma-wayland-protocols
         source: https://invent.kde.org/plasma/kwayland.git
-        source-tag: v6.0.3
+        source-tag: &plasma-version v6.2.5
         source-depth: 1
         build-packages:
         - libegl1-mesa-dev
@@ -1970,7 +1971,7 @@ parts:
         - kwindowsystem
         - kcoreaddons
         source: https://invent.kde.org/plasma/plasma-activities.git
-        source-branch: &plasma-version v6.2.4
+        source-tag: *plasma-version
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
@@ -1984,7 +1985,7 @@ parts:
         after:
         - plasma-activities
         source: https://invent.kde.org/plasma/plasma-activities-stats.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         build-snaps:
         - kde-qt6-core24-sdk
@@ -2017,7 +2018,7 @@ parts:
         - plasma-activities
         - plasma-activities-stats
         source: https://invent.kde.org/network/kio-extras.git
-        source-branch: master
+        source-tag: &apps-version v24.12.0
         source-depth: 1
         build-packages:
         - libappimage-dev
@@ -2051,7 +2052,7 @@ parts:
         - extra-cmake-modules
         - ki18n
         source: https://invent.kde.org/plasma/kdecoration.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         build-packages:
         - libx11-dev
@@ -2075,7 +2076,7 @@ parts:
         - frameworkintegration
         - kcmutils
         source: https://invent.kde.org/plasma/breeze.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2126,7 +2127,7 @@ parts:
         - kservice
         - kwidgetsaddons
         source: https://invent.kde.org/plasma/oxygen.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2161,7 +2162,7 @@ parts:
         - kxmlgui
         - breeze
         source: https://invent.kde.org/plasma/plasma-integration.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         plugin: cmake
         build-snaps:
@@ -2193,7 +2194,7 @@ parts:
         - kquickcharts
         - kiconthemes
         source: https://invent.kde.org/plasma/qqc2-breeze-style.git
-        source-branch: *plasma-version
+        source-tag: *plasma-version
         source-depth: 1
         build-packages:
         - cmake
@@ -2218,7 +2219,7 @@ parts:
         - knewstuff
         - kxmlgui
         source: https://invent.kde.org/games/libkdegames.git
-        source-branch: master
+        source-tag: *apps-version
         source-depth: 1
         build-packages:
         - cmake
