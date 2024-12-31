@@ -28,30 +28,6 @@ package-repositories:
     url: http://origin.archive.neon.kde.org/user
     key-server: keyserver.ubuntu.com
 parts:
-    mesa-no-patchelf:
-        after: []
-        plugin: nil
-        build-attributes:
-        - no-patchelf
-        build-packages: []
-        stage-packages:
-        - libgl1-mesa-dri
-        - libglx-mesa0
-        prime:
-        - "-lib/udev"
-        - "-usr/doc"
-        - "-usr/doc-base"
-        - "-usr/share/applications"
-        - "-usr/share/apport"
-        - "-usr/share/bug"
-        - "-usr/share/doc"
-        - "-usr/share/doc-base"
-        - "-usr/share/icons"
-        - "-usr/share/libdrm"
-        - "-usr/share/libwacom"
-        - "-usr/share/lintian"
-        - "-usr/share/man"
-        - "-usr/share/pkgconfig"
     qtconf:
         plugin: nil
         override-build: |
@@ -112,7 +88,7 @@ parts:
             - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
             - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
             - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
         stage-packages:
         - python3
     plasma-wayland-protocols:
