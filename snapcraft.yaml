@@ -2213,7 +2213,6 @@ parts:
         build-environment: *buildenvironment
     fix_pc_files:
         after:
-        - mesa-no-patchelf
         - qtconf
         - missing-deps
         - extra-cmake-modules
