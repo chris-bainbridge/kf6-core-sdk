@@ -383,6 +383,9 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: *cmakeparameters
         build-environment: *buildenvironment
+        override-pull: |
+          craftctl default
+          patch -p1 < $CRAFT_PROJECT_DIR/patches/kcoreaddons/001_snap_window_class_fix.patch
     karchive:
         after:
         - extra-cmake-modules
