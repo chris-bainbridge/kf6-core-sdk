@@ -1,50 +1,13 @@
-# * Copyright 2024 Soumyadeep Ghosh (সৌম্যদীপ ঘোষ) <soumyadeepghosh2004@zohomail.in>
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9d5bc5ef..11b90915 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -32,6 +32,7 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt
- 
- option(ENABLE_PCH "Enable precompile headers for faster builds" ON)
- option(KCOREADDONS_USE_QML "Build the QML plugin" ON)
-+option(SNAP_SUPPORT "Build with the desktop file name fix for snaps" OFF)
- 
- set(REQUIRED_QT_VERSION 6.6.0)
- find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core)
-diff --git a/src/lib/CMakeLists.txt b/src/lib/CMakeLists.txt
-index 5930a0cd..ae27bcd8 100644
---- a/src/lib/CMakeLists.txt
-+++ b/src/lib/CMakeLists.txt
-@@ -388,3 +388,7 @@ if(BUILD_QCH)
-         COMPONENT Devel
-     )
- endif()
-+
-+if(SNAP_SUPPORT)
-+    target_compile_definitions(KF6CoreAddons PUBLIC -DSNAP_SUPPORT=1)
-+endif()
-\ No newline at end of file
 diff --git a/src/lib/kaboutdata.cpp b/src/lib/kaboutdata.cpp
-index 56ed509f..e0249c61 100644
+index 2811edc3..ddc9a345 100644
 --- a/src/lib/kaboutdata.cpp
 +++ b/src/lib/kaboutdata.cpp
-@@ -560,7 +560,11 @@ KAboutData::KAboutData(const QString &_componentName,
+@@ -619,7 +619,7 @@ KAboutData::KAboutData(const QString &_componentName,
      std::reverse(hostComponents.begin(), hostComponents.end());
      hostComponents.append(_componentName);
  
-+#ifdef SNAP_SUPPORT
+-    d->desktopFileName = hostComponents.join(dotChar);
 +    d->desktopFileName = _componentName + QLatin1Char('_') + _componentName;
-+#else
-     d->desktopFileName = hostComponents.join(dotChar);
-+#endif
  }
  
  KAboutData::KAboutData(const QString &_componentName, const QString &_displayName, const QString &_version)
-@@ -1003,6 +1007,7 @@ KAboutData &KAboutData::setDesktopFileName(const QString &desktopFileName)
- 
- QString KAboutData::desktopFileName() const
- {
-+    qDebug() << "From getter desktopFileName" << d->desktopFileName;
-     return d->desktopFileName;
-     // KF6: switch to this code and adapt API dox
- #if 0
