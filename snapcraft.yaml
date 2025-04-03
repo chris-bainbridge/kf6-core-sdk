@@ -64,7 +64,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: &cmakeparameters
         - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DCMAKE_BUILD_TYPE=Release
         - -DQT_MAJOR_VERSION=6
         - -DBUILD_WITH_QT6=ON
         - -DBUILD_TESTING=OFF
@@ -844,7 +844,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters:
         - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DCMAKE_BUILD_TYPE=Release
         - -DQT_MAJOR_VERSION=6
         - -DUSE_QT6=ON
         - -DCMAKE_INSTALL_SYSCONFDIR=/etc
@@ -912,7 +912,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters:
         - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DCMAKE_BUILD_TYPE=Release
         - -DQT_MAJOR_VERSION=6
         - -DPHONON_BUILD_QT5=OFF
         - -DPHONON_BUILD_QT6=ON
@@ -953,7 +953,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters:
             - -DCMAKE_INSTALL_PREFIX=/usr
-            - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+            - -DCMAKE_BUILD_TYPE=Release
             - -DQT_MAJOR_VERSION=6
             - -DPHONON_BUILD_QT5=OFF
             - -DPHONON_BUILD_QT6=ON
@@ -1895,7 +1895,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters:
         - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DCMAKE_BUILD_TYPE=Release
         - -DQT_MAJOR_VERSION=6
         - -DBUILD_WITH_QT6=ON
         - -DKDSoap_QT6=True
@@ -2066,7 +2066,7 @@ parts:
         cmake-generator: Ninja
         cmake-parameters: &cmakeparameters-withoutqt5
         - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        - -DCMAKE_BUILD_TYPE=Release
         - -DQT_MAJOR_VERSION=6
         - -DBUILD_WITH_QT6=ON
         - -DBUILD_QT6=ON
