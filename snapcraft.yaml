@@ -28,2295 +28,2425 @@ package-repositories:
     url: http://origin.archive.neon.kde.org/user
     key-server: keyserver.ubuntu.com
 parts:
-    qtconf:
-        plugin: nil
-        override-build: |
-            mkdir -p $CRAFT_PART_INSTALL/usr/bin
-            cat <<EOF > $CRAFT_PART_INSTALL/usr/bin/qt.conf
-            [Paths]
-            Prefix = ../../
-            LibraryExecutables = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/libexec
-            Plugins = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins
-            Qml2Imports = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/qml
-            Translations = usr/share/qt6/translations
-            Data = usr/share/qt6
-            EOF
-    missing-deps:
-        after:
-        - qtconf
-        plugin: nil
-        stage-packages:
-        - libpcre2-16-0
-        - libegl1
-        - libclang-cpp14
-        - libsm6
-        - libice6
-        - libfbclient2
-    extra-cmake-modules:
-        after:
-        - qtconf
-        source: https://invent.kde.org/frameworks/extra-cmake-modules.git
-        source-tag: &kf6-version v6.11.0
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: &cmakeparameters
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=Release
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DBUILD_SHARED_LIBS=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - -DENABLE_DOCS=OFF
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: &buildenvironment
-            - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
-            - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
-            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-        stage-packages:
-        - python3
-    plasma-wayland-protocols:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
-        source-branch: master
-        source-depth: 1
-        stage-packages:
-        - wayland-protocols
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    qca:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/libraries/qca.git
-        source-branch: master
-        source-depth: 1
-        build-packages:
-        - ca-certificates
-        - gnupg
-        - libsasl2-dev
-        - libssl-dev
-        - pkg-config
-        - rsync
-        - libproxy1v5
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        override-stage: |
-            craftctl default
-            rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
-    polkit-qt-1:
-        after:
-        - qtconf
-        source: https://invent.kde.org/libraries/polkit-qt-1.git
-        source-branch: master
-        source-depth: 1
-        build-packages:
-        - libglib2.0-dev
-        - libpolkit-agent-1-dev
-        - libpolkit-gobject-1-dev
-        stage-packages:
-        - default-logind
-        - libpolkit-agent-1-0
-        - libpolkit-gobject-1-0
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kirigami:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kirigami.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libgomp1
-    kplotting:
-        after:
-        - extra-cmake-modules
-        - missing-deps
-        source: https://invent.kde.org/frameworks/kplotting.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - cmake
-        - libglx-dev
-        - libgl1-mesa-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    syntax-highlighting:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/syntax-highlighting.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - perl
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kdnssd:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kdnssd.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - graphviz
-        - doxygen
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kitemmodels:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kitemmodels.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - graphviz
-        - doxygen
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    threadweaver:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/threadweaver.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - graphviz
-        - doxygen
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    solid:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/solid.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - bison
-        - doxygen
-        - flex
-        - graphviz
-        - libudev-dev
-        - libimobiledevice-dev
-        - libmount-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libimobiledevice6
-        - libmount1
-        - libplist-2.0-4
-        - libudev1
-        - media-player-info
-        - udisks2
-        - upower
-    kwidgetsaddons:
-        after:
-        - plasma-wayland-protocols
-        - qtconf
-        source: https://invent.kde.org/frameworks/kwidgetsaddons.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - graphviz
-        - doxygen
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ki18n:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/ki18n.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - iso-codes
-        - gettext
-        - doxygen
-        - graphviz
-        - python3
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kconfig:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/kconfig.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libxkbcommon-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    attica:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/attica.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kguiaddons:
-        after:
-        - qtconf
-        - extra-cmake-modules
-        - plasma-wayland-protocols
-        source: https://invent.kde.org/frameworks/kguiaddons.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libxkbcommon-dev
-        - libwayland-client0
-        - libwayland-dev
-        - wayland-protocols
-        - doxygen
-        - graphviz
-        - libx11-dev
-        - libxcb1-dev
-        - pkg-config
-        - libglx-dev
-        - libgl1-mesa-dev
-        - libmd4c-dev
-        stage-packages:
-        - libwayland-client0
-        - libx11-6
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcoreaddons:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/kcoreaddons.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libudev-dev
-        - shared-mime-info
-        stage-packages:
-        - shared-mime-info
-        - libudev1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        override-pull: |
-          craftctl default
-          patch -p1 < $CRAFT_PROJECT_DIR/patches/kcoreaddons/001_snap_window_class_fix.patch
-    karchive:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        build-packages:
-        - libbz2-dev
-        - libzstd-dev
-        stage-packages:
-        - libbz2-1.0
-        - libzstd1
-        source: https://invent.kde.org/frameworks/karchive.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        override-pull: |
-            craftctl default
-            while read -r PATCHFILE ; do
-                patch -p1 < "$CRAFT_PROJECT_DIR/patches/karchive/$PATCHFILE"
-            done < $CRAFT_PROJECT_DIR/patches/karchive/series
-    kcodecs:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/kcodecs.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - gperf
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kitemviews:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/kitemviews.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kwindowsystem:
-        after:
-        - extra-cmake-modules
-        - plasma-wayland-protocols
-        - qtconf
-        source: https://invent.kde.org/frameworks/kwindowsystem.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libx11-dev
-        - libxcb-icccm4-dev
-        - libxcb-keysyms1-dev
-        - libxcb-res0-dev
-        - libxcb-xfixes0-dev
-        - libxcb1-dev
-        - libxfixes-dev
-        - libxrender-dev
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libwayland-client0
-        - libx11-6
-        - libxcb-keysyms1
-        - libxcb-res0
-        - libxcb1
-        - libxfixes3
-    kdbusaddons:
-        after:
-        - extra-cmake-modules
-        - qtconf
-        source: https://invent.kde.org/frameworks/kdbusaddons.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - dbus-x11
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    sonnet:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/sonnet.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - aspell
-        - doxygen
-        - graphviz
-        - hspell
-        - libaspell-dev
-        - libhunspell-dev
-        - libvoikko-dev
-        - pkg-config
-        - zlib1g-dev
-        stage-packages:
-        - hspell
-        - libaspell15
-        - libhunspell-1.7-0
-        - libvoikko1
-        - zlib1g
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        stage-snaps:
-        - hunspell-dictionaries
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
+  libtool:
+    plugin: nil
+    stage-packages:
+      - libtool
+      - libtool-bin
+    override-stage: |
+      set -eux
+      craftctl default
+      LIBTOOLIZE=usr/bin/libtoolize
+      sed -i 's#pkgauxdir="#pkgauxdir="$CRAFT_STAGE#' $LIBTOOLIZE
+      sed -i 's#pkgltdldir="#pkgltdldir="$CRAFT_STAGE#' $LIBTOOLIZE
+      sed -i 's#aclocaldir="#aclocaldir="$CRAFT_STAGE#' $LIBTOOLIZE
+
+  libffi:
+    after: [ libtool, meson-deps ]
+    source: https://gitlab.freedesktop.org/gstreamer/meson-ports/libffi.git
+    source-tag: 'meson-3.2.9999.4'
+    source-depth: 1
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+      - -Doptimization=3
+      - -Ddebug=true
+    build-environment: *buildenv
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/patches/libffi-enable-building-on-riscv64.patch
+
+  glib:
+    after: [ libffi, meson-deps ]
+    source: https://gitlab.gnome.org/GNOME/glib.git
+    source-tag: '2.78.1'
+    source-depth: 1
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+      - -Doptimization=3
+      - -Ddebug=true
+    build-environment: *buildenv
+    override-build: |
+      set -eux
+      craftctl default
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/glib-2.0/
+      cp $CRAFT_PART_INSTALL/usr/bin/{gio-querymodules,glib-compile-schemas} $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/glib-2.0/
+    build-packages:
+      - pkg-config
+      - libmount-dev
+      - gcc
+      - g++
+      - clang
+
+  ninja:
+    plugin: nil
+    source: https://github.com/ninja-build/ninja.git
+    source-tag: 'v1.11.1'
+    source-depth: 1
+    override-build: |
+      rm -rf build
+      rm -f ninja
+      rm -f ninja_bootstrap
+      sed -i 's_^#!/usr/bin/env python$_#!/usr/bin/env python3_g' configure.py
+      ./configure.py --bootstrap
+      mv ninja ninja_bootstrap
+      rm -rf build
+      ./ninja_bootstrap
+      rm -f ninja_bootstrap
+      mkdir -p $CRAFT_PART_INSTALL/usr/bin
+      mv ninja $CRAFT_PART_INSTALL/usr/bin/
+    build-packages:
+      - python3
+
+  meson-deps:
+    after: [ ninja ]
+    plugin: nil
+    source: https://github.com/mesonbuild/meson.git
+    source-tag: '1.2.3'
+    source-depth: 1
+    override-build: |
+      python3 -m pip install --break-system-packages .
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages
+      rm -rf $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages/meson*
+      python3 -m pip install --target=$CRAFT_PART_INSTALL/usr --break-system-packages .
+      mv $CRAFT_PART_INSTALL/usr/meson* $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages/
+      sed -i "s%^#!/usr/bin/python3$%#!/usr/bin/env python3%g" /usr/local/bin/meson
+      sed -i "s%^#!/usr/bin/python3$%#!/usr/bin/env python3%g" $CRAFT_PART_INSTALL/usr/bin/meson
+    build-packages:
+      - python3-pip
+
+  gsettings-desktop-schemas:
+    after:
+      - meson-deps
+      - ninja
+    source: https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas.git
+    source-tag: '42.0'
+    source-depth: 1
+    build-packages:
+      - libgirepository-1.0-dev
+    stage-packages:
+      - libgirepository-1.0-1
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+      - -Doptimization=3
+      - -Ddebug=true
+    override-build: |
+      set -eux
+      craftctl default
+      PC=$CRAFT_PART_INSTALL/usr/share/pkgconfig/gsettings-desktop-schemas.pc
+      sed -i 's#-I/usr#-I${prefix}#' $PC
+
+  qtconf:
+    plugin: nil
+    override-build: |
+      mkdir -p $CRAFT_PART_INSTALL/usr/bin
+      cat <<EOF > $CRAFT_PART_INSTALL/usr/bin/qt.conf
+      [Paths]
+      Prefix = ../../
+      LibraryExecutables = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/libexec
+      Plugins = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins
+      Qml2Imports = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/qml
+      Translations = usr/share/qt6/translations
+      Data = usr/share/qt6
+      EOF
+  missing-deps:
+    after:
+      - qtconf
+    plugin: nil
+    stage-packages:
+      - libpcre2-16-0
+      - libegl1
+      - libclang-cpp14
+      - libsm6
+      - libice6
+      - libfbclient2
+  extra-cmake-modules:
+    after:
+      - qtconf
+    source: https://invent.kde.org/frameworks/extra-cmake-modules.git
+    source-tag: &kf6-version v6.11.0
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: &cmakeparameters
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DBUILD_WITH_QT6=ON
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DBUILD_SHARED_LIBS=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -DENABLE_DOCS=OFF
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+    build-environment: &buildenvironment
+      - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
+      - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+      - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
+      - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
+      - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    stage-packages:
+      - python3
+  plasma-wayland-protocols:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
+    source-branch: master
+    source-depth: 1
+    stage-packages:
+      - wayland-protocols
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  qca:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/libraries/qca.git
+    source-branch: master
+    source-depth: 1
+    build-packages:
+      - ca-certificates
+      - gnupg
+      - libsasl2-dev
+      - libssl-dev
+      - pkg-config
+      - rsync
+      - libproxy1v5
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    override-stage: |
+        craftctl default
+        rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+  polkit-qt-1:
+    after:
+      - qtconf
+    source: https://invent.kde.org/libraries/polkit-qt-1.git
+    source-branch: master
+    source-depth: 1
+    build-packages:
+      - libglib2.0-dev
+      - libpolkit-agent-1-dev
+      - libpolkit-gobject-1-dev
+    stage-packages:
+      - default-logind
+      - libpolkit-agent-1-0
+      - libpolkit-gobject-1-0
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kirigami:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kirigami.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libgomp1
+  kplotting:
+    after:
+      - extra-cmake-modules
+      - missing-deps
+    source: https://invent.kde.org/frameworks/kplotting.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - cmake
+      - libglx-dev
+      - libgl1-mesa-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  syntax-highlighting:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/syntax-highlighting.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - perl
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kdnssd:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kdnssd.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - graphviz
+      - doxygen
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kitemmodels:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kitemmodels.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - graphviz
+      - doxygen
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  threadweaver:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/threadweaver.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - graphviz
+      - doxygen
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  solid:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/solid.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - bison
+      - doxygen
+      - flex
+      - graphviz
+      - libudev-dev
+      - libimobiledevice-dev
+      - libmount-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libimobiledevice6
+      - libmount1
+      - libplist-2.0-4
+      - libudev1
+      - media-player-info
+      - upower
+  kwidgetsaddons:
+    after:
+      - plasma-wayland-protocols
+      - qtconf
+    source: https://invent.kde.org/frameworks/kwidgetsaddons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - graphviz
+      - doxygen
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ki18n:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/ki18n.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - iso-codes
+      - gettext
+      - doxygen
+      - graphviz
+      - python3
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kconfig:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/kconfig.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libxkbcommon-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  attica:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/attica.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kguiaddons:
+    after:
+      - qtconf
+      - extra-cmake-modules
+      - plasma-wayland-protocols
+    source: https://invent.kde.org/frameworks/kguiaddons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libxkbcommon-dev
+      - libwayland-client0
+      - libwayland-dev
+      - wayland-protocols
+      - doxygen
+      - graphviz
+      - libx11-dev
+      - libxcb1-dev
+      - pkg-config
+      - libglx-dev
+      - libgl1-mesa-dev
+      - libmd4c-dev
+    stage-packages:
+      - libwayland-client0
+      - libx11-6
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcoreaddons:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/kcoreaddons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libudev-dev
+      - shared-mime-info
+    stage-packages:
+      - shared-mime-info
+      - libudev1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    override-pull: |
+        craftctl default
+        patch -p1 < $CRAFT_PROJECT_DIR/patches/kcoreaddons/001_snap_window_class_fix.patch
+  karchive:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    build-packages:
+      - libbz2-dev
+      - libzstd-dev
+    stage-packages:
+      - libbz2-1.0
+      - libzstd1
+    source: https://invent.kde.org/frameworks/karchive.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    override-pull: |
+        craftctl default
+        while read -r PATCHFILE ; do
+            patch -p1 < "$CRAFT_PROJECT_DIR/patches/karchive/$PATCHFILE"
+        done < $CRAFT_PROJECT_DIR/patches/karchive/series
+  kcodecs:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/kcodecs.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - gperf
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kitemviews:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/kitemviews.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kwindowsystem:
+    after:
+      - extra-cmake-modules
+      - plasma-wayland-protocols
+      - qtconf
+    source: https://invent.kde.org/frameworks/kwindowsystem.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libx11-dev
+      - libxcb-icccm4-dev
+      - libxcb-keysyms1-dev
+      - libxcb-res0-dev
+      - libxcb-xfixes0-dev
+      - libxcb1-dev
+      - libxfixes-dev
+      - libxrender-dev
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libwayland-client0
+      - libx11-6
+      - libxcb-keysyms1
+      - libxcb-res0
+      - libxcb1
+      - libxfixes3
+  kdbusaddons:
+    after:
+      - extra-cmake-modules
+      - qtconf
+    source: https://invent.kde.org/frameworks/kdbusaddons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - dbus-x11
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  sonnet:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/sonnet.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - aspell
+      - doxygen
+      - graphviz
+      - hspell
+      - libaspell-dev
+      - libhunspell-dev
+      - libvoikko-dev
+      - pkg-config
+      - zlib1g-dev
+    stage-packages:
+      - hspell
+      - libaspell15
+      - libhunspell-1.7-0
+      - libvoikko1
+      - zlib1g
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    stage-snaps:
+      - hunspell-dictionaries
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
 # ## Tier 2
-    kauth:
-        after:
-        - polkit-qt-1
-        - extra-cmake-modules
-        - kcoreaddons
-        - kwindowsystem
-        source: https://invent.kde.org/frameworks/kauth.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kglobalaccel:
-        after:
-        - extra-cmake-modules
-        - ki18n
-        source: https://invent.kde.org/frameworks/kglobalaccel.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libx11-dev
-        - libxcb1-dev
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcrash:
-        after:
-        - extra-cmake-modules
-        - kcoreaddons
-        - kwindowsystem
-        source: https://invent.kde.org/frameworks/kcrash.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libx11-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libx11-6
-    kservice:
-        after:
-        - kdbusaddons
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kcrash
-        - kdoctools
-        - ki18n
-        source: https://invent.kde.org/frameworks/kservice.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - bison
-        - dbus-x11
-        - docbook-xml
-        - docbook-xsl
-        - doxygen
-        - flex
-        - graphviz
-        - libxml2-utils
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcolorscheme:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kguiaddons
-        - ki18n
-        source: https://invent.kde.org/frameworks/kcolorscheme.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libglx-dev
-        - libgl1-mesa-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kdoctools:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - ki18n
-        source: https://invent.kde.org/frameworks/kdoctools.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - docbook-xml
-        - docbook-xsl
-        - liburi-perl
-        - libxml2-dev
-        - libxml2-utils
-        - libxslt1-dev
-        stage-packages:
-        - docbook-xml
-        - docbook-xsl
-        - libxml2-utils
-        - libxml2
-        - libxslt1.1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment:
-            - PATH: $CRAFT_STAGE/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
-            - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
-            - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
-            - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
-            - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-    kconfigwidgets:
-        after:
-        - kcolorscheme
-        - extra-cmake-modules
-        - kauth
-        - kcodecs
-        - kconfig
-        - kcoreaddons
-        - kdoctools
-        - kguiaddons
-        - ki18n
-        - kwidgetsaddons
-        source: https://invent.kde.org/frameworks/kconfigwidgets.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - docbook-xml
-        - docbook-xsl
-        - doxygen
-        - graphviz
-        - libxml2-utils
-        stage-packages:
-        - perl
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kiconthemes:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kauth
-        - kcodecs
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - ki18n
-        - kitemviews
-        - kwidgetsaddons
-        - breeze-icons
-        source: https://invent.kde.org/frameworks/kiconthemes.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcompletion:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        - kconfig
-        - kwidgetsaddons
-        source: https://invent.kde.org/frameworks/kcompletion.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ktextwidgets:
-        after:
-        - extra-cmake-modules
-        - kauth
-        - kcodecs
-        - kcolorscheme
-        - kcompletion
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - ki18n
-        - kiconthemes
-        - kitemviews
-        - kservice
-        - kwidgetsaddons
-        - kwindowsystem
-        - sonnet
-        source: https://invent.kde.org/frameworks/ktextwidgets.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kxmlgui:
-        after:
-        - attica
-        - extra-cmake-modules
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kglobalaccel
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kitemviews
-        - ktextwidgets
-        - kwidgetsaddons
-        - kwindowsystem
-        source: https://invent.kde.org/frameworks/kxmlgui.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kpackage:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kconfig
-        - kcoreaddons
-        - kdoctools
-        - ki18n
-        source: https://invent.kde.org/frameworks/kpackage.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kbookmarks:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kiconthemes
-        - kwidgetsaddons
-        - kwindowsystem
-        - kxmlgui
-        source: https://invent.kde.org/frameworks/kbookmarks.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    libdbusmenu-qt6:
-        after:
-        - qtconf
-        source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
-        source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
-        override-pull: |
-            craftctl default
-            while read -r PATCHFILE ; do 
-                patch -p1 < "$CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/$PATCHFILE"
-            done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
-        plugin: cmake
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=Release
-        - -DQT_MAJOR_VERSION=6
-        - -DUSE_QT6=ON
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - -DENABLE_DOCS=OFF
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: *buildenvironment
-    kfilemetadata:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kconfig
-        - kcoreaddons
-        - ki18n
-        source: https://invent.kde.org/frameworks/kfilemetadata.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libtag1-dev
-        - doxygen
-        - graphviz
-        - libappimage-dev
-        - libattr1-dev
-        - libepub-dev
-        - libexiv2-dev
-        - libpostproc-dev
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        stage-packages:
-        - catdoc
-        - libappimage1.0abi1t64
-        - libepub0
-        - libexiv2-27
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    phonon:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/libraries/phonon.git
-        source-branch: master
-        source-depth: 1
-        build-packages:
-        - libglib2.0-dev
-        - libpulse-dev
-        - libpulse0
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        stage-packages:
-        - libpulse-mainloop-glib0
-        - libpulse0
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=Release
-        - -DQT_MAJOR_VERSION=6
-        - -DPHONON_BUILD_QT5=OFF
-        - -DPHONON_BUILD_QT6=ON
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: *buildenvironment
-    phonon-vlc:
-        after:
-        - extra-cmake-modules
-        - phonon
-        source: https://invent.kde.org/libraries/phonon-vlc.git
-        source-branch: master
-        source-depth: 1
-        build-packages:
-            - libvlc-dev
-            - libvlccore-dev
-            - libv4l-dev
-        build-snaps:
-            - kde-qt6-core24-sdk/latest/edge
-        stage-packages:
-            - vlc-plugin-base
-            - vlc-plugin-video-output
-            - libvlc5
-            - libvlccore9
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters:
-            - -DCMAKE_INSTALL_PREFIX=/usr
-            - -DCMAKE_BUILD_TYPE=Release
-            - -DQT_MAJOR_VERSION=6
-            - -DPHONON_BUILD_QT5=OFF
-            - -DPHONON_BUILD_QT6=ON
-            - -DBUILD_TESTING=OFF
-            - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-            - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-            - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-            - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-            - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-            - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-            - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-            - -DCMAKE_VERBOSE_MAKEFILE=ON
-            - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - --log-level=STATUS
-            - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-            - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-            - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: *buildenvironment
-    knotifications:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        - kconfig
-        - kcoreaddons
-        - kwindowsystem
-        - libdbusmenu-qt6
-        - phonon
-        source: https://invent.kde.org/frameworks/knotifications.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - dbus-x11
-        - doxygen
-        - graphviz
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kwallet:
-        after:
-        - qca
-        - extra-cmake-modules
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kdbusaddons
-        - kdoctools
-        - ki18n
-        - kiconthemes
-        - knotifications
-        - kservice
-        - kwidgetsaddons
-        - kwindowsystem
-        source: https://invent.kde.org/frameworks/kwallet.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libboost-dev
-        - libgcrypt20-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libgcrypt20
-    kjobwidgets:
-        after:
-        - extra-cmake-modules
-        - kcoreaddons
-        - knotifications
-        - kwidgetsaddons
-        source: https://invent.kde.org/frameworks/kjobwidgets.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libx11-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kio:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kauth
-        - kbookmarks
-        - kcolorscheme
-        - kcompletion
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kcrash
-        - kdbusaddons
-        - kded
-        - kdoctools
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kitemviews
-        - kjobwidgets
-        - knotifications
-        - kservice
-        - solid
-        - sonnet
-        - ktextwidgets
-        - kwallet
-        - kwidgetsaddons
-        - kwindowsystem
-        - kxmlgui
-        source: https://invent.kde.org/frameworks/kio.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libacl1-dev
-        - libkrb5-dev
-        - libmount-dev
-        - libxml2-dev
-        - libxslt1-dev
-        - switcheroo-control
-        - zlib1g-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libacl1
-        - libmount1
-        - libxml2
-        - libxslt1.1
-    kparts:
-        after:
-        - extra-cmake-modules
-        - kbookmarks
-        - kcolorscheme
-        - kcompletion
-        - kconfig
-        - kcoreaddons
-        - ki18n
-        - kiconthemes
-        - kio
-        - kitemviews
-        - kjobwidgets
-        - knotifications
-        - kservice
-        - ktextwidgets
-        - kwidgetsaddons
-        - kxmlgui
-        - solid
-        - sonnet
-        source: https://invent.kde.org/frameworks/kparts.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kded:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kcrash
-        - kdbusaddons
-        - kdoctools
-        - kservice
-        source: https://invent.kde.org/frameworks/kded.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kunitconversion:
-        after:
-        - extra-cmake-modules
-        - ki18n
-        source: https://invent.kde.org/frameworks/kunitconversion.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kdeclarative:
-        after:
-        - extra-cmake-modules
-        - kcolorscheme
-        - kconfig
-        - kglobalaccel
-        - ki18n
-        - kiconthemes
-        - kio
-        source: https://invent.kde.org/frameworks/kdeclarative.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        - libepoxy-dev
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcmutils:
-        after:
-        - extra-cmake-modules
-        - kcoreaddons
-        - kitemviews
-        - ki18n
-        - kio
-        - kirigami
-        - kxmlgui
-        source: https://invent.kde.org/frameworks/kcmutils.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    knotifyconfig:
-        after:
-        - extra-cmake-modules
-        - kbookmarks
-        - kcompletion
-        - kconfig
-        - kconfigwidgets
-        - ki18n
-        - kiconthemes
-        - kio
-        - kjobwidgets
-        - knotifications
-        - kservice
-        - kwidgetsaddons
-        - kxmlgui
-        - solid
-        - phonon
-        source: https://invent.kde.org/frameworks/knotifyconfig.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libcanberra-dev
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libcanberra0
-    syndication:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        source: https://invent.kde.org/frameworks/syndication.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    knewstuff:
-        after:
-        - attica
-        - extra-cmake-modules
-        - karchive
-        - kbookmarks
-        - kcompletion
-        - kconfig
-        - kcoreaddons
-        - ki18n
-        - kiconthemes
-        - kio
-        - kirigami
-        - kitemviews
-        - kjobwidgets
-        - kpackage
-        - kservice
-        - ktextwidgets
-        - kwidgetsaddons
-        - kxmlgui
-        - solid
-        - syndication
-        source: https://invent.kde.org/frameworks/knewstuff.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kidletime:
-        after:
-        - extra-cmake-modules
-        - plasma-wayland-protocols
-        source: https://invent.kde.org/frameworks/kidletime.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libwayland-dev
-        - libx11-dev
-        - libx11-xcb-dev
-        - libxcb-sync-dev
-        - libxcb1-dev
-        - libxss-dev
-        - pkg-config
-        - wayland-protocols
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libwayland-client0
-        - libx11-6
-        - libx11-xcb1
-        - libxcb-sync1
-        - libxcb1
-        - libxext6
-        - libxss1
-    kquickcharts:
-        after:
-        - extra-cmake-modules
-        - kirigami
-        source: https://invent.kde.org/frameworks/kquickcharts.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ktexteditor:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kbookmarks
-        - kcolorscheme
-        - kcompletion
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kio
-        - kitemviews
-        - kjobwidgets
-        - kparts
-        - kservice
-        - kwidgetsaddons
-        - kxmlgui
-        - solid
-        - sonnet
-        - syntax-highlighting
-        source: https://invent.kde.org/frameworks/ktexteditor.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libeditorconfig-dev
-        - libgit2-dev
-        - libjs-underscore
-        - perl
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libjs-underscore
-        - libeditorconfig0
-    frameworkintegration:
-        after:
-        - extra-cmake-modules
-        - kcolorscheme
-        - kconfig
-        - kconfigwidgets
-        - ki18n
-        - kiconthemes
-        - kio
-        - knewstuff
-        - knotifications
-        - kpackage
-        - kwidgetsaddons
-        source: https://invent.kde.org/frameworks/frameworkintegration.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - dbus-x11
-        - libxcursor-dev
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kpty:
-        after:
-        - extra-cmake-modules
-        - kcoreaddons
-        - ki18n
-        source: https://invent.kde.org/frameworks/kpty.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libutempter-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kwayland:
-        after:
-        - extra-cmake-modules
-        - plasma-wayland-protocols
-        source: https://invent.kde.org/plasma/kwayland.git
-        source-tag: &plasma-version v6.2.5
-        source-depth: 1
-        build-packages:
-        - libegl1-mesa-dev
-        - libwayland-dev
-        - pkg-config
-        - wayland-protocols
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    qqc2-desktop-style:
-        after:
-        - sonnet
-        - kcolorscheme
-        - kconfig
-        - kiconthemes
-        - kirigami
-        source: https://invent.kde.org/frameworks/qqc2-desktop-style.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - dbus-x11
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcontacts:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        - kconfig
-        - kcoreaddons
-        - ki18n
-        source: https://invent.kde.org/frameworks/kcontacts.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kcalendarcore:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kcalendarcore.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libical-dev
-        - bison
-        stage-packages:
-        - libical3
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        override-pull: |
-            craftctl default
-            while read -r PATCHFILE ; do
-                patch -p1 < "$CRAFT_PROJECT_DIR/patches/kcalendarcore/$PATCHFILE"
-            done < $CRAFT_PROJECT_DIR/patches/kcalendarcore/series
-    kholidays:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kholidays.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - doxygen
-        - graphviz
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    prison:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/prison.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libqrencode-dev
-        - libdmtx-dev
-        - libzxing-dev
-        stage-packages:
-        - libdmtx0b
-        - libqrencode4
-        - libzxing3
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    purpose:
-        after:
-        - extra-cmake-modules
-        - kcmutils
-        - kconfig
-        - kcoreaddons
-        - kdeclarative
-        - ki18n
-        - kio
-        - kirigami
-        - knotifications
-        - kwallet
-        source: https://invent.kde.org/frameworks/purpose.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - intltool
-        - pkg-config
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kdav:
-        after:
-        - extra-cmake-modules
-        - kbookmarks
-        - kcolorscheme
-        - kcompletion
-        - kconfig
-        - kcoreaddons
-        - ki18n
-        - kio
-        - kwidgetsaddons
-        source: https://invent.kde.org/frameworks/kdav.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ksvg:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kcolorscheme
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - kirigami
-        source: https://invent.kde.org/frameworks/ksvg.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    breeze-icons:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/breeze-icons.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - fdupes
-        - libxml2-utils
-        - python3-lxml
-        stage-packages:
-        - hicolor-icon-theme
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        prime:
-        - "-*.rcc"
-    kimageformats:
-        after:
-        - extra-cmake-modules
-        - karchive
-        source: https://invent.kde.org/frameworks/kimageformats.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - libavif-dev
-        - libjxl-dev
-        - libheif-dev
-        - libopenexr-dev
-        - libraw-dev
-        - pkg-config
-        stage-packages:
-        - python3-imath
-        - libavif16
-        - libheif1
-        - libimath-3-1-29
-        - libjxl0.7
-        - libopenexr-3-1-30
-        - libraw23
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    bluez-qt:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/bluez-qt.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-packages:
-        - graphviz
-        - doxygen
-        - libxkbcommon-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kstatusnotifieritem:
-        after:
-        - kwindowsystem
-        source: https://invent.kde.org/frameworks/kstatusnotifieritem.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    krunner:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - threadweaver
-        - ki18n
-        - kitemmodels
-        source: https://invent.kde.org/frameworks/krunner.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    qtkeychain:
-        after:
-        - qtconf
-        source: https://github.com/frankosterfeld/qtkeychain.git
-        source-branch: main
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libsecret-1-dev
-        stage-packages:
-        - libglib2.0-0
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    qcoro:
-        after:
-        - qtconf
-        source: https://github.com/danvratil/qcoro.git
-        source-branch: main
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ktextaddons:
-        after:
-        - extra-cmake-modules
-        - ki18n
-        - kconfig
-        - kconfigwidgets
-        - karchive
-        - kcoreaddons
-        - kio
-        - sonnet
-        - syntax-highlighting
-        - breeze-icons
-        - qtkeychain
-        source: https://invent.kde.org/libraries/ktextaddons.git
-        source-branch: master
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    baloo:
-        after:
-        - extra-cmake-modules
-        - kfilemetadata
-        - kcoreaddons
-        - kconfig
-        - kdbusaddons
-        - ki18n
-        - kidletime
-        - solid
-        - kcrash
-        - kio
-        source: https://invent.kde.org/frameworks/baloo.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - liblmdb-dev
-        - libxapian-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - init-system-helpers
-        - liblmdb0
-    kdesu:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kpty
-        source: https://invent.kde.org/frameworks/kdesu.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - sudo
-        - libx11-6
-    kpeople:
-        after:
-        - extra-cmake-modules
-        - kcoreaddons
-        - kwidgetsaddons
-        - ki18n
-        - kitemviews
-        - kcontacts
-        source: https://invent.kde.org/frameworks/kpeople.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - firebird-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    ktexttemplate:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/ktexttemplate.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - xauth
-        - xvfb
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    oxygen-icons:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/oxygen-icons.git
-        source-tag: v6.0.0
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - fdupes
-        - imagemagick
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - hicolor-icon-theme
-    kuserfeedback:
-        after:
-        - qtconf
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/kuserfeedback.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - bison
-        - flex
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kirigami-addons:
-        after:
-        - extra-cmake-modules
-        - kirigami
-        - ki18n
-        source: https://invent.kde.org/libraries/kirigami-addons.git
-        source-branch: master
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    modemmanager-qt:
-        after:
-        - qtconf
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/modemmanager-qt.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - modemmanager-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    networkmanager-qt:
-        after:
-        - qtconf
-        - extra-cmake-modules
-        source: https://invent.kde.org/frameworks/networkmanager-qt.git
-        source-tag: *kf6-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libnm-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kdsoap:
-        after:
-        - qtconf
-        source: https://github.com/KDAB/KDSoap.git
-        source-branch: kdsoap-2.2
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters:
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=Release
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DKDSoap_QT6=True
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: *buildenvironment
-    kdsoap-ws-discovery-client:
-        after:
-        - extra-cmake-modules
-        - kdsoap
-        source: https://invent.kde.org/libraries/kdsoap-ws-discovery-client.git
-        source-branch: master
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    libkexiv2:
-        after:
-        - extra-cmake-modules
-        source: https://invent.kde.org/graphics/libkexiv2.git
-        source-branch: master
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libexiv2-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - libexiv2-27
-    plasma-activities:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kwindowsystem
-        - kcoreaddons
-        source: https://invent.kde.org/plasma/plasma-activities.git
-        source-tag: *plasma-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libboost-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    plasma-activities-stats:
-        after:
-        - plasma-activities
-        source: https://invent.kde.org/plasma/plasma-activities-stats.git
-        source-tag: *plasma-version
-        source-depth: 1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libboost-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    kio-extras:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kconfig
-        - kconfigwidgets
-        - kcoreaddons
-        - kdbusaddons
-        - kcmutils
-        - kdnssd
-        - ki18n
-        - kio
-        - solid
-        - kguiaddons
-        - syntax-highlighting
-        - phonon
-        - qcoro
-        - kdsoap
-        - kdsoap-ws-discovery-client
-        - libkexiv2
-        - plasma-activities
-        - plasma-activities-stats
-        source: https://invent.kde.org/network/kio-extras.git
-        source-tag: &apps-version v24.12.3
-        source-depth: 1
-        build-packages:
-        - libappimage-dev
-        - libimobiledevice-dev
-        - libmsgsl-dev
-        - libmtp-dev
-        - libopenexr-dev
-        - libsmbclient-dev
-        - libssh-dev
-        - libtag1-dev
-        - libtirpc-dev
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-        stage-packages:
-        - perl
-        - libappimage1.0abi1t64
-        - libimobiledevice6
-        - libmtp9
-        - libopenexr-3-1-30
-        - libplist-2.0-4
-        - libsmbclient
-        - libssh-4
-        - libtag1v5-vanilla
-        - libxcursor1
-    kdecoration2:
-        after:
-        - extra-cmake-modules
-        - ki18n
-        source: https://invent.kde.org/plasma/kdecoration.git
-        source-tag: *plasma-version
-        source-depth: 1
-        build-packages:
-        - libx11-dev
-        - libfftw3-dev
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    breeze:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kirigami
-        - kwindowsystem
-        - kcolorscheme
-        - kdecoration2
-        - frameworkintegration
-        - kcmutils
-        source: https://invent.kde.org/plasma/breeze.git
-        source-tag: *plasma-version
-        source-depth: 1
-        plugin: cmake
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libx11-dev
-        - libfftw3-dev
-        cmake-generator: Ninja
-        cmake-parameters: &cmakeparameters-withoutqt5
-        - -DCMAKE_INSTALL_PREFIX=/usr
-        - -DCMAKE_BUILD_TYPE=Release
-        - -DQT_MAJOR_VERSION=6
-        - -DBUILD_WITH_QT6=ON
-        - -DBUILD_QT6=ON
-        - -DBUILD_QT5=OFF
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-        - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-        - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-        - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-        - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-        - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-        - -DCMAKE_VERBOSE_MAKEFILE=ON
-        - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - --log-level=STATUS
-        - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-        - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-        build-environment: *buildenvironment
-    oxygen:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - ki18n
-        - kiconthemes
-        - kirigami
-        - kwindowsystem
-        - kcolorscheme
-        - kdecoration2
-        - frameworkintegration
-        - kcmutils
-        - kcodecs
-        - kcompletion
-        - kconfigwidgets
-        - kservice
-        - kwidgetsaddons
-        source: https://invent.kde.org/plasma/oxygen.git
-        source-tag: *plasma-version
-        source-depth: 1
-        plugin: cmake
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libx11-dev
-        - libfftw3-dev
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-withoutqt5
-        build-environment: *buildenvironment
-        override-pull: |
-            craftctl default
-            while read -r PATCHFILE ; do
-                patch -p1 < "$CRAFT_PROJECT_DIR/patches/oxygen/$PATCHFILE"
-            done < $CRAFT_PROJECT_DIR/patches/oxygen/series
-    plasma-integration:
-        after:
-        - extra-cmake-modules
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - ki18n
-        - kcolorscheme
-        - kiconthemes
-        - kio
-        - kjobwidgets
-        - knotifications
-        - kservice
-        - kstatusnotifieritem
-        - kwidgetsaddons
-        - kwindowsystem
-        - kxmlgui
-        - breeze
-        source: https://invent.kde.org/plasma/plasma-integration.git
-        source-tag: *plasma-version
-        source-depth: 1
-        plugin: cmake
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        build-packages:
-        - libwayland-dev
-        - libxcursor-dev
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters-withoutqt5
-        build-environment: *buildenvironment
-        stage-packages:
-        - fonts-hack
-        - fonts-noto-cjk
-        - fonts-noto-color-emoji
-        - fonts-noto-core
-        - fonts-noto-ui-core
-        - libwayland-client0
-        - libxcb1
-        - libxcursor1
-    qqc2-breeze-style:
-        after:
-        - extra-cmake-modules
-        - kcodecs
-        - kcolorscheme
-        - kconfig
-        - kcoreaddons
-        - kguiaddons
-        - kirigami
-        - kquickcharts
-        - kiconthemes
-        source: https://invent.kde.org/plasma/qqc2-breeze-style.git
-        source-tag: *plasma-version
-        source-depth: 1
-        build-packages:
-        - cmake
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    libkdegames:
-        after:
-        - extra-cmake-modules
-        - karchive
-        - kconfig
-        - kcolorscheme
-        - kcompletion
-        - kconfigwidgets
-        - kdnssd
-        - kguiaddons
-        - kiconthemes
-        - ki18n
-        - knewstuff
-        - kxmlgui
-        source: https://invent.kde.org/games/libkdegames.git
-        source-tag: *apps-version
-        source-depth: 1
-        build-packages:
-        - cmake
-        - libsndfile1-dev
-        - 7zip
-        - libopenal-dev
-        stage-packages:
-        - libsndfile1
-        - libopenal1
-        build-snaps:
-        - kde-qt6-core24-sdk/latest/edge
-        plugin: cmake
-        cmake-generator: Ninja
-        cmake-parameters: *cmakeparameters
-        build-environment: *buildenvironment
-    fix_pc_files:
-        after:
-        - qtconf
-        - missing-deps
-        - extra-cmake-modules
-        - plasma-wayland-protocols
-        - qca
-        - polkit-qt-1
-        - kirigami
-        - kplotting
-        - syntax-highlighting
-        - kdnssd
-        - kitemmodels
-        - threadweaver
-        - solid
-        - kwidgetsaddons
-        - ki18n
-        - kconfig
-        - attica
-        - kguiaddons
-        - kcoreaddons
-        - karchive
-        - kcodecs
-        - kitemviews
-        - kwindowsystem
-        - kdbusaddons
-        - sonnet
-        - kauth
-        - kglobalaccel
-        - kcrash
-        - kservice
-        - kcolorscheme
-        - kdoctools
-        - kconfigwidgets
-        - kiconthemes
-        - kcompletion
-        - ktextwidgets
-        - kxmlgui
-        - kpackage
-        - kbookmarks
-        - libdbusmenu-qt6
-        - kfilemetadata
-        - phonon
-        - phonon-vlc
-        - knotifications
-        - kwallet
-        - kjobwidgets
-        - kio
-        - kparts
-        - kded
-        - kunitconversion
-        - kdeclarative
-        - kcmutils
-        - knotifyconfig
-        - syndication
-        - knewstuff
-        - kidletime
-        - kquickcharts
-        - ktexteditor
-        - frameworkintegration
-        - kpty
-        - kwayland
-        - qqc2-desktop-style
-        - kcontacts
-        - kcalendarcore
-        - kholidays
-        - prison
-        - purpose
-        - kdav
-        - ksvg
-        - breeze-icons
-        - kimageformats
-        - bluez-qt
-        - kstatusnotifieritem
-        - krunner
-        - qtkeychain
-        - qcoro
-        - ktextaddons
-        - baloo
-        - kdesu
-        - kpeople
-        - ktexttemplate
-        - oxygen-icons
-        - kuserfeedback
-        - kirigami-addons
-        - modemmanager-qt
-        - networkmanager-qt
-        - kdsoap
-        - kdsoap-ws-discovery-client
-        - libkexiv2
-        - plasma-activities
-        - plasma-activities-stats
-        - kio-extras
-        - kdecoration2
-        - breeze
-        - oxygen
-        - plasma-integration
-        - qqc2-breeze-style
-        - libkdegames
-        plugin: nil
-        override-stage: |
-            craftctl default
-            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:/root/stage:/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
-            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
-            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
-            find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
+  kauth:
+    after:
+      - polkit-qt-1
+      - extra-cmake-modules
+      - kcoreaddons
+      - kwindowsystem
+    source: https://invent.kde.org/frameworks/kauth.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kglobalaccel:
+    after:
+      - extra-cmake-modules
+      - ki18n
+    source: https://invent.kde.org/frameworks/kglobalaccel.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libx11-dev
+      - libxcb1-dev
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcrash:
+    after:
+      - extra-cmake-modules
+      - kcoreaddons
+      - kwindowsystem
+    source: https://invent.kde.org/frameworks/kcrash.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libx11-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libx11-6
+  kservice:
+    after:
+      - kdbusaddons
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kcrash
+      - kdoctools
+      - ki18n
+    source: https://invent.kde.org/frameworks/kservice.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - bison
+      - dbus-x11
+      - docbook-xml
+      - docbook-xsl
+      - doxygen
+      - flex
+      - graphviz
+      - libxml2-utils
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcolorscheme:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kguiaddons
+      - ki18n
+    source: https://invent.kde.org/frameworks/kcolorscheme.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libglx-dev
+      - libgl1-mesa-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kdoctools:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - ki18n
+    source: https://invent.kde.org/frameworks/kdoctools.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - docbook-xml
+      - docbook-xsl
+      - liburi-perl
+      - libxml2-dev
+      - libxml2-utils
+      - libxslt1-dev
+    stage-packages:
+      - docbook-xml
+      - docbook-xsl
+      - libxml2-utils
+      - libxml2
+      - libxslt1.1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment:
+      - PATH: $CRAFT_STAGE/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/bin${PATH:+:$PATH}
+      - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+      - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
+      - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
+      - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+  kconfigwidgets:
+    after:
+      - kcolorscheme
+      - extra-cmake-modules
+      - kauth
+      - kcodecs
+      - kconfig
+      - kcoreaddons
+      - kdoctools
+      - kguiaddons
+      - ki18n
+      - kwidgetsaddons
+    source: https://invent.kde.org/frameworks/kconfigwidgets.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - docbook-xml
+      - docbook-xsl
+      - doxygen
+      - graphviz
+      - libxml2-utils
+    stage-packages:
+      - perl
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kiconthemes:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kauth
+      - kcodecs
+      - kcolorscheme
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - ki18n
+      - kitemviews
+      - kwidgetsaddons
+      - breeze-icons
+    source: https://invent.kde.org/frameworks/kiconthemes.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcompletion:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+      - kconfig
+      - kwidgetsaddons
+    source: https://invent.kde.org/frameworks/kcompletion.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ktextwidgets:
+    after:
+      - extra-cmake-modules
+      - kauth
+      - kcodecs
+      - kcolorscheme
+      - kcompletion
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - ki18n
+      - kiconthemes
+      - kitemviews
+      - kservice
+      - kwidgetsaddons
+      - kwindowsystem
+      - sonnet
+    source: https://invent.kde.org/frameworks/ktextwidgets.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kxmlgui:
+    after:
+      - attica
+      - extra-cmake-modules
+      - kcolorscheme
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - kglobalaccel
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kitemviews
+      - ktextwidgets
+      - kwidgetsaddons
+      - kwindowsystem
+    source: https://invent.kde.org/frameworks/kxmlgui.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kpackage:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kconfig
+      - kcoreaddons
+      - kdoctools
+      - ki18n
+    source: https://invent.kde.org/frameworks/kpackage.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kbookmarks:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+      - kcolorscheme
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - kiconthemes
+      - kwidgetsaddons
+      - kwindowsystem
+      - kxmlgui
+    source: https://invent.kde.org/frameworks/kbookmarks.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  libdbusmenu-qt6:
+    after:
+      - qtconf
+    source: http://archive.ubuntu.com/ubuntu/pool/main/libd/libdbusmenu-qt/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
+    source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
+    override-pull: |
+        craftctl default
+        while read -r PATCHFILE ; do
+            patch -p1 < "$CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/$PATCHFILE"
+        done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
+    plugin: cmake
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DUSE_QT6=ON
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - -DENABLE_DOCS=OFF
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+    build-environment: *buildenvironment
+  kfilemetadata:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kconfig
+      - kcoreaddons
+      - ki18n
+    source: https://invent.kde.org/frameworks/kfilemetadata.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libtag1-dev
+      - doxygen
+      - graphviz
+      - libappimage-dev
+      - libattr1-dev
+      - libepub-dev
+      - libexiv2-dev
+      - libpostproc-dev
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    stage-packages:
+      - catdoc
+      - libappimage1.0abi1t64
+      - libepub0
+      - libexiv2-27
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  phonon:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/libraries/phonon.git
+    source-branch: master
+    source-depth: 1
+    build-packages:
+      - libglib2.0-dev
+      - libpulse-dev
+      - libpulse0
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    stage-packages:
+      - libpulse-mainloop-glib0
+      - libpulse0
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DPHONON_BUILD_QT5=OFF
+      - -DPHONON_BUILD_QT6=ON
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+    build-environment: *buildenvironment
+  phonon-vlc:
+    after:
+      - extra-cmake-modules
+      - phonon
+    source: https://invent.kde.org/libraries/phonon-vlc.git
+    source-branch: master
+    source-depth: 1
+    build-packages:
+      - libvlc-dev
+      - libvlccore-dev
+      - libv4l-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    stage-packages:
+      - vlc-plugin-base
+      - vlc-plugin-video-output
+      - libvlc5
+      - libvlccore9
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DPHONON_BUILD_QT5=OFF
+      - -DPHONON_BUILD_QT6=ON
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+    build-environment: *buildenvironment
+  libcanberra:
+    source: http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
+    plugin: autotools
+    autotools-configure-parameters:
+      - --prefix=/usr
+      - --with-builtin=pulse
+    build-environment: *buildenv
+    override-pull: |
+      craftctl default
+      for p in $CRAFT_PROJECT_DIR/patches/libcanberra/*.patch; do
+        patch -p1 < "$p"
+      done
+    override-build: |
+      ./autogen.sh
+      craftctl default
+    build-packages:
+      - libasound2-dev
+      - libvorbis-dev
+      - libtdb-dev
+      - libpulse-dev
+      - libgstreamer1.0-dev
+      - libltdl-dev
+  knotifications:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+      - kconfig
+      - kcoreaddons
+      - kwindowsystem
+      - libdbusmenu-qt6
+      - phonon
+      - libcanberra
+    source: https://invent.kde.org/frameworks/knotifications.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - dbus-x11
+      - doxygen
+      - graphviz
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kwallet:
+    after:
+      - qca
+      - extra-cmake-modules
+      - kcolorscheme
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - kdbusaddons
+      - kdoctools
+      - ki18n
+      - kiconthemes
+      - knotifications
+      - kservice
+      - kwidgetsaddons
+      - kwindowsystem
+    source: https://invent.kde.org/frameworks/kwallet.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libboost-dev
+      - libgcrypt20-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libgcrypt20
+  kjobwidgets:
+    after:
+      - extra-cmake-modules
+      - kcoreaddons
+      - knotifications
+      - kwidgetsaddons
+    source: https://invent.kde.org/frameworks/kjobwidgets.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libx11-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kio:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kauth
+      - kbookmarks
+      - kcolorscheme
+      - kcompletion
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - kcrash
+      - kdbusaddons
+      - kded
+      - kdoctools
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kitemviews
+      - kjobwidgets
+      - knotifications
+      - kservice
+      - solid
+      - sonnet
+      - ktextwidgets
+      - kwallet
+      - kwidgetsaddons
+      - kwindowsystem
+      - kxmlgui
+    source: https://invent.kde.org/frameworks/kio.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libacl1-dev
+      - libkrb5-dev
+      - libmount-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - switcheroo-control
+      - zlib1g-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libacl1
+      - libmount1
+      - libxml2
+      - libxslt1.1
+  kparts:
+    after:
+      - extra-cmake-modules
+      - kbookmarks
+      - kcolorscheme
+      - kcompletion
+      - kconfig
+      - kcoreaddons
+      - ki18n
+      - kiconthemes
+      - kio
+      - kitemviews
+      - kjobwidgets
+      - knotifications
+      - kservice
+      - ktextwidgets
+      - kwidgetsaddons
+      - kxmlgui
+      - solid
+      - sonnet
+    source: https://invent.kde.org/frameworks/kparts.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kded:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kcrash
+      - kdbusaddons
+      - kdoctools
+      - kservice
+    source: https://invent.kde.org/frameworks/kded.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kunitconversion:
+    after:
+      - extra-cmake-modules
+      - ki18n
+    source: https://invent.kde.org/frameworks/kunitconversion.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kdeclarative:
+    after:
+      - extra-cmake-modules
+      - kcolorscheme
+      - kconfig
+      - kglobalaccel
+      - ki18n
+      - kiconthemes
+      - kio
+    source: https://invent.kde.org/frameworks/kdeclarative.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libepoxy-dev
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcmutils:
+    after:
+      - extra-cmake-modules
+      - kcoreaddons
+      - kitemviews
+      - ki18n
+      - kio
+      - kirigami
+      - kxmlgui
+    source: https://invent.kde.org/frameworks/kcmutils.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  knotifyconfig:
+    after:
+      - extra-cmake-modules
+      - kbookmarks
+      - kcompletion
+      - kconfig
+      - kconfigwidgets
+      - ki18n
+      - kiconthemes
+      - kio
+      - kjobwidgets
+      - knotifications
+      - kservice
+      - kwidgetsaddons
+      - kxmlgui
+      - solid
+      - phonon
+      - libcanberra
+    source: https://invent.kde.org/frameworks/knotifyconfig.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  syndication:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+    source: https://invent.kde.org/frameworks/syndication.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  knewstuff:
+    after:
+      - attica
+      - extra-cmake-modules
+      - karchive
+      - kbookmarks
+      - kcompletion
+      - kconfig
+      - kcoreaddons
+      - ki18n
+      - kiconthemes
+      - kio
+      - kirigami
+      - kitemviews
+      - kjobwidgets
+      - kpackage
+      - kservice
+      - ktextwidgets
+      - kwidgetsaddons
+      - kxmlgui
+      - solid
+      - syndication
+    source: https://invent.kde.org/frameworks/knewstuff.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kidletime:
+    after:
+      - extra-cmake-modules
+      - plasma-wayland-protocols
+    source: https://invent.kde.org/frameworks/kidletime.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libwayland-dev
+      - libx11-dev
+      - libx11-xcb-dev
+      - libxcb-sync-dev
+      - libxcb1-dev
+      - libxss-dev
+      - pkg-config
+      - wayland-protocols
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libwayland-client0
+      - libx11-6
+      - libx11-xcb1
+      - libxcb-sync1
+      - libxcb1
+      - libxext6
+      - libxss1
+  kquickcharts:
+    after:
+      - extra-cmake-modules
+      - kirigami
+    source: https://invent.kde.org/frameworks/kquickcharts.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ktexteditor:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kbookmarks
+      - kcolorscheme
+      - kcompletion
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kio
+      - kitemviews
+      - kjobwidgets
+      - kparts
+      - kservice
+      - kwidgetsaddons
+      - kxmlgui
+      - solid
+      - sonnet
+      - syntax-highlighting
+    source: https://invent.kde.org/frameworks/ktexteditor.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libeditorconfig-dev
+      - libgit2-dev
+      - libjs-underscore
+      - perl
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libjs-underscore
+      - libeditorconfig0
+  frameworkintegration:
+    after:
+      - extra-cmake-modules
+      - kcolorscheme
+      - kconfig
+      - kconfigwidgets
+      - ki18n
+      - kiconthemes
+      - kio
+      - knewstuff
+      - knotifications
+      - kpackage
+      - kwidgetsaddons
+    source: https://invent.kde.org/frameworks/frameworkintegration.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - dbus-x11
+      - libxcursor-dev
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kpty:
+    after:
+      - extra-cmake-modules
+      - kcoreaddons
+      - ki18n
+    source: https://invent.kde.org/frameworks/kpty.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libutempter-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kwayland:
+    after:
+      - extra-cmake-modules
+      - plasma-wayland-protocols
+    source: https://invent.kde.org/plasma/kwayland.git
+    source-tag: &plasma-version v6.2.5
+    source-depth: 1
+    build-packages:
+      - libegl1-mesa-dev
+      - libwayland-dev
+      - pkg-config
+      - wayland-protocols
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  qqc2-desktop-style:
+    after:
+      - sonnet
+      - kcolorscheme
+      - kconfig
+      - kiconthemes
+      - kirigami
+    source: https://invent.kde.org/frameworks/qqc2-desktop-style.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - dbus-x11
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcontacts:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+      - kconfig
+      - kcoreaddons
+      - ki18n
+    source: https://invent.kde.org/frameworks/kcontacts.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kcalendarcore:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kcalendarcore.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libical-dev
+      - bison
+    stage-packages:
+      - libical3
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    override-pull: |
+      craftctl default
+      while read -r PATCHFILE ; do
+        patch -p1 < "$CRAFT_PROJECT_DIR/patches/kcalendarcore/$PATCHFILE"
+      done < $CRAFT_PROJECT_DIR/patches/kcalendarcore/series
+  kholidays:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kholidays.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  prison:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/prison.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libqrencode-dev
+      - libdmtx-dev
+      - libzxing-dev
+    stage-packages:
+      - libdmtx0b
+      - libqrencode4
+      - libzxing3
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  purpose:
+    after:
+      - extra-cmake-modules
+      - kcmutils
+      - kconfig
+      - kcoreaddons
+      - kdeclarative
+      - ki18n
+      - kio
+      - kirigami
+      - knotifications
+      - kwallet
+    source: https://invent.kde.org/frameworks/purpose.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - intltool
+      - pkg-config
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kdav:
+    after:
+      - extra-cmake-modules
+      - kbookmarks
+      - kcolorscheme
+      - kcompletion
+      - kconfig
+      - kcoreaddons
+      - ki18n
+      - kio
+      - kwidgetsaddons
+    source: https://invent.kde.org/frameworks/kdav.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ksvg:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kcolorscheme
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - kirigami
+    source: https://invent.kde.org/frameworks/ksvg.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  breeze-icons:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/breeze-icons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - fdupes
+      - libxml2-utils
+      - python3-lxml
+    stage-packages:
+      - hicolor-icon-theme
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    prime:
+      - "-*.rcc"
+  kimageformats:
+    after:
+      - extra-cmake-modules
+      - karchive
+    source: https://invent.kde.org/frameworks/kimageformats.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - libavif-dev
+      - libjxl-dev
+      - libheif-dev
+      - libopenexr-dev
+      - libraw-dev
+      - pkg-config
+    stage-packages:
+      - python3-imath
+      - libavif16
+      - libheif1
+      - libimath-3-1-29
+      - libjxl0.7
+      - libopenexr-3-1-30
+      - libraw23
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  bluez-qt:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/bluez-qt.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - graphviz
+      - doxygen
+      - libxkbcommon-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kstatusnotifieritem:
+    after:
+      - kwindowsystem
+    source: https://invent.kde.org/frameworks/kstatusnotifieritem.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  krunner:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - threadweaver
+      - ki18n
+      - kitemmodels
+    source: https://invent.kde.org/frameworks/krunner.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  qtkeychain:
+    after:
+      - qtconf
+    source: https://github.com/frankosterfeld/qtkeychain.git
+    source-branch: main
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libsecret-1-dev
+    stage-packages:
+      - libglib2.0-0
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  qcoro:
+    after:
+      - qtconf
+    source: https://github.com/danvratil/qcoro.git
+    source-branch: main
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ktextaddons:
+    after:
+      - extra-cmake-modules
+      - ki18n
+      - kconfig
+      - kconfigwidgets
+      - karchive
+      - kcoreaddons
+      - kio
+      - sonnet
+      - syntax-highlighting
+      - breeze-icons
+      - qtkeychain
+    source: https://invent.kde.org/libraries/ktextaddons.git
+    source-branch: master
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  baloo:
+    after:
+      - extra-cmake-modules
+      - kfilemetadata
+      - kcoreaddons
+      - kconfig
+      - kdbusaddons
+      - ki18n
+      - kidletime
+      - solid
+      - kcrash
+      - kio
+    source: https://invent.kde.org/frameworks/baloo.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - liblmdb-dev
+      - libxapian-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - init-system-helpers
+      - liblmdb0
+  kdesu:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kpty
+    source: https://invent.kde.org/frameworks/kdesu.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - sudo
+      - libx11-6
+  kpeople:
+    after:
+      - extra-cmake-modules
+      - kcoreaddons
+      - kwidgetsaddons
+      - ki18n
+      - kitemviews
+      - kcontacts
+    source: https://invent.kde.org/frameworks/kpeople.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - firebird-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  ktexttemplate:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/ktexttemplate.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - xauth
+      - xvfb
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  oxygen-icons:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/oxygen-icons.git
+    source-tag: v6.0.0
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - fdupes
+      - imagemagick
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - hicolor-icon-theme
+  kuserfeedback:
+    after:
+      - qtconf
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/kuserfeedback.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - bison
+      - flex
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kirigami-addons:
+    after:
+      - extra-cmake-modules
+      - kirigami
+      - ki18n
+    source: https://invent.kde.org/libraries/kirigami-addons.git
+    source-branch: master
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  modemmanager-qt:
+    after:
+      - qtconf
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/modemmanager-qt.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - modemmanager-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  networkmanager-qt:
+    after:
+      - qtconf
+      - extra-cmake-modules
+    source: https://invent.kde.org/frameworks/networkmanager-qt.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libnm-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kdsoap:
+    after:
+      - qtconf
+    source: https://github.com/KDAB/KDSoap.git
+    source-branch: kdsoap-2.2
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DBUILD_WITH_QT6=ON
+      - -DKDSoap_QT6=True
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+    build-environment: *buildenvironment
+  kdsoap-ws-discovery-client:
+    after:
+      - extra-cmake-modules
+      - kdsoap
+    source: https://invent.kde.org/libraries/kdsoap-ws-discovery-client.git
+    source-branch: master
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  libkexiv2:
+    after:
+      - extra-cmake-modules
+    source: https://invent.kde.org/graphics/libkexiv2.git
+    source-branch: master
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libexiv2-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - libexiv2-27
+  plasma-activities:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kwindowsystem
+      - kcoreaddons
+    source: https://invent.kde.org/plasma/plasma-activities.git
+    source-tag: *plasma-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libboost-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  plasma-activities-stats:
+    after:
+      - plasma-activities
+    source: https://invent.kde.org/plasma/plasma-activities-stats.git
+    source-tag: *plasma-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libboost-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  kio-extras:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kconfig
+      - kconfigwidgets
+      - kcoreaddons
+      - kdbusaddons
+      - kcmutils
+      - kdnssd
+      - ki18n
+      - kio
+      - solid
+      - kguiaddons
+      - syntax-highlighting
+      - phonon
+      - qcoro
+      - kdsoap
+      - kdsoap-ws-discovery-client
+      - libkexiv2
+      - plasma-activities
+      - plasma-activities-stats
+    source: https://invent.kde.org/network/kio-extras.git
+    source-tag: &apps-version v24.12.3
+    source-depth: 1
+    build-packages:
+      - libappimage-dev
+      - libimobiledevice-dev
+      - libmsgsl-dev
+      - libmtp-dev
+      - libopenexr-dev
+      - libsmbclient-dev
+      - libssh-dev
+      - libtag1-dev
+      - libtirpc-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+    stage-packages:
+      - perl
+      - libappimage1.0abi1t64
+      - libimobiledevice6
+      - libmtp9
+      - libopenexr-3-1-30
+      - libplist-2.0-4
+      - libsmbclient
+      - libssh-4
+      - libtag1v5-vanilla
+      - libxcursor1
+  kdecoration2:
+    after:
+      - extra-cmake-modules
+      - ki18n
+    source: https://invent.kde.org/plasma/kdecoration.git
+    source-tag: *plasma-version
+    source-depth: 1
+    build-packages:
+      - libx11-dev
+      - libfftw3-dev
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  breeze:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kirigami
+      - kwindowsystem
+      - kcolorscheme
+      - kdecoration2
+      - frameworkintegration
+      - kcmutils
+    source: https://invent.kde.org/plasma/breeze.git
+    source-tag: *plasma-version
+    source-depth: 1
+    plugin: cmake
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libx11-dev
+      - libfftw3-dev
+    cmake-generator: Ninja
+    cmake-parameters: &cmakeparameters-withoutqt5
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DBUILD_WITH_QT6=ON
+      - -DBUILD_QT6=ON
+      - -DBUILD_QT5=OFF
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
+      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
+      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
+      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
+      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
+      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
+      - -DCMAKE_VERBOSE_MAKEFILE=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - --log-level=STATUS
+      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+    build-environment: *buildenvironment
+  oxygen:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kirigami
+      - kwindowsystem
+      - kcolorscheme
+      - kdecoration2
+      - frameworkintegration
+      - kcmutils
+      - kcodecs
+      - kcompletion
+      - kconfigwidgets
+      - kservice
+      - kwidgetsaddons
+    source: https://invent.kde.org/plasma/oxygen.git
+    source-tag: *plasma-version
+    source-depth: 1
+    plugin: cmake
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libx11-dev
+      - libfftw3-dev
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters-withoutqt5
+    build-environment: *buildenvironment
+    override-pull: |
+        craftctl default
+        while read -r PATCHFILE ; do
+            patch -p1 < "$CRAFT_PROJECT_DIR/patches/oxygen/$PATCHFILE"
+        done < $CRAFT_PROJECT_DIR/patches/oxygen/series
+  plasma-integration:
+    after:
+      - extra-cmake-modules
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - ki18n
+      - kcolorscheme
+      - kiconthemes
+      - kio
+      - kjobwidgets
+      - knotifications
+      - kservice
+      - kstatusnotifieritem
+      - kwidgetsaddons
+      - kwindowsystem
+      - kxmlgui
+      - breeze
+    source: https://invent.kde.org/plasma/plasma-integration.git
+    source-tag: *plasma-version
+    source-depth: 1
+    plugin: cmake
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    build-packages:
+      - libwayland-dev
+      - libxcursor-dev
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters-withoutqt5
+    build-environment: *buildenvironment
+    stage-packages:
+      - fonts-hack
+      - fonts-noto-cjk
+      - fonts-noto-color-emoji
+      - fonts-noto-core
+      - fonts-noto-ui-core
+      - libwayland-client0
+      - libxcb1
+      - libxcursor1
+  qqc2-breeze-style:
+    after:
+      - extra-cmake-modules
+      - kcodecs
+      - kcolorscheme
+      - kconfig
+      - kcoreaddons
+      - kguiaddons
+      - kirigami
+      - kquickcharts
+      - kiconthemes
+    source: https://invent.kde.org/plasma/qqc2-breeze-style.git
+    source-tag: *plasma-version
+    source-depth: 1
+    build-packages:
+      - cmake
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  libkdegames:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kconfig
+      - kcolorscheme
+      - kcompletion
+      - kconfigwidgets
+      - kdnssd
+      - kguiaddons
+      - kiconthemes
+      - ki18n
+      - knewstuff
+      - kxmlgui
+    source: https://invent.kde.org/games/libkdegames.git
+    source-tag: *apps-version
+    source-depth: 1
+    build-packages:
+      - cmake
+      - libsndfile1-dev
+      - 7zip
+      - libopenal-dev
+    stage-packages:
+      - libsndfile1
+      - libopenal1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/edge
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+fix_pc_files:
+    after:
+      - qtconf
+      - missing-deps
+      - extra-cmake-modules
+      - plasma-wayland-protocols
+      - qca
+      - polkit-qt-1
+      - kirigami
+      - kplotting
+      - syntax-highlighting
+      - kdnssd
+      - kitemmodels
+      - threadweaver
+      - solid
+      - kwidgetsaddons
+      - ki18n
+      - kconfig
+      - attica
+      - kguiaddons
+      - kcoreaddons
+      - karchive
+      - kcodecs
+      - kitemviews
+      - kwindowsystem
+      - kdbusaddons
+      - sonnet
+      - kauth
+      - kglobalaccel
+      - kcrash
+      - kservice
+      - kcolorscheme
+      - kdoctools
+      - kconfigwidgets
+      - kiconthemes
+      - kcompletion
+      - ktextwidgets
+      - kxmlgui
+      - kpackage
+      - kbookmarks
+      - libdbusmenu-qt6
+      - kfilemetadata
+      - phonon
+      - phonon-vlc
+      - knotifications
+      - kwallet
+      - kjobwidgets
+      - kio
+      - kparts
+      - kded
+      - kunitconversion
+      - kdeclarative
+      - kcmutils
+      - knotifyconfig
+      - syndication
+      - knewstuff
+      - kidletime
+      - kquickcharts
+      - ktexteditor
+      - frameworkintegration
+      - kpty
+      - kwayland
+      - qqc2-desktop-style
+      - kcontacts
+      - kcalendarcore
+      - kholidays
+      - prison
+      - purpose
+      - kdav
+      - ksvg
+      - breeze-icons
+      - kimageformats
+      - bluez-qt
+      - kstatusnotifieritem
+      - krunner
+      - qtkeychain
+      - qcoro
+      - ktextaddons
+      - baloo
+      - kdesu
+      - kpeople
+      - ktexttemplate
+      - oxygen-icons
+      - kuserfeedback
+      - kirigami-addons
+      - modemmanager-qt
+      - networkmanager-qt
+      - kdsoap
+      - kdsoap-ws-discovery-client
+      - libkexiv2
+      - plasma-activities
+      - plasma-activities-stats
+      - kio-extras
+      - kdecoration2
+      - breeze
+      - oxygen
+      - plasma-integration
+      - qqc2-breeze-style
+      - libkdegames
+    plugin: nil
+    override-stage: |
+        craftctl default
+        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:/root/stage:/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
+        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
