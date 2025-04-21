@@ -51,7 +51,6 @@ parts:
       - --prefix=/usr
       - -Doptimization=3
       - -Ddebug=true
-    build-environment: *buildenvironment
     override-pull: |
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/patches/libffi-enable-building-on-riscv64.patch
@@ -66,7 +65,6 @@ parts:
       - --prefix=/usr
       - -Doptimization=3
       - -Ddebug=true
-    build-environment: *buildenvironment
     override-build: |
       set -eux
       craftctl default
