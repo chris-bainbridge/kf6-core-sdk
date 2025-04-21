@@ -1091,6 +1091,7 @@ parts:
       ./autogen.sh
       craftctl default
     build-packages:
+      - automake
       - libasound2-dev
       - libvorbis-dev
       - libtdb-dev
