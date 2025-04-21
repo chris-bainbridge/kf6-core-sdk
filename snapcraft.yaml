@@ -51,10 +51,6 @@ parts:
       - --prefix=/usr
       - -Doptimization=3
       - -Ddebug=true
-    override-pull: |
-      craftctl default
-      patch -p1 < $CRAFT_PROJECT_DIR/patches/libffi-enable-building-on-riscv64.patch
-
   glib:
     after: [ libffi, meson-deps ]
     source: https://gitlab.gnome.org/GNOME/glib.git
