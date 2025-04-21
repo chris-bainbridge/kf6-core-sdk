@@ -1087,9 +1087,6 @@ parts:
       for p in $CRAFT_PROJECT_DIR/patches/libcanberra/*.patch; do
         patch -p1 < "$p"
       done
-    override-build: |
-      ./autogen.sh
-      craftctl default
     build-packages:
       - automake
       - libasound2-dev
