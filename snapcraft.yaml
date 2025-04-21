@@ -2342,7 +2342,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
-fix_pc_files:
+  fix_pc_files:
     after:
       - qtconf
       - missing-deps
