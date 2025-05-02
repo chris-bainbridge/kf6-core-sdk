@@ -17,7 +17,7 @@ platforms:
     build-for: [arm64]
 environment:
   LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
-  GDK_PIXBUF_MODULE_FILE: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET/gdk-pixbuf-2.0/2.10.0/loaders.cache
+  GDK_PIXBUF_MODULE_FILE: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0/2.10.0/loaders.cache
 slots: {}
 package-repositories:
 -   type: apt
@@ -72,16 +72,14 @@ parts:
     override-build: |
       set -eux
       craftctl default
-      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/glib-2.0/
-      cp $CRAFT_PART_INSTALL/usr/bin/{gio-querymodules,glib-compile-schemas} $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/glib-2.0/
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/glib-2.0/
+      cp $CRAFT_PART_INSTALL/usr/bin/{gio-querymodules,glib-compile-schemas} $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/glib-2.0/
     build-packages:
       - pkg-config
       - libmount-dev
       - gcc
       - g++
       - clang
-      - libproxy
-
   ninja:
     plugin: nil
     source: https://github.com/ninja-build/ninja.git
@@ -143,12 +141,12 @@ parts:
       set -eux
       craftctl default
       cp $CRAFT_PART_INSTALL/usr/bin/gdk-pixbuf-query-loaders $CRAFT_STAGE/usr/bin/
-      LOADERS_PATH=$CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET/gdk-pixbuf-2.0/2.10.0/loaders
+      LOADERS_PATH=$CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0/2.10.0/loaders
       $CRAFT_PART_INSTALL/usr/bin/gdk-pixbuf-query-loaders $LOADERS_PATH/*.so > $LOADERS_PATH.cache
       # workaround for thumbnailer being in a different directory in the snap env
       sed -i 's#/usr/bin/##' $CRAFT_PART_INSTALL/usr/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
     organize:
-      usr/bin/gdk-pixbuf-query-loaders: usr/lib/$CRAFT_ARCH_TRIPLET/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders
+      usr/bin/gdk-pixbuf-query-loaders: usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders
     build-packages:
       - libpng-dev
       - libjpeg-dev
