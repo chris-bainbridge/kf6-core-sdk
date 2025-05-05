@@ -179,7 +179,7 @@ parts:
 
   qtconf:
     after:
-    - gsettings-desktop-schemes
+    - gsettings-desktop-schemas
     plugin: nil
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/usr/bin
