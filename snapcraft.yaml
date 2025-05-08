@@ -61,7 +61,7 @@ parts:
   glib:
     after: [ libffi, meson-deps ]
     source: https://gitlab.gnome.org/GNOME/glib.git
-    source-tag: '2.78.1'
+    source-tag: '2.84.0'
     source-depth: 1
     plugin: meson
     meson-parameters:
@@ -123,7 +123,7 @@ parts:
   gdk-pixbuf:
     after: [ meson-deps ]
     source: https://gitlab.gnome.org/GNOME/gdk-pixbuf.git
-    source-tag: '2.42.10'
+    source-tag: '2.42.12'
     source-depth: 1
     plugin: meson
     meson-parameters:
