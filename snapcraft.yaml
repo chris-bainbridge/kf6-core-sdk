@@ -1035,6 +1035,7 @@ parts:
     build-environment: *buildenvironment
     stage:
      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0*
+     - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgdk_pixbuf-2.0.so.0
      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgdk_pixbuf-2.0.so.0.4200.10
   phonon:
     after:
