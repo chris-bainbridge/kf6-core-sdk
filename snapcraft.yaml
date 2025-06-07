@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.11.0-6.2.5-24.12.3
+version: 6.12.0-6.2.5-24.12.3
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -177,9 +177,25 @@ parts:
       PC=$CRAFT_PART_INSTALL/usr/share/pkgconfig/gsettings-desktop-schemas.pc
       sed -i 's#-I/usr#-I${prefix}#' $PC
 
-  qtconf:
+  remove_libtoolize:
     after:
     - gsettings-desktop-schemas
+    plugin: nil
+    prime:
+      - -usr/bin/libtoolize
+      - -usr/share/libtool/build-aux/*
+      - -usr/share/aclocal/ltargz.m4
+      - -usr/share/aclocal/ltversion.m4
+      - -usr/share/aclocal/lt~obsolete.m4
+      - -usr/share/aclocal/libtool.m4
+      - -usr/share/aclocal/ltoptions.m4
+      - -usr/share/aclocal/ltsugar.m4
+      - -usr/share/man/man1/libtoolize.*
+      - -usr/bin/libtool
+
+  qtconf:
+    after:
+      - gsettings-desktop-schemas
     plugin: nil
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/usr/bin
@@ -207,7 +223,7 @@ parts:
     after:
       - qtconf
     source: https://invent.kde.org/frameworks/extra-cmake-modules.git
-    source-tag: &kf6-version v6.11.0
+    source-tag: &kf6-version v6.12.0
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/edge
@@ -217,21 +233,6 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DQT_MAJOR_VERSION=6
-      - -DBUILD_WITH_QT6=ON
-      - -DBUILD_TESTING=OFF
-      - -DCMAKE_INSTALL_SYSCONFDIR=/etc
-      - -DCMAKE_INSTALL_LOCALSTATEDIR=/var
-      - -DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON
-      - -DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF
-      - -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON
-      - -DCMAKE_INSTALL_RUNSTATEDIR=/run
-      - -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON
-      - -DCMAKE_VERBOSE_MAKEFILE=ON
-      - -DBUILD_SHARED_LIBS=ON
-      - -DCMAKE_INSTALL_LIBDIR=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      - -DENABLE_DOCS=OFF
-      - --log-level=STATUS
-      - -DCMAKE_LIBRARY_PATH=lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
       - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
     build-environment: *buildenvironment
