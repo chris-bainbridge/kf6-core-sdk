@@ -271,7 +271,13 @@ parts:
       - kde-qt6-core24-sdk/latest/edge
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
+    cmake-parameters:
+      - -DBUILD_WITH_QT6=ON
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
     build-environment: *buildenvironment
     override-stage: |
         craftctl default
