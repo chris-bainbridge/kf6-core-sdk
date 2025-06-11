@@ -1622,11 +1622,11 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
-    override-pull: |
-      craftctl default
-      while read -r PATCHFILE ; do
-        patch -p1 < "$CRAFT_PROJECT_DIR/patches/kcalendarcore/$PATCHFILE"
-      done < $CRAFT_PROJECT_DIR/patches/kcalendarcore/series
+    # override-pull: |
+    #   craftctl default
+    #   while read -r PATCHFILE ; do
+    #     patch -p1 < "$CRAFT_PROJECT_DIR/patches/kcalendarcore/$PATCHFILE"
+    #   done < $CRAFT_PROJECT_DIR/patches/kcalendarcore/series
   kholidays:
     after:
       - extra-cmake-modules
