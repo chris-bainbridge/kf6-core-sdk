@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.14.0-6.2.5-25.04.2
+version: 6.14.0-6.3.5-25.04.2
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -1555,7 +1555,7 @@ parts:
       - extra-cmake-modules
       - plasma-wayland-protocols
     source: https://invent.kde.org/plasma/kwayland.git
-    source-tag: &plasma-version v6.2.5
+    source-tag: &plasma-version v6.3.5
     source-depth: 1
     build-packages:
       - libegl1-mesa-dev
