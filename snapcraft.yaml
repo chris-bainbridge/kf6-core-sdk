@@ -2299,6 +2299,12 @@ parts:
     build-packages:
       - libwayland-dev
       - libxcursor-dev
+      - fonts-hack
+      - fonts-noto-cjk
+      - fonts-noto-color-emoji
+      - fonts-noto-core
+      - fonts-noto-ui-core
+      - xdg-desktop-portal-kde
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-withoutqt5
     build-environment: *buildenvironment
@@ -2311,6 +2317,7 @@ parts:
       - libwayland-client0
       - libxcb1
       - libxcursor1
+      - xdg-desktop-portal-kde
   qqc2-breeze-style:
     after:
       - extra-cmake-modules
