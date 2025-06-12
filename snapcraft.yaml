@@ -2309,6 +2309,18 @@ parts:
       - libxcb1
       - libxcursor1
       - xdg-desktop-portal-kde
+    stage:
+      - -usr/share/GConf/gsettings/wm-schemas.convert
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.a11y.interface.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.enums.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.interface.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.media-handling.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.peripherals.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.screensaver.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.wm.keybindings.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.desktop.wm.preferences.gschema.xml
+      - -usr/share/glib-2.0/schemas/org.gnome.system.proxy.gschema.xml
   qqc2-breeze-style:
     after:
       - extra-cmake-modules
