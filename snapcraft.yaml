@@ -177,22 +177,6 @@ parts:
       PC=$CRAFT_PART_INSTALL/usr/share/pkgconfig/gsettings-desktop-schemas.pc
       sed -i 's#-I/usr#-I${prefix}#' $PC
 
-  remove_libtoolize:
-    after:
-    - gsettings-desktop-schemas
-    plugin: nil
-    prime:
-      - -usr/bin/libtoolize
-      - -usr/share/libtool/build-aux/*
-      - -usr/share/aclocal/ltargz.m4
-      - -usr/share/aclocal/ltversion.m4
-      - -usr/share/aclocal/lt~obsolete.m4
-      - -usr/share/aclocal/libtool.m4
-      - -usr/share/aclocal/ltoptions.m4
-      - -usr/share/aclocal/ltsugar.m4
-      - -usr/share/man/man1/libtoolize.*
-      - -usr/bin/libtool
-
   qtconf:
     after:
       - gsettings-desktop-schemas
@@ -2479,3 +2463,6 @@ parts:
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
+        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
+        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
+        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
