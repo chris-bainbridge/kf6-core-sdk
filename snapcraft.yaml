@@ -2463,6 +2463,4 @@ parts:
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
         find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
-        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
-        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
-        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i "s#/root/stage#/snap/$CRAFT_PROJECT_NAME/current#"
+        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i 's#/root/stage#/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
