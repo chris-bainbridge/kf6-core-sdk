@@ -29,21 +29,8 @@ package-repositories:
     url: http://origin.archive.neon.kde.org/user
     key-server: keyserver.ubuntu.com
 parts:
-  libtool:
-    plugin: nil
-    stage-packages:
-      - libtool
-      - libtool-bin
-    override-stage: |
-      set -eux
-      craftctl default
-      LIBTOOLIZE=usr/bin/libtoolize
-      sed -i 's#pkgauxdir="#pkgauxdir="$CRAFT_STAGE#' $LIBTOOLIZE
-      sed -i 's#pkgltdldir="#pkgltdldir="$CRAFT_STAGE#' $LIBTOOLIZE
-      sed -i 's#aclocaldir="#aclocaldir="$CRAFT_STAGE#' $LIBTOOLIZE
-
   libffi:
-    after: [ libtool, meson-deps ]
+    after: [ meson-deps ]
     source: https://gitlab.freedesktop.org/gstreamer/meson-ports/libffi.git
     source-tag: 'meson-3.2.9999.4'
     source-depth: 1
@@ -59,7 +46,7 @@ parts:
       - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
       - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
   glib:
-    after: [ libffi, meson-deps ]
+    after: [ meson-deps ]
     source: https://gitlab.gnome.org/GNOME/glib.git
     source-tag: '2.84.0'
     source-depth: 1
