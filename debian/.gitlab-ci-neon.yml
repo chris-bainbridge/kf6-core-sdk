@@ -3,5 +3,14 @@
 
 include:
   - project: sysadmin/ci-utilities
-    file:
-      - /gitlab-templates/snap-snapcraft-core-lxd.yml
+    file: /gitlab-templates/snap-snapcraft-lxd.yml
+
+.snap_base:
+  tags:
+    - LargeVM
+    - amd64
+
+.snap_base_arm64:
+  tags:
+    - LargeVM
+    - arm64
