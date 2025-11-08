@@ -194,7 +194,7 @@ parts:
     after:
       - qtconf
     source: https://invent.kde.org/frameworks/extra-cmake-modules.git
-    # source-tag: &kf6-version v6.19.0
+    source-tag: &kf6-version v6.19.0
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/edge
