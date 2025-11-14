@@ -497,6 +497,7 @@ parts:
       - graphviz
       - libudev-dev
       - shared-mime-info
+      - python3-build
     stage-packages:
       - shared-mime-info
       - libudev1
