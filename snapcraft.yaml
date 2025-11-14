@@ -497,12 +497,12 @@ parts:
       - graphviz
       - libudev-dev
       - shared-mime-info
-      - libpyside6-dev
     stage-packages:
       - shared-mime-info
       - libudev1
     build-snaps:
       - kde-qt6-core24-sdk/latest/edge
+      - kde-pyside6-core24-sdk/latest/edge
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
