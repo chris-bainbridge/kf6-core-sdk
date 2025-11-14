@@ -498,6 +498,8 @@ parts:
       - libudev-dev
       - shared-mime-info
       - python3-build
+      - libstdc++-13-dev
+      - libc++abi-dev
     stage-packages:
       - shared-mime-info
       - libudev1
