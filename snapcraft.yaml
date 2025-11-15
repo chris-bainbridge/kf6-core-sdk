@@ -46,9 +46,9 @@ parts:
       - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
       - CLANG_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
       - CMAKE_PREFIX_PATH: /snap/kde-qt6-core24-sdk/current/usr:/snap/ffmpeg-2404-sdk/current/usr${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
-      - CPATH:  /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${CPATH:+:$CPATH}
-      - C_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}
-      - CPLUS_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/include/PySide6:/snap/kde-pyside6-core24-sdk/current/usr/include/shiboken6${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}
+      # - CPATH:  /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${CPATH:+:$CPATH}
+      # - C_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}
+      # - CPLUS_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/include/PySide6:/snap/kde-pyside6-core24-sdk/current/usr/include/shiboken6${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}
       - DICPATH: "$CRAFT_STAGE/usr/share/hunspell"
       - LIBCLANG_LIBDIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/lib
       - LIBCLANG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin
