@@ -80,7 +80,7 @@ parts:
   ninja:
     plugin: nil
     source: https://github.com/ninja-build/ninja.git
-    source-tag: 'v1.11.1'
+    source-tag: 'v1.12.1'
     source-depth: 1
     build-environment: *buildenvironment
     override-build: |
@@ -102,7 +102,7 @@ parts:
     after: [ ninja ]
     plugin: nil
     source: https://github.com/mesonbuild/meson.git
-    source-tag: '1.4.0'
+    source-tag: '1.8.4'
     source-depth: 1
     build-environment: *buildenvironment
     override-build: |
@@ -155,7 +155,7 @@ parts:
       - meson-deps
       - ninja
     source: https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas.git
-    source-tag: '42.0'
+    source-tag: '46.1'
     source-depth: 1
     build-environment: *buildenvironment
     build-packages:
