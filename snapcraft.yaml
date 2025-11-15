@@ -524,7 +524,7 @@ parts:
       - LIBCLANG_LIBDIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/lib
       - LIBCLANG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin
       - LLVM_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
-      - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin${PATH:+:$PATH}
+      - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin:/snap/kde-pyside6-core24-sdk/current/usr/bin${PATH:+:$PATH}
       - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
       - PYSIDE_DISABLE_INTERNAL_QT_CONF: 1
       - PYTHONPATH: /snap/kde-qt6-core24-sdk/current/usr/lib/python3.12:/snap/kde-qt6-core24-sdk/current/usr/lib/python3/dist-packages:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3.12
