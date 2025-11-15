@@ -500,7 +500,7 @@ parts:
       - python3-build
       - libclang-18-dev
       - libstdc++-13-dev
-      - libstdc++abi-dev
+      - libc++abi-dev
     stage-packages:
       - shared-mime-info
       - libudev1
