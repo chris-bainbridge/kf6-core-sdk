@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.19.0-6.5.2-25.08.3
+version: 6.20.0-6.5.2-25.08.3
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -67,7 +67,7 @@ parts:
       - libdbus-1-dev
       - gcc
       - g++
-      - clang
+      - clang-18
   ninja:
     plugin: nil
     source: https://github.com/ninja-build/ninja.git
@@ -194,7 +194,7 @@ parts:
     after:
       - qtconf
     source: https://invent.kde.org/frameworks/extra-cmake-modules.git
-    source-tag: &kf6-version v6.19.0
+    source-tag: &kf6-version v6.20.0
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/edge
@@ -500,6 +500,7 @@ parts:
       - python3-build
       - gcc
       - g++
+      - clang-18
     stage-packages:
       - shared-mime-info
       - libudev1
@@ -517,8 +518,9 @@ parts:
       - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/snap/kde-pyside6-core24-sdk/current\\:/usr"
       - -DCMAKE_CXX_COMPILER=/usr/bin/g++
       - -DCMAKE_C_COMPILER=/usr/bin/gcc
+      - -DCMAKE_CXX_STANDARD=17
     build-environment:
-      - CLANG_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
+      - LLVM_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
       - CMAKE_PREFIX_PATH: /snap/kde-qt6-core24-sdk/current/usr:/snap/ffmpeg-2404-sdk/current/usr${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
       - CPATH:  /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${CPATH:+:$CPATH}
       - C_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}
@@ -526,7 +528,7 @@ parts:
       - DICPATH: "$CRAFT_STAGE/usr/share/hunspell"
       - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/ffmpeg-2404-sdk/current/usr/lib/x86_64-linux-gnu/:$CRAFT_STAGE/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
       - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin:/snap/kde-pyside6-core24-sdk/current/usr/bin${PATH:+:$PATH}
-      - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+      - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/kde-pyside6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
       - PYSIDE_DISABLE_INTERNAL_QT_CONF: 1
       - PYTHONPATH: /snap/kde-qt6-core24-sdk/current/usr/lib/python3.12:/snap/kde-qt6-core24-sdk/current/usr/lib/python3/dist-packages:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3.12
       - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
