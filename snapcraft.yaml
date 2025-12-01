@@ -528,8 +528,8 @@ parts:
       - PYSIDE_DISABLE_INTERNAL_QT_CONF: 1
       - PYTHONPATH: /snap/kde-qt6-core24-sdk/current/usr/lib/python3.12:/snap/kde-qt6-core24-sdk/current/usr/lib/python3/dist-packages:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3/dist-packages
       - CPATH:  /snap/kde-qt6-core24-sdk/current/usr/include:/snap/kde-pyside6-core24-sdk/current/usr/include${CPATH:+:$CPATH}
-      - C_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include:/snap/kde-pyside6-core24-sdk/current/usr/include:$C_INCLUDE_PATH
-      - CPLUS_INCLUDE_PATH: /snap/kde-qt6-core24-sdk/current/usr/include/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/include/PySide6:/snap/kde-pyside6-core24-sdk/current/usr/include/shiboken6:/snap/kde-pyside6-core24-sdk/current/usr/include
+      - C_INCLUDE_PATH: $CRAFT_STAGE/usr/include:/snap/kde-qt6-core24-sdk/current/usr/include:/snap/kde-pyside6-core24-sdk/current/usr/include
+      - CPLUS_INCLUDE_PATH: $CRAFT_STAGE/usr/include:/snap/kde-qt6-core24-sdk/current/usr/include/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/include/PySide6:/snap/kde-pyside6-core24-sdk/current/usr/include/shiboken6:/snap/kde-pyside6-core24-sdk/current/usr/include
       - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
       - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
       - CC: /usr/bin/gcc
