@@ -514,10 +514,7 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DQT_MAJOR_VERSION=6
-      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
-      - -DCMAKE_CXX_COMPILER=/usr/bin/g++
-      - -DCMAKE_C_COMPILER=/usr/bin/gcc
-      - -DCMAKE_CXX_STANDARD=17
+      - -DCMAKE_FIND_ROOT_PATH="$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
     build-environment:
       - LLVM_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
       - CMAKE_PREFIX_PATH: /snap/kde-qt6-core24-sdk/current/usr:/snap/ffmpeg-2404-sdk/current/usr:/snap/kde-pyside6-core24-sdk/current${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
