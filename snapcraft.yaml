@@ -197,7 +197,7 @@ parts:
     source-tag: &kf6-version v6.20.0
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters
@@ -219,7 +219,7 @@ parts:
     stage-packages:
       - wayland-protocols
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -239,7 +239,7 @@ parts:
       - rsync
       - libproxy1v5
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -268,7 +268,7 @@ parts:
       - libpolkit-agent-1-0
       - libpolkit-gobject-1-0
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -280,7 +280,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -299,7 +299,7 @@ parts:
       - libglx-dev
       - libgl1-mesa-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -313,7 +313,7 @@ parts:
     build-packages:
       - perl
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -328,7 +328,7 @@ parts:
       - graphviz
       - doxygen
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -343,7 +343,7 @@ parts:
       - graphviz
       - doxygen
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -358,7 +358,7 @@ parts:
       - graphviz
       - doxygen
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -378,7 +378,7 @@ parts:
       - libimobiledevice-dev
       - libmount-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -401,7 +401,7 @@ parts:
       - graphviz
       - doxygen
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -420,7 +420,7 @@ parts:
       - graphviz
       - python3
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -437,7 +437,7 @@ parts:
       - graphviz
       - libxkbcommon-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -450,7 +450,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -480,7 +480,7 @@ parts:
       - libwayland-client0
       - libx11-6
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -505,8 +505,8 @@ parts:
       - shared-mime-info
       - libudev1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
-      - kde-pyside6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -548,7 +548,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -570,7 +570,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -586,7 +586,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -610,7 +610,7 @@ parts:
       - libxrender-dev
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -632,7 +632,7 @@ parts:
     build-packages:
       - dbus-x11
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -660,7 +660,7 @@ parts:
       - libvoikko1
       - zlib1g
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     stage-snaps:
       - hunspell-dictionaries
     plugin: cmake
@@ -681,7 +681,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -700,7 +700,7 @@ parts:
       - libxcb1-dev
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -718,7 +718,7 @@ parts:
       - graphviz
       - libx11-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -747,7 +747,7 @@ parts:
       - graphviz
       - libxml2-utils
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -765,7 +765,7 @@ parts:
       - libglx-dev
       - libgl1-mesa-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -792,7 +792,7 @@ parts:
       - libxml2
       - libxslt1.1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -821,7 +821,7 @@ parts:
     stage-packages:
       - perl
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -847,7 +847,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -865,7 +865,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -894,7 +894,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -922,7 +922,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -942,7 +942,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -966,7 +966,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -983,7 +983,7 @@ parts:
         done < $CRAFT_PROJECT_DIR/patches/libdbusmenu-qt6/series
     plugin: cmake
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     cmake-generator: Ninja
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
@@ -1014,7 +1014,7 @@ parts:
       - libpostproc-dev
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     stage-packages:
       - catdoc
       - libappimage1.0abi1t64
@@ -1039,7 +1039,7 @@ parts:
       - libpulse-dev
       - libpulse0
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     stage-packages:
       - libpulse-mainloop-glib0
       - libpulse0
@@ -1067,7 +1067,7 @@ parts:
       - libvlccore-dev
       - libv4l-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     stage-packages:
       - vlc-plugin-base
       - vlc-plugin-video-output
@@ -1128,7 +1128,7 @@ parts:
       - graphviz
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1158,7 +1158,7 @@ parts:
       - libboost-dev
       - libgcrypt20-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1179,7 +1179,7 @@ parts:
       - graphviz
       - libx11-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1227,7 +1227,7 @@ parts:
       - switcheroo-control
       - zlib1g-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1264,7 +1264,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1282,7 +1282,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1298,7 +1298,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1321,7 +1321,7 @@ parts:
       - libepoxy-dev
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1342,7 +1342,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1372,7 +1372,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1385,7 +1385,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1416,7 +1416,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1438,7 +1438,7 @@ parts:
       - pkg-config
       - wayland-protocols
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1459,7 +1459,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1496,7 +1496,7 @@ parts:
       - perl
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1525,7 +1525,7 @@ parts:
       - libxcursor-dev
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1541,7 +1541,7 @@ parts:
     build-packages:
       - libutempter-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1559,7 +1559,7 @@ parts:
       - pkg-config
       - wayland-protocols
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1578,7 +1578,7 @@ parts:
       - dbus-x11
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1596,7 +1596,7 @@ parts:
     build-packages:
       - doxygen
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1613,7 +1613,7 @@ parts:
     stage-packages:
       - libical3
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1633,7 +1633,7 @@ parts:
       - doxygen
       - graphviz
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1653,7 +1653,7 @@ parts:
       - libqrencode4
       - libzxing3
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1677,7 +1677,7 @@ parts:
       - intltool
       - pkg-config
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1697,7 +1697,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1715,7 +1715,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1733,7 +1733,7 @@ parts:
     stage-packages:
       - hicolor-icon-theme
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1763,7 +1763,7 @@ parts:
       - libopenexr-3-1-30
       - libraw23
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1779,7 +1779,7 @@ parts:
       - doxygen
       - libxkbcommon-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1791,7 +1791,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1808,7 +1808,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1820,7 +1820,7 @@ parts:
     source-branch: main
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libsecret-1-dev
     stage-packages:
@@ -1842,7 +1842,7 @@ parts:
     source-branch: main
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1864,7 +1864,7 @@ parts:
     source-branch: 1.6
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1885,7 +1885,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - liblmdb-dev
       - libxapian-dev
@@ -1906,7 +1906,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -1926,7 +1926,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - firebird-dev
     plugin: cmake
@@ -1940,7 +1940,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - xauth
       - xvfb
@@ -1955,7 +1955,7 @@ parts:
     source-tag: v6.0.0
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - fdupes
       - imagemagick
@@ -1973,7 +1973,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - bison
       - flex
@@ -1990,7 +1990,7 @@ parts:
     source-branch: master
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -2003,7 +2003,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - modemmanager-dev
     plugin: cmake
@@ -2018,7 +2018,7 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libnm-dev
     plugin: cmake
@@ -2032,7 +2032,7 @@ parts:
     source-branch: kdsoap-2.2
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -2053,7 +2053,7 @@ parts:
     source-branch: master
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -2065,7 +2065,7 @@ parts:
     source-branch: master
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libexiv2-dev
     plugin: cmake
@@ -2084,7 +2084,7 @@ parts:
     source-tag: *plasma-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libboost-dev
     plugin: cmake
@@ -2098,7 +2098,7 @@ parts:
     source-tag: *plasma-version
     source-depth: 1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libboost-dev
     plugin: cmake
@@ -2141,7 +2141,7 @@ parts:
       - libtag1-dev
       - libtirpc-dev
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -2194,7 +2194,7 @@ parts:
     source-depth: 1
     plugin: cmake
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libx11-dev
       - libfftw3-dev
@@ -2234,7 +2234,7 @@ parts:
     source-depth: 1
     plugin: cmake
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libx11-dev
       - libfftw3-dev
@@ -2269,7 +2269,7 @@ parts:
     source-depth: 1
     plugin: cmake
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     build-packages:
       - libwayland-dev
       - libxcursor-dev
@@ -2333,7 +2333,7 @@ parts:
     build-packages:
       - cmake
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
@@ -2364,7 +2364,7 @@ parts:
       - libsndfile1
       - libopenal1
     build-snaps:
-      - kde-qt6-core24-sdk/latest/edge
+      - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
