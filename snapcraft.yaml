@@ -404,10 +404,11 @@ parts:
       - doxygen
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   ki18n:
     after:
       - extra-cmake-modules
@@ -483,10 +484,11 @@ parts:
       - libx11-6
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   kcoreaddons:
     after:
       - extra-cmake-modules
@@ -511,20 +513,19 @@ parts:
       - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters:
+    cmake-parameters: &cmakeparameters-kf6withpyside6
       - -DBUILD_WITH_QT6=ON
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DQT_MAJOR_VERSION=6
       - -DCMAKE_FIND_ROOT_PATH="$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
-    build-environment:
+    build-environment: &buildenvironment-kf6withpyside6
       - LLVM_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
       - CMAKE_PREFIX_PATH: /snap/kde-qt6-core24-sdk/current/usr:/snap/ffmpeg-2404-sdk/current/usr:/snap/kde-pyside6-core24-sdk/current${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
       - DICPATH: "$CRAFT_STAGE/usr/share/hunspell"
       - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-pyside6-core24-sdk/current/usr/lib:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/ffmpeg-2404-sdk/current/usr/lib/x86_64-linux-gnu/:$CRAFT_STAGE/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
       - PATH: /snap/kde-qt6-core24-sdk/current/usr/bin:/snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18/bin:/snap/kde-pyside6-core24-sdk/current/usr/bin${PATH:+:$PATH}
       - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/kde-pyside6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/pkgconfig:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
-      - PYSIDE_DISABLE_INTERNAL_QT_CONF: 1
       - PYTHONPATH: /snap/kde-qt6-core24-sdk/current/usr/lib/python3.12:/snap/kde-qt6-core24-sdk/current/usr/lib/python3/dist-packages:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3/dist-packages
       - CPATH:  /snap/kde-qt6-core24-sdk/current/usr/include:/snap/kde-pyside6-core24-sdk/current/usr/include${CPATH:+:$CPATH}
       - C_INCLUDE_PATH: $CRAFT_STAGE/usr/include:/snap/kde-qt6-core24-sdk/current/usr/include:/snap/kde-pyside6-core24-sdk/current/usr/include
@@ -925,10 +926,11 @@ parts:
       - graphviz
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   kpackage:
     after:
       - extra-cmake-modules
@@ -1131,10 +1133,11 @@ parts:
       - pkg-config
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   kwallet:
     after:
       - qca
@@ -1182,10 +1185,11 @@ parts:
       - libx11-dev
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   kio:
     after:
       - extra-cmake-modules
@@ -1301,10 +1305,11 @@ parts:
       - graphviz
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   kdeclarative:
     after:
       - extra-cmake-modules
@@ -1794,10 +1799,11 @@ parts:
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
   krunner:
     after:
       - extra-cmake-modules
