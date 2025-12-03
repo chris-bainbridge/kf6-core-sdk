@@ -16,8 +16,10 @@ platforms:
     build-on: [arm64]
     build-for: [arm64]
 environment:
-  LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
+  LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-pyside6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/snap/kde-qt6-core24-sdk/current/usr/lib:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/usr/lib:/lib"
   GDK_PIXBUF_MODULE_FILE: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0/2.10.0/loaders.cache
+  PYSIDE_DISABLE_INTERNAL_QT_CONF: 1
+  PYTHONPATH: /snap/kde-qt6-core24-sdk/current/usr/lib/python3.12:/snap/kde-qt6-core24-sdk/current/usr/lib/python3/dist-packages:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3.12:/snap/kde-pyside6-core24-sdk/current/usr/lib/python3/dist-packages
 slots: {}
 package-repositories:
 -   type: apt
