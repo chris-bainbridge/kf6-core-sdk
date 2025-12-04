@@ -46,6 +46,7 @@ parts:
       - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/kde-qt6-core24-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
       - XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kde-qt6-core24-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
       - LD_LIBRARY_PATH: "/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}:/snap/kde-qt6-core24-sdk/current/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}/libproxy:/snap/kde-qt6-core24-sdk/current/usr/lib:$CRAFT_STAGE/usr/lib:$CRAFT_STAGE/lib/:$CRAFT_STAGE/usr/lib/${CRAFT_ARCH_TRIPLET_BUILD_FOR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
   glib:
     after: [ meson-deps ]
     source: https://gitlab.gnome.org/GNOME/glib.git
@@ -69,6 +70,7 @@ parts:
       - gcc
       - g++
       - clang-18
+
   ninja:
     plugin: nil
     source: https://github.com/ninja-build/ninja.git
@@ -165,24 +167,9 @@ parts:
       PC=$CRAFT_PART_INSTALL/usr/share/pkgconfig/gsettings-desktop-schemas.pc
       sed -i 's#-I/usr#-I${prefix}#' $PC
 
-  qtconf:
-    after:
-      - gsettings-desktop-schemas
-    plugin: nil
-    override-build: |
-      mkdir -p $CRAFT_PART_INSTALL/usr/bin
-      cat <<EOF > $CRAFT_PART_INSTALL/usr/bin/qt.conf
-      [Paths]
-      Prefix = ../../
-      LibraryExecutables = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/libexec
-      Plugins = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins
-      Qml2Imports = usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/qml
-      Translations = usr/share/qt6/translations
-      Data = usr/share/qt6
-      EOF
   missing-deps:
     after:
-      - qtconf
+      - gsettings-desktop-schemas
     plugin: nil
     stage-packages:
       - libpcre2-16-0
@@ -191,9 +178,10 @@ parts:
       - libsm6
       - libice6
       - libfbclient2
+
   extra-cmake-modules:
     after:
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/extra-cmake-modules.git
     source-tag: &kf6-version v6.20.0
     source-depth: 1
@@ -210,10 +198,11 @@ parts:
     build-environment: *buildenvironment
     stage-packages:
       - python3
+
   plasma-wayland-protocols:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
     source-branch: master
     source-depth: 1
@@ -225,6 +214,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   qca:
     after:
       - extra-cmake-modules
@@ -254,9 +244,10 @@ parts:
     override-stage: |
         craftctl default
         rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+
   polkit-qt-1:
     after:
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/libraries/polkit-qt-1.git
     source-branch: master
     source-depth: 1
@@ -274,6 +265,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   kirigami:
     after:
       - extra-cmake-modules
@@ -288,6 +280,7 @@ parts:
     build-environment: *buildenvironment
     stage-packages:
       - libgomp1
+
   kplotting:
     after:
       - extra-cmake-modules
@@ -305,6 +298,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   syntax-highlighting:
     after:
       - extra-cmake-modules
@@ -319,6 +313,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   kdnssd:
     after:
       - extra-cmake-modules
@@ -334,6 +329,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   kitemmodels:
     after:
       - extra-cmake-modules
@@ -349,6 +345,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   threadweaver:
     after:
       - extra-cmake-modules
@@ -364,6 +361,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   solid:
     after:
       - extra-cmake-modules
@@ -395,7 +393,7 @@ parts:
   kcoreaddons:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/kcoreaddons.git
     source-tag: *kf6-version
     source-depth: 1
@@ -445,80 +443,9 @@ parts:
         craftctl default
         patch -p1 < $CRAFT_PROJECT_DIR/patches/kcoreaddons/001_snap_window_class_fix.patch
 
-  kwidgetsaddons:
-    after:
-      - plasma-wayland-protocols
-      - qtconf
-    source: https://invent.kde.org/frameworks/kwidgetsaddons.git
-    source-tag: *kf6-version
-    source-depth: 1
-    build-packages:
-      - clang-18
-      - doxygen
-      - g++
-      - gcc
-      - graphviz
-      - python3-build
-    build-snaps:
-      - kde-qt6-core24-sdk/latest/beta
-      - kde-pyside6-core24-sdk/latest/beta
-    plugin: cmake
-    cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters-kf6withpyside6
-    build-environment: *buildenvironment-kf6withpyside6
-
-  ki18n:
-    after:
-      - extra-cmake-modules
-      - qtconf
-    source: https://invent.kde.org/frameworks/ki18n.git
-    source-tag: *kf6-version
-    source-depth: 1
-    build-packages:
-      - iso-codes
-      - gettext
-      - doxygen
-      - graphviz
-      - python3
-    build-snaps:
-      - kde-qt6-core24-sdk/latest/beta
-    plugin: cmake
-    cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
-  kconfig:
-    after:
-      - extra-cmake-modules
-      - qtconf
-    source: https://invent.kde.org/frameworks/kconfig.git
-    source-tag: *kf6-version
-    source-depth: 1
-    build-packages:
-      - doxygen
-      - graphviz
-      - libxkbcommon-dev
-    build-snaps:
-      - kde-qt6-core24-sdk/latest/beta
-    plugin: cmake
-    cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
-  attica:
-    after:
-      - extra-cmake-modules
-      - qtconf
-    source: https://invent.kde.org/frameworks/attica.git
-    source-tag: *kf6-version
-    source-depth: 1
-    build-snaps:
-      - kde-qt6-core24-sdk/latest/beta
-    plugin: cmake
-    cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
   kguiaddons:
     after:
-      - qtconf
+      - missing-deps
       - extra-cmake-modules
       - plasma-wayland-protocols
     source: https://invent.kde.org/frameworks/kguiaddons.git
@@ -551,10 +478,84 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-kf6withpyside6
     build-environment: *buildenvironment-kf6withpyside6
+
+  kwidgetsaddons:
+    after:
+      - plasma-wayland-protocols
+      - missing-deps
+    source: https://invent.kde.org/frameworks/kwidgetsaddons.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - clang-18
+      - doxygen
+      - g++
+      - gcc
+      - graphviz
+      - python3-build
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
+
+  ki18n:
+    after:
+      - extra-cmake-modules
+      - missing-deps
+    source: https://invent.kde.org/frameworks/ki18n.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - iso-codes
+      - gettext
+      - doxygen
+      - graphviz
+      - python3
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+
+  kconfig:
+    after:
+      - extra-cmake-modules
+      - missing-deps
+    source: https://invent.kde.org/frameworks/kconfig.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-packages:
+      - doxygen
+      - graphviz
+      - libxkbcommon-dev
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  attica:
+    after:
+      - extra-cmake-modules
+      - missing-deps
+    source: https://invent.kde.org/frameworks/attica.git
+    source-tag: *kf6-version
+    source-depth: 1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+
   karchive:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     build-packages:
       - libbz2-dev
       - libzstd-dev
@@ -575,10 +576,11 @@ parts:
         while read -r PATCHFILE ; do
             patch -p1 < "$CRAFT_PROJECT_DIR/patches/karchive/$PATCHFILE"
         done < $CRAFT_PROJECT_DIR/patches/karchive/series
+
   kcodecs:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/kcodecs.git
     source-tag: *kf6-version
     source-depth: 1
@@ -592,10 +594,11 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   kitemviews:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/kitemviews.git
     source-tag: *kf6-version
     source-depth: 1
@@ -608,11 +611,12 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   kwindowsystem:
     after:
       - extra-cmake-modules
       - plasma-wayland-protocols
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/kwindowsystem.git
     source-tag: *kf6-version
     source-depth: 1
@@ -639,10 +643,11 @@ parts:
       - libxcb-res0
       - libxcb1
       - libxfixes3
+
   kdbusaddons:
     after:
       - extra-cmake-modules
-      - qtconf
+      - missing-deps
     source: https://invent.kde.org/frameworks/kdbusaddons.git
     source-tag: *kf6-version
     source-depth: 1
@@ -684,6 +689,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
 # ## Tier 2
   kauth:
     after:
@@ -995,7 +1001,7 @@ parts:
     build-environment: *buildenvironment
   libdbusmenu-qt6:
     after:
-      - qtconf
+      - missing-deps
     source: https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libdbusmenu-qt/0.9.3+16.04.20160218-3/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
     source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
     override-pull: |
@@ -1858,7 +1864,7 @@ parts:
     build-environment: *buildenvironment
   qtkeychain:
     after:
-      - qtconf
+      - missing-deps
     source: https://github.com/frankosterfeld/qtkeychain.git
     source-branch: main
     source-depth: 1
@@ -1880,7 +1886,7 @@ parts:
     build-environment: *buildenvironment
   qcoro:
     after:
-      - qtconf
+      - missing-deps
     source: https://github.com/danvratil/qcoro.git
     source-branch: main
     source-depth: 1
@@ -2010,7 +2016,7 @@ parts:
       - hicolor-icon-theme
   kuserfeedback:
     after:
-      - qtconf
+      - missing-deps
       - extra-cmake-modules
     source: https://invent.kde.org/frameworks/kuserfeedback.git
     source-tag: *kf6-version
@@ -2040,7 +2046,7 @@ parts:
     build-environment: *buildenvironment
   modemmanager-qt:
     after:
-      - qtconf
+      - missing-deps
       - extra-cmake-modules
     source: https://invent.kde.org/frameworks/modemmanager-qt.git
     source-tag: *kf6-version
@@ -2055,7 +2061,7 @@ parts:
     build-environment: *buildenvironment
   networkmanager-qt:
     after:
-      - qtconf
+      - missing-deps
       - extra-cmake-modules
     source: https://invent.kde.org/frameworks/networkmanager-qt.git
     source-tag: *kf6-version
@@ -2070,7 +2076,7 @@ parts:
     build-environment: *buildenvironment
   kdsoap:
     after:
-      - qtconf
+      - missing-deps
     source: https://github.com/KDAB/KDSoap.git
     source-branch: kdsoap-2.2
     source-depth: 1
@@ -2414,7 +2420,7 @@ parts:
     build-environment: *buildenvironment
   fix_pc_files:
     after:
-      - qtconf
+      - missing-deps
       - missing-deps
       - extra-cmake-modules
       - plasma-wayland-protocols
