@@ -415,6 +415,7 @@ parts:
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters-kf6withpyside6
+      - -DBUILD_TESTING=OFF
       - -DBUILD_WITH_QT6=ON
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_FIND_ROOT_PATH="$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
