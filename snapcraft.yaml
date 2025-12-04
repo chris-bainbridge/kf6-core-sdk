@@ -401,17 +401,17 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
+      - clang-18
       - doxygen
+      - g++
+      - gcc
       - graphviz
       - libudev-dev
-      - shared-mime-info
       - python3-build
-      - gcc
-      - g++
-      - clang-18
-    stage-packages:
       - shared-mime-info
+    stage-packages:
       - libudev1
+      - shared-mime-info
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -419,10 +419,10 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters-kf6withpyside6
       - -DBUILD_WITH_QT6=ON
-      - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
-      - -DQT_MAJOR_VERSION=6
       - -DCMAKE_FIND_ROOT_PATH="$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DQT_MAJOR_VERSION=6
     build-environment: &buildenvironment-kf6withpyside6
       - LLVM_INSTALL_DIR: /snap/kde-qt6-core24-sdk/current/usr/lib/llvm-18
       - CMAKE_PREFIX_PATH: /snap/kde-qt6-core24-sdk/current/usr:/snap/ffmpeg-2404-sdk/current/usr:/snap/kde-pyside6-core24-sdk/current${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}
@@ -452,6 +452,10 @@ parts:
     build-packages:
       - graphviz
       - doxygen
+      - python3-build
+      - gcc
+      - g++
+      - clang-18
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -517,18 +521,22 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
-      - libxkbcommon-dev
+      - clang-18
+      - doxygen
+      - g++
+      - gcc
+      - graphviz
+      - libgl1-mesa-dev
+      - libglx-dev
+      - libmd4c-dev
       - libwayland-client0
       - libwayland-dev
-      - wayland-protocols
-      - doxygen
-      - graphviz
       - libx11-dev
       - libxcb1-dev
+      - libxkbcommon-dev
       - pkg-config
-      - libglx-dev
-      - libgl1-mesa-dev
-      - libmd4c-dev
+      - python3-build
+      - wayland-protocols
     stage-packages:
       - libwayland-client0
       - libx11-6
@@ -924,8 +932,12 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
+      - clang-18
       - doxygen
+      - g++
+      - gcc
       - graphviz
+      - python3-build
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -1110,11 +1122,11 @@ parts:
     build-packages:
       - automake
       - libasound2-dev
-      - libvorbis-dev
-      - libtdb-dev
-      - libpulse-dev
       - libgstreamer1.0-dev
       - libltdl-dev
+      - libpulse-dev
+      - libtdb-dev
+      - libvorbis-dev
   knotifications:
     after:
       - extra-cmake-modules
@@ -1122,17 +1134,21 @@ parts:
       - kconfig
       - kcoreaddons
       - kwindowsystem
+      - libcanberra
       - libdbusmenu-qt6
       - phonon
-      - libcanberra
     source: https://invent.kde.org/frameworks/knotifications.git
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
+      - clang-18
       - dbus-x11
       - doxygen
+      - g++
+      - gcc
       - graphviz
       - pkg-config
+      - python3-build
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -1182,9 +1198,13 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
+      - clang-18
       - doxygen
+      - g++
+      - gcc
       - graphviz
       - libx11-dev
+      - python3-build
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -1303,8 +1323,12 @@ parts:
     source-tag: *kf6-version
     source-depth: 1
     build-packages:
+      - clang-18
       - doxygen
+      - g++
+      - gcc
       - graphviz
+      - python3-build
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
@@ -1799,6 +1823,11 @@ parts:
     source: https://invent.kde.org/frameworks/kstatusnotifieritem.git
     source-tag: *kf6-version
     source-depth: 1
+    build-packages:
+      - clang-18
+      - g++
+      - gcc
+      - python3-build
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
