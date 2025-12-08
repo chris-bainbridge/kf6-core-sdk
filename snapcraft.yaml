@@ -1233,7 +1233,8 @@ parts:
     build-environment: *buildenvironment-kf6withpyside6
     override-pull: |
         craftctl default
-        cp /root/parts/kcoreaddons/install/usr/share/PySide6/typesystems/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems
+        mkdir -p /usr/share/PySide6/typesystems
+        cp /root/sources/kcoreaddons/python/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems/
 
   kio:
     after:
