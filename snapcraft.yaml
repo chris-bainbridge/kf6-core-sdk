@@ -1234,7 +1234,7 @@ parts:
     override-pull: |
         craftctl default
         mkdir -p /usr/share/PySide6/typesystems
-        cp /root/sources/kcoreaddons/python/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems/
+        cp /root/parts/kcoreaddons/src/kcoreaddons/python/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems/
 
   kio:
     after:
