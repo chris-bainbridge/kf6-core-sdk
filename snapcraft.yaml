@@ -505,6 +505,9 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-kf6withpyside6
     build-environment: *buildenvironment-kf6withpyside6
+    override-pull: |
+        craftctl default
+        patch -p1 < $CRAFT_PROJECT_DIR/patches/kwidgetsaddons/add_qmetamethod_include.diff
 
   ki18n:
     after:

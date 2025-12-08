@@ -1,0 +1,12 @@
+diff --git a/python/bindings.h b/python/bindings.h
+index 3b2bdf7b..9af165b3 100644
+--- a/python/bindings.h
++++ b/python/bindings.h
+@@ -6,6 +6,7 @@
+ // Make "signals:", "slots:" visible as access specifiers
+ #define QT_ANNOTATE_ACCESS_SPECIFIER(a) __attribute__((annotate(#a)))
+ 
++#include <QMetaMethod>
+ #include "pysidesignal.h"
+ 
+ #include <KAcceleratorManager>
