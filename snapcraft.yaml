@@ -1231,6 +1231,10 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-kf6withpyside6
     build-environment: *buildenvironment-kf6withpyside6
+    override-pull: |
+        craftctl default
+        cp /root/parts/kcoreaddons/install/usr/share/PySide6/typesystems/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems
+
   kio:
     after:
       - extra-cmake-modules
