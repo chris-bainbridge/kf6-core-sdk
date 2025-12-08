@@ -190,11 +190,12 @@ parts:
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters
-      - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DQT_MAJOR_VERSION=6
       - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
       - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - -DBUILD_TESTING=OFF
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DQT_MAJOR_VERSION=6
     build-environment: *buildenvironment
     stage-packages:
       - python3
@@ -417,10 +418,11 @@ parts:
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters-kf6withpyside6
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\/snap/kde-pyside6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\/snap/kde-pyside6-core24-sdk/current\\:/usr"
       - -DBUILD_TESTING=OFF
       - -DBUILD_WITH_QT6=ON
       - -DCMAKE_BUILD_TYPE=Release
-      - -DCMAKE_FIND_ROOT_PATH="$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DQT_MAJOR_VERSION=6
     build-environment: &buildenvironment-kf6withpyside6
@@ -541,6 +543,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   attica:
     after:
       - extra-cmake-modules
@@ -2252,15 +2255,15 @@ parts:
       - libfftw3-dev
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters-withoutqt5
-      - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DQT_MAJOR_VERSION=6
-      - -DBUILD_WITH_QT6=ON
-      - -DBUILD_QT6=ON
-      - -DBUILD_QT5=OFF
-      - -DBUILD_TESTING=OFF
       - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
       - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
+      - -DBUILD_QT5=OFF
+      - -DBUILD_QT6=ON
+      - -DBUILD_TESTING=OFF
+      - -DBUILD_WITH_QT6=ON
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DQT_MAJOR_VERSION=6
     build-environment: *buildenvironment
   oxygen:
     after:
