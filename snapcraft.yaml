@@ -174,7 +174,7 @@ parts:
     stage-packages:
       - libpcre2-16-0
       - libegl1
-      - libclang-cpp14
+      - libclang-cpp18
       - libsm6
       - libice6
       - libfbclient2
