@@ -1207,6 +1207,7 @@ parts:
     build-environment: *buildenvironment
     stage-packages:
       - libgcrypt20
+
   kjobwidgets:
     after:
       - extra-cmake-modules
@@ -1231,10 +1232,12 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-kf6withpyside6
     build-environment: *buildenvironment-kf6withpyside6
-    override-pull: |
-        craftctl default
+    override-build: |
         mkdir -p /usr/share/PySide6/typesystems
-        cp /root/parts/kcoreaddons/src/python/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems/
+        cp /root/parts/kcoreaddons/install/usr/share/PySide6/typesystems/typesystem_kcoreaddons.xml /usr/share/PySide6/typesystems/
+        mkdir -p /usr/include/PySide6/KCoreAddons/
+        cp /root/parts/kcoreaddons/install/usr/include/PySide6/KCoreAddons/kcoreaddons_python.h /usr/include/PySide6/KCoreAddons/
+        craftctl default
 
   kio:
     after:
