@@ -403,6 +403,8 @@ parts:
       - g++
       - gcc
       - graphviz
+      - libpython3-dev
+      - libpython3.12-dev
       - libudev-dev
       - python3-build
       - shared-mime-info
