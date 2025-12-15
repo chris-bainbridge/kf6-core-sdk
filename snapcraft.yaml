@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.20.0-6.5.3-25.08.3
+version: 6.20.0-6.5.3-25.12.0
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -2194,7 +2194,7 @@ parts:
       - plasma-activities
       - plasma-activities-stats
     source: https://invent.kde.org/network/kio-extras.git
-    source-tag: &apps-version v25.08.3
+    source-tag: &apps-version v25.12.0
     source-depth: 1
     build-packages:
       - libappimage-dev
@@ -2429,6 +2429,37 @@ parts:
     stage-packages:
       - libsndfile1
       - libopenal1
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+    plugin: cmake
+    cmake-generator: Ninja
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
+  khelpcenter:
+    after:
+      - extra-cmake-modules
+      - karchive
+      - kbookmarks
+      - kconfig
+      - kcolorscheme
+      - kcoreaddons
+      - kdbusaddons
+      - kdoctools
+      - kio
+      - kservice
+      - ktexttemplate
+      - ki18n
+      - kwidgetsaddons
+      - kwindowsystem
+      - kxmlgui
+    source: https://invent.kde.org/system/khelpcenter.git
+    source-tag: *apps-version
+    source-depth: 1
+    build-packages:
+      - cmake
+      - libgumbo-dev
+      - libxapian-dev
+      - libxml2-dev
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
