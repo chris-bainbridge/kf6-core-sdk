@@ -1126,26 +1126,26 @@ parts:
      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0*
      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgdk_pixbuf-2.0.so.0
      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgdk_pixbuf-2.0.so.0.4200.10
-  libcanberra:
-    source: http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
-    plugin: autotools
-    autotools-configure-parameters:
-      - --prefix=/usr
-      - --with-builtin=pulse
-    build-environment: *buildenvironment
-    override-pull: |
-      craftctl default
-      for p in $CRAFT_PROJECT_DIR/patches/libcanberra/*.patch; do
-        patch -p1 < "$p"
-      done
-    build-packages:
-      - automake
-      - libasound2-dev
-      - libgstreamer1.0-dev
-      - libltdl-dev
-      - libpulse-dev
-      - libtdb-dev
-      - libvorbis-dev
+  # libcanberra:
+  #   source: http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
+  #   plugin: autotools
+  #   autotools-configure-parameters:
+  #     - --prefix=/usr
+  #     - --with-builtin=pulse
+  #   build-environment: *buildenvironment
+  #   override-pull: |
+  #     craftctl default
+  #     for p in $CRAFT_PROJECT_DIR/patches/libcanberra/*.patch; do
+  #       patch -p1 < "$p"
+  #     done
+  #   build-packages:
+  #     - automake
+  #     - libasound2-dev
+  #     - libgstreamer1.0-dev
+  #     - libltdl-dev
+  #     - libpulse-dev
+  #     - libtdb-dev
+  #     - libvorbis-dev
   knotifications:
     after:
       - extra-cmake-modules
@@ -1168,6 +1168,10 @@ parts:
       - graphviz
       - pkg-config
       - python3-build
+    stage-packages:
+      - libcanberra-pulse
+      - libcanberra-gstreamer
+      - libcanberra0t64
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
       - kde-pyside6-core24-sdk/latest/beta
