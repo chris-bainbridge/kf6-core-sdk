@@ -1153,7 +1153,7 @@ parts:
       - kconfig
       - kcoreaddons
       - kwindowsystem
-      - libcanberra
+ #     - libcanberra
       - libdbusmenu-qt6
       - phonon
     source: https://invent.kde.org/frameworks/knotifications.git
@@ -1428,7 +1428,7 @@ parts:
       - kxmlgui
       - solid
       - phonon
-      - libcanberra
+#      - libcanberra
     source: https://invent.kde.org/frameworks/knotifyconfig.git
     source-tag: *kf6-version
     source-depth: 1
