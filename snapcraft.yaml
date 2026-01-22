@@ -1615,7 +1615,7 @@ parts:
       - extra-cmake-modules
       - plasma-wayland-protocols
     source: https://invent.kde.org/plasma/kwayland.git
-    source-tag: &plasma-version v6.6.0
+    source-tag: &plasma-version v6.5.90
     source-depth: 1
     build-packages:
       - libegl1-mesa-dev
