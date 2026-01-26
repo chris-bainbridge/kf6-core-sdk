@@ -1168,6 +1168,7 @@ parts:
       - graphviz
       - pkg-config
       - python3-build
+      - libcanberra-dev
     stage-packages:
       - libcanberra-pulse
       - libcanberra-gstreamer
