@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.22.0-6.6.0-25.12.1
+version: 6.22.0-6.6.0-25.12.2
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -70,6 +70,8 @@ parts:
       - gcc
       - g++
       - clang-18
+      - binutiles
+      - elfutils
 
   ninja:
     plugin: nil
