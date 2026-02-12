@@ -70,7 +70,7 @@ parts:
       - gcc
       - g++
       - clang-18
-      - binutiles
+      - binutils
       - elfutils
 
   ninja:
