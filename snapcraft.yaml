@@ -57,6 +57,7 @@ parts:
       - --prefix=/usr
       - -Doptimization=3
       - -Ddebug=true
+      - -Dtests=false
     build-environment: *buildenvironment
     override-build: |
       set -eux
@@ -64,14 +65,15 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/glib-2.0/
       cp $CRAFT_PART_INSTALL/usr/bin/{gio-querymodules,glib-compile-schemas} $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/glib-2.0/
     build-packages:
-      - pkg-config
-      - libmount-dev
-      - libdbus-1-dev
+      - binutils
+      - clang-18
+      - elfutils
       - gcc
       - g++
-      - clang-18
-      - binutils
-      - elfutils
+      - libmount-dev
+      - libdbus-1-dev
+      - libelf-dev
+      - pkg-config
 
   ninja:
     plugin: nil
