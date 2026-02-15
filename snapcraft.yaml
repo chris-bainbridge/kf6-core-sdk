@@ -176,13 +176,16 @@ parts:
       - gsettings-desktop-schemas
     plugin: nil
     stage-packages:
-      - libpcre2-16-0
-      - libegl1
       - libclang-cpp18
-      - libsm6
-      - libice6
+      - libduktape207
+      - libegl1
       - libfbclient2
-
+      - libfreetype6
+      - libice6
+      - libpcre2-16-0
+      - libsm6     
+      - libxkbcommon0
+      
   extra-cmake-modules:
     after:
       - missing-deps
@@ -2489,7 +2492,6 @@ parts:
     build-environment: *buildenvironment
   fix_pc_files:
     after:
-      - missing-deps
       - missing-deps
       - extra-cmake-modules
       - plasma-wayland-protocols
