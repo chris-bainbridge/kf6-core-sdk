@@ -1951,7 +1951,7 @@ parts:
       - breeze-icons
       - qtkeychain
     source: https://invent.kde.org/libraries/ktextaddons.git
-    source-branch: 1.9
+    source-branch: 2.0
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
