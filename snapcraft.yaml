@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
-# Please update to match &kf6-version, &plasma-version, &apps-version
-version: 6.23.0-6.6.2-25.12.3
+# Please update to match qt-version, &kf6-version, &plasma-version, &apps-version
+version: 6.10.2-6.23.0-6.6.2-25.12.3
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -197,8 +197,8 @@ parts:
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters: &cmakeparameters
-      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
-      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/snap/kde-pyside6-core24-sdk/current\\:/usr"
+      - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/snap/kde-pyside6-core24-sdk/current\\;/usr"
       - -DBUILD_TESTING=OFF
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
@@ -207,6 +207,15 @@ parts:
     stage-packages:
       - python3
 
+  wayland-protocols:
+    source: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+    source-tag: 1.47
+    plugin: meson
+    build-packages:
+      - libwayland-dev
+      - meson
+      - pkgconf
+
   plasma-wayland-protocols:
     after:
       - extra-cmake-modules
@@ -214,8 +223,6 @@ parts:
     source: https://invent.kde.org/libraries/plasma-wayland-protocols.git
     source-branch: master
     source-depth: 1
-    stage-packages:
-      - wayland-protocols
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
     plugin: cmake
@@ -246,7 +253,7 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
       - -DQT_MAJOR_VERSION=6
-      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
+      - "-DCMAKE_FIND_ROOT_PATH=$CRAFT_STAGE\\:/snap/kde-qt6-core24-sdk/current\\:/usr"
       - "-DCMAKE_PREFIX_PATH=$CRAFT_STAGE\\;/snap/kde-qt6-core24-sdk/current\\;/usr"
     build-environment: *buildenvironment
     override-stage: |
