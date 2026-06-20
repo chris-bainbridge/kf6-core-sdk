@@ -2326,6 +2326,7 @@ parts:
       - kconfigwidgets
       - kservice
       - kwidgetsaddons
+      - libplasma
     source: https://invent.kde.org/plasma/oxygen.git
     source-tag: *plasma-version
     source-depth: 1
@@ -2338,11 +2339,6 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-withoutqt5
     build-environment: *buildenvironment
-    override-pull: |
-        craftctl default
-        while read -r PATCHFILE ; do
-            patch -p1 < "$CRAFT_PROJECT_DIR/patches/oxygen/$PATCHFILE"
-        done < $CRAFT_PROJECT_DIR/patches/oxygen/series
   plasma-integration:
     after:
       - extra-cmake-modules
@@ -2413,28 +2409,64 @@ parts:
       - -usr/share/glib-2.0/schemas/org.gnome.desktop.wm.preferences.gschema.xml
       - -usr/share/glib-2.0/schemas/org.gnome.system.proxy.gschema.xml
       - -usr/share/icons/*
-  qqc2-breeze-style:
-    after:
-      - extra-cmake-modules
-      - kcodecs
-      - kcolorscheme
-      - kconfig
-      - kcoreaddons
-      - kguiaddons
-      - kirigami
-      - kquickcharts
-      - kiconthemes
-    source: https://invent.kde.org/plasma/qqc2-breeze-style.git
-    source-tag: *plasma-version
-    source-depth: 1
-    build-packages:
-      - cmake
+  wayland:
+    source: https://gitlab.freedesktop.org/wayland/wayland.git
+    source-branch: 1.23
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kf6-core24-sdk/latest/beta
+    build-packages:
+      - meson
+      - pkgconf
+      - xsltproc
+      - xmlto
+      - libexpat1-dev
+      - libffi-dev
+      - libxml2-dev
+      - doxygen
+      - graphviz
+    build-environment:
+      - PKG_CONFIG_PATH: "$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig:/snap/kde-qt6-core24-sdk/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig:/snap/kf6-core24-sdk/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig"
+  wayland-protocols:
+    after:
+      - wayland
+    source: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+    source-tag: 1.47
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+      - kf6-core24-sdk/latest/beta
+    build-packages:
+      - meson
+      - pkgconf
+    build-environment:
+      - PKG_CONFIG_PATH: "$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig:/snap/kde-qt6-core24-sdk/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig:/snap/kf6-core24-sdk/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig"
+      - LD_LIBRARY_PATH: "$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$LD_LIBRARY_PATH"
+  libplasma:
+    after: [wayland-protocols]
+    source: https://invent.kde.org/plasma/libplasma.git
+    source-tag: *plasma-version
     plugin: cmake
+    build-packages:
+      - libpulse0
+      - rsync
+    stage-packages:
+      - libpulse0
+    build-snaps:
+      - kde-qt6-core24-sdk/latest/beta
+      - kf6-core24-sdk/latest/beta
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+    override-build: |
+      craftctl default
+      rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+    prime:
+      - -usr/bin/rsync
   libkdegames:
     after:
       - extra-cmake-modules
