@@ -2326,6 +2326,8 @@ parts:
       - kconfigwidgets
       - kservice
       - kwidgetsaddons
+      - libplasma
+
     source: https://invent.kde.org/plasma/oxygen.git
     source-tag: *plasma-version
     source-depth: 1
@@ -2338,11 +2340,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters-withoutqt5
     build-environment: *buildenvironment
-    override-pull: |
-        craftctl default
-        while read -r PATCHFILE ; do
-            patch -p1 < "$CRAFT_PROJECT_DIR/patches/oxygen/$PATCHFILE"
-        done < $CRAFT_PROJECT_DIR/patches/oxygen/series
+
   plasma-integration:
     after:
       - extra-cmake-modules
