@@ -2327,7 +2327,6 @@ parts:
       - kservice
       - kwidgetsaddons
       - libplasma
-
     source: https://invent.kde.org/plasma/oxygen.git
     source-tag: *plasma-version
     source-depth: 1
@@ -2466,6 +2465,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   khelpcenter:
     after:
       - extra-cmake-modules
@@ -2497,6 +2497,7 @@ parts:
     cmake-generator: Ninja
     cmake-parameters: *cmakeparameters
     build-environment: *buildenvironment
+
   libplasma:
     after: [wayland-protocols]
     source: https://invent.kde.org/plasma/libplasma.git
@@ -2511,18 +2512,14 @@ parts:
       - kde-qt6-core24-sdk/latest/beta
       - kf6-core24-sdk/latest/beta
     cmake-generator: Ninja
-    cmake-parameters:
-      - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DQT_MAJOR_VERSION=6
-      - -DENABLE_QT5=OFF
-      - -DENABLE_QT6=ON
-      - -DBUILD_TESTING=OFF
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
     override-build: |
       craftctl default
       rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
     prime:
       - -usr/bin/rsync
+
   marble:
     source: https://invent.kde.org/education/marble.git
     source-tag: *apps-version
@@ -2538,14 +2535,8 @@ parts:
       - hunspell-dictionaries
       - ffmpeg-2404-sdk
     cmake-generator: Ninja
-    cmake-parameters:
-      - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DQT_MAJOR_VERSION=6
-      - -DENABLE_QT5=OFF
-      - -DENABLE_QT6=ON
-      - -DBUILD_TESTING=OFF
-      - -DCMAKE_FIND_ROOT_PATH="/snap/ffmpeg-2404-sdk/current;/snap/kde-qt6-core24-sdk/current;/snap/kf6-core24-sdk/current"
+    cmake-parameters: *cmakeparameters
+    build-environment: *buildenvironment
     override-pull: |
         craftctl default
         patch -p0 < ${SNAPCRAFT_PROJECT_DIR}/project/bundles/snap/snap/local/disable_broken_osm_plugin.patch
@@ -2553,11 +2544,10 @@ parts:
       craftctl default
       rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
     build-environment: &build-environment
-      - PKG_CONFIG_PATH: "$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig"
-      - LD_LIBRARY_PATH: "/snap/mesa-2404/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/ffmpeg-2404-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$LD_LIBRARY_PATH"
       - DICPATH: "$CRAFT_STAGE/usr/share/hunspell"
     prime:
       - -usr/bin/rsync
+
   fix_pc_files:
     after:
       - missing-deps
