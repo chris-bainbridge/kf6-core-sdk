@@ -2543,8 +2543,6 @@ parts:
     override-build: |
       craftctl default
       rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
-    build-environment: &build-environment
-      - DICPATH: "$CRAFT_STAGE/usr/share/hunspell"
     prime:
       - -usr/bin/rsync
 
