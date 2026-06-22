@@ -1958,7 +1958,7 @@ parts:
       - breeze-icons
       - qtkeychain
     source: https://invent.kde.org/libraries/ktextaddons.git
-    source-branch: 2.0
+    source-branch: 2.1
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
@@ -2049,7 +2049,7 @@ parts:
     after:
       - extra-cmake-modules
     source: https://invent.kde.org/frameworks/oxygen-icons.git
-    source-tag: v6.0.0
+    source-tag: *kf6-version
     source-depth: 1
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
@@ -2539,7 +2539,7 @@ parts:
     build-environment: *buildenvironment
     override-pull: |
         craftctl default
-        patch -p0 < ${SNAPCRAFT_PROJECT_DIR}/project/bundles/snap/snap/local/disable_broken_osm_plugin.patch
+        patch -p0 < ${SNAPCRAFT_PROJECT_DIR}/patches/marble/disable_broken_osm_plugin.patch
     override-build: |
       craftctl default
       rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
