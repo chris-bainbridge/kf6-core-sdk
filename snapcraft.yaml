@@ -1,7 +1,7 @@
 ---
 name: kf6-core24-sdk
 # Please update to match qt-version, &kf6-version, &plasma-version, &apps-version
-version: 6.11.1-6.27.0-6.7.0-26.04.2
+version: 6.11.1-6.27.0-6.7.1-26.04.2
 summary: KDE Frameworks 6
 description: KDE Frameworks are addons and useful extensions to Qt
 confinement: strict
@@ -1657,7 +1657,7 @@ parts:
       - extra-cmake-modules
       - plasma-wayland-protocols
     source: https://invent.kde.org/plasma/kwayland.git
-    source-tag: &plasma-version v6.7.0
+    source-tag: &plasma-version v6.7.1
     source-depth: 1
     build-packages:
       - libegl1-mesa-dev
@@ -1720,10 +1720,11 @@ parts:
       - libical3
     build-snaps:
       - kde-qt6-core24-sdk/latest/beta
+      - kde-pyside6-core24-sdk/latest/beta
     plugin: cmake
     cmake-generator: Ninja
-    cmake-parameters: *cmakeparameters
-    build-environment: *buildenvironment
+    cmake-parameters: *cmakeparameters-kf6withpyside6
+    build-environment: *buildenvironment-kf6withpyside6
     # override-pull: |
     #   craftctl default
     #   while read -r PATCHFILE ; do
