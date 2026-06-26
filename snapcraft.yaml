@@ -2535,7 +2535,20 @@ parts:
     build-environment: *buildenvironment
 
   libplasma:
-    after: [wayland-protocols]
+    after:
+      - wayland-protocols
+      - kconfig
+      - kcoreaddons
+      - kglobalaccel
+      - kguiaddons
+      - ki18n
+      - kiconthemes
+      - kio
+      - kwindowsystem
+      - knotifications
+      - kpackage
+      - kirigami
+      - ksvg
     source: https://invent.kde.org/plasma/libplasma.git
     source-tag: *plasma-version
     plugin: cmake
@@ -2557,6 +2570,8 @@ parts:
       - -usr/bin/rsync
 
   marble:
+    after:
+      - libplasma
     source: https://invent.kde.org/education/marble.git
     source-tag: *apps-version
     plugin: cmake
