@@ -1797,6 +1797,7 @@ parts:
       - kirigami
       - knotifications
       - kwallet
+      - prison
     source: https://invent.kde.org/frameworks/purpose.git
     source-tag: *kf6-version
     source-depth: 1
