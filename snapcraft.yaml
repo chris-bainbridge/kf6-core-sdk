@@ -2600,7 +2600,6 @@ parts:
       - hunspell-dictionaries
       - ffmpeg-2404-sdk
     cmake-generator: Ninja
-    cmake-generator: Ninja
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
