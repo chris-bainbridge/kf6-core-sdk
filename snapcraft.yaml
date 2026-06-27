@@ -1033,7 +1033,7 @@ parts:
     after:
       - missing-deps
     source: https://launchpad.net/ubuntu/+archive/primary/+files/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
-    source-checksum: 8b90312bd8654e026d814d4db986ce5e
+    source-checksum: md5/8b90312bd8654e026d814d4db986ce5e
     override-pull: |
         craftctl default
         while read -r PATCHFILE ; do
