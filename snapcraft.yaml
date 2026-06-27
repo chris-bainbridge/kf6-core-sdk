@@ -1032,8 +1032,8 @@ parts:
   libdbusmenu-qt6:
     after:
       - missing-deps
-    source: https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libdbusmenu-qt/0.9.3+16.04.20160218-3/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
-    source-checksum: sha256/a8e6358a31c44ccdf1bfc46c95a77a6bfc7fc1f536aadb913ed4f4405c570cf6
+    source: https://launchpad.net/ubuntu/+archive/primary/+files/libdbusmenu-qt_0.9.3+16.04.20160218.orig.tar.gz
+    source-checksum: 8b90312bd8654e026d814d4db986ce5e
     override-pull: |
         craftctl default
         while read -r PATCHFILE ; do
