@@ -2605,6 +2605,14 @@ parts:
     source-tag: *apps-version
     plugin: cmake
     build-packages:
+      - bison
+      - dbus-x11
+      - docbook-xml
+      - docbook-xsl
+      - doxygen
+      - flex
+      - graphviz
+      - libxml2-utils
       - libpulse0
       - rsync
     stage-packages:
