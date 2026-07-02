@@ -156,22 +156,20 @@ parts:
       - libpango1.0-dev
 
   gsettings-desktop-schemas:
-    after:
-      - meson-deps
-      - ninja
+    after: [ gsound, meson-deps, gobject-introspection ]
     source: https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas.git
-    source-tag: '42.0'
+    source-tag: '46.1'
+# ext:updatesnap
+#   version-format:
+#     same-major: true
     source-depth: 1
-    build-environment: *buildenvironment
-    build-packages:
-      - libgirepository-1.0-dev
-    stage-packages:
-      - libgirepository-1.0-1
     plugin: meson
     meson-parameters:
       - --prefix=/usr
       - -Doptimization=3
       - -Ddebug=true
+      - -Dintrospection=true
+    build-environment: *buildenvironment
     override-build: |
       set -eux
       craftctl default
