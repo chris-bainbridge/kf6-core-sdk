@@ -1,2 +1,4 @@
 .ccache/
 .sdk/
+*.snap
+build.log
