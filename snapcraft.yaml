@@ -238,6 +238,7 @@ parts:
       - meson-deps
     source: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
     source-tag: 1.47
+    source-depth: 1
     plugin: meson
     build-environment:
       - PYTHONPATH: /usr/local/lib/python3.14/dist-packages${PYTHONPATH:+:$PYTHONPATH}
