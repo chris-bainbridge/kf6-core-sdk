@@ -2569,10 +2569,20 @@ parts:
       - kio-extras
       - libkdegames
     plugin: nil
-    override-stage: |
+    # Rewrites run in override-PRIME, not override-stage: the stage tree
+    # persists between runs, so rewriting .pc files to target-system
+    # paths here poisons later rebuilds -- a part consuming them (e.g.
+    # kcoreaddons via ECM FindLibMount -> glib's libmount.pc) configures
+    # against /snap/$CRAFT_PROJECT_NAME/current/... paths that only
+    # exist on a target system, never in the build container (seen
+    # 2026-10-08: kcoreaddons failed to configure after the stage had
+    # been rewritten by the previous run's pass). In prime, the rewrites
+    # affect only the shipped snap; the stage keeps /root/stage-resolved
+    # paths that every rebuild can consume.
+    override-prime: |
         craftctl default
-        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:/root/stage:/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
-        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
-        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
-        find $CRAFT_STAGE -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
-        find $CRAFT_STAGE -type f,l -name "libtoolize" -exec bash -c "sed -i 's#/root/stage#/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
+        find $CRAFT_PRIME -type f,l -name "*.pc" -exec bash -c "sed -i 's:/root/stage:/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
+        find $CRAFT_PRIME -type f,l -name "*.pc" -exec bash -c "sed -i 's:libdir=/usr:libdir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+        find $CRAFT_PRIME -type f,l -name "*.pc" -exec bash -c "sed -i 's:includedir=/usr:includedir=/snap/$CRAFT_PROJECT_NAME/current/usr:g' {}*" \;
+        find $CRAFT_PRIME -type f,l -name "*.pc" -exec bash -c "sed -i 's:pkgdatadir=.*$:pkgdatadir=/snap/$CRAFT_PROJECT_NAME/current/usr/share/wayland-protocols:g' {}*" \;
+        find $CRAFT_PRIME -type f,l -name "libtoolize" -exec bash -c "sed -i 's#/root/stage#/snap/$CRAFT_PROJECT_NAME/current:g' {}*" \;
